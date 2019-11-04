@@ -1,0 +1,23 @@
+{
+    "name": "etienne/projet_4",
+    "description": "Blog MVC OOP",
+    "type": "project",
+
+    "authors": [
+        {
+            "name": "etienne",
+            "email": "etiennejuffard@gmail.com"
+        }
+    ],
+
+    "minimum-stability": "stable",
+
+    "require": {},
+
+    "autoload":{
+        "psr-4": {
+            "controller\\": "src/controller/",
+            "model\\": "src/model/",
+        }
+    }
+}
