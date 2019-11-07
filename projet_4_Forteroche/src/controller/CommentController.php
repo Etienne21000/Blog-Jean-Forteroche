@@ -1,7 +1,6 @@
 <?php
 namespace controller;
 
-// use model\PostManager;
 use model\CommentManager;
 use model\Comment;
 
@@ -12,7 +11,6 @@ class CommentController
 
     public function __construct()
     {
-        // $this->post = new PostManager();
         $this->comments = new CommentManager();
     }
 
@@ -36,14 +34,6 @@ class CommentController
 
         return $countComs;
     }
-
-    //Count method by post id
-    // public function nbComById()
-    // {
-    //     $countId = $this->comments->countComId();
-    //
-    //     return $countId;
-    // }
 
     // Methode Add Comment
     public function newComment($post_id, $author, $comment)
@@ -83,22 +73,35 @@ class CommentController
     }
 
     //Get comment by post
-    public function getCom()
+    public function getCom($id)
     {
-        $Comment = $this->comments->getComments($_GET['id']);
+        $Comment = $this->comments->getComments($id);
 
         return $Comment;
     }
 
-}
+    //Report comment
+    public function reportCom($id)
+    {
+        $reportedCom = $this->comments->reportComment($id);
 
-// public function newComment(/*$post_id, $author, $comment*/)
-//     {
-//         $newComment = new Comment([
-//             'post_id' => $_GET['post_id'],
-//             'author' => $_POST['form-pseudo'],
-//             'comment' => $_POST['form-comment']
-//         ]);
-//         $this->comments->addComment($comment);
-//
-//     }
+        return $reportedCom;
+    }
+
+    //Get reported comments
+    public function getReportedCom()
+    {
+        $report = $this->comments->getReportedComments();
+
+        return $report;
+    }
+
+    //Count reported Comments
+    public function nbReported()
+    {
+        $countReport = $this->comments->countReported();
+
+        return $countReport;
+    }
+
+}

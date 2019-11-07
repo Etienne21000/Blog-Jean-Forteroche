@@ -55,6 +55,16 @@ class PostController
         return $post;
     }
 
+    public function updatePost($id, $title, $content)
+    {
+        $Post = $this->post->update($id, $title, $content);
+
+        if($Post === false)
+        {
+            throw new Exception("Impossible de mettre à jour l'article");
+        }
+    }
+
 }
 
 

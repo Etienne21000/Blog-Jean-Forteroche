@@ -76,23 +76,14 @@ class PostManager extends Manager
             $content
         ]);
     }
-    // public function add(Post $post)
-    // {
-    //     $req = $this->db->prepare('INSERT INTO billets(title, content, creation_date)
-    //     VALUES(?,?, NOW())');
-    //     $req->execute([
-    //         $post->title(),
-    //         $post->content()
-    //     ]);
-    // }
 
     //Methode update post
-    // public function update(Post $post)
-    // {
-    //     $req = $this->db->prepare('UPDATE billets SET title = :title, content = :, creation_date = NOW(),
-    //     WHERE id = ?');
-    //     $req->execute([$id, $title, $comment]);
-    // }
+    public function update($id, $content)
+    {
+        $req = $this->db->prepare('UPDATE billets SET title = ?, content = ?, creation_date = NOW(),
+        WHERE id = ?');
+        $req->execute([$id, $title, $comment]);
+    }
 }
 
 

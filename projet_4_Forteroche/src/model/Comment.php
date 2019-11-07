@@ -8,6 +8,7 @@ class Comment extends Entity
     private $author;
     private $post_id;
     private $comment;
+    private $report;
     private $comment_date;
 
     //Constructor
@@ -17,7 +18,7 @@ class Comment extends Entity
     }
 
     /*---------------------------------------
-                    Setter Post
+                    Setter Comments
     ----------------------------------------*/
 
     public function setId($id)
@@ -46,6 +47,11 @@ class Comment extends Entity
         }
     }
 
+    public function setreport($report)
+    {
+        $this->report = (bool)$report;
+    }
+
     public function setCommentdate($comment_date)
     {
         if(is_string($comment_date))
@@ -55,7 +61,7 @@ class Comment extends Entity
     }
 
     /*---------------------------------------
-                    Getter Post
+                    Getter Comments
     ----------------------------------------*/
 
     public function id()
@@ -76,6 +82,11 @@ class Comment extends Entity
     public function comment()
     {
         return $this->comment;
+    }
+
+    public function report()
+    {
+        return $this->report;
     }
 
     public function comment_date()
