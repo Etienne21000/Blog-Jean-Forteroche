@@ -95,14 +95,6 @@ try
             header('Location: index.php?action=listComments&id=' . $_GET['post_id']);
         }
 
-        // elseif ($_GET['action'] == 'postUpdate')
-        // {
-        //     // if(isset($_GET['id']) && $_GET['id'] > 0)
-        //     // {
-        //     require 'src/view/AddPostView.php';
-        //     // }
-        // }
-
         //Update post
         elseif ($_GET['action'] == 'postUpdate')
         {
@@ -143,7 +135,6 @@ try
                 if(!empty($_POST['comment']))
                 {
                     $commentController->updateCom($_GET['id'], $_POST['comment']);
-                    // header('Location: index.php?action=listComments&id=' .$_GET['id']);
                 }
                 else
                 {
@@ -257,8 +248,6 @@ try
             $countReport = $commentController->nbReported();
 
             $Posts = $postController->post();
-            // $Comments = $commentController->lastCom();
-            // $Users = $userController->listUsers();
 
             require 'src/view/listPostAdminView.php';
         }
@@ -279,8 +268,6 @@ try
             {
                 $validate = false;
                 throw new Exception("Pseudo vide ou incorrecte");
-                // $errors['user'] = 'Pseudo vide ou incorrecte';
-                // die();
             }
 
             //Verify mail
@@ -295,8 +282,6 @@ try
             {
                 $validate = false;
                 throw new Exception("Mot de passe invalide");
-                // $errors['pass'] = 'Mot de pass invalide';
-                // die();
             }
 
             //Confirm pass
@@ -304,8 +289,6 @@ try
             {
                 $validate = false;
                 throw new Exception("Confirmez à nouveau votre mot de passe");
-                // $errors['confirmePass'] = 'Confirmez à nouveau votre mot de passe';
-                // die();
             }
 
             if($validate = true)
@@ -320,7 +303,6 @@ try
                 }
                 else {
                     echo '<p>Ce pseudo est déjà utilisé ou le mail est invalide</p>';
-                    // die();
                 }
             }
         }
@@ -341,7 +323,6 @@ try
                 if ($validate = true)
                 {
                     $User = $userController->userConnect($_POST['user']);
-                    // $userManager = new UserManager();
 
                     if (!$User)
                     {
@@ -352,23 +333,6 @@ try
                     {
                         $passVerify = password_verify($_POST['pass'], $User['pass']);
                     }
-                    //
-                    // else
-                    // {
-                    //     // $passVerify = password_verify($_POST['pass'], $User->passWord());
-                    //     //
-                    //     // if($passVerify)
-                    //     // {
-                    //     //     session_start();
-                    //     //     $_SESSION['id'] = $User->id();
-                    //     //     $_SESSION['pseudo'] = $User->pseudo();
-                    //     //
-                    //     // }
-                    //     // else
-                    //     // {
-                    //     //     throw new Exception("Mot de passe incorrect");
-                    //     // }
-                    // }
                 }
             }
             header('Location: index.php&action=Admin');
@@ -405,28 +369,3 @@ catch (Exception $e)
 {
     echo '<strong>Erreur</strong> : une erreur s\'est produite : ' . $e->getMessage();
 }
-
-// if (empty($_POST['user']) || empty($_POST['mail']) || empty($_POST['pass']) || empty($_POST['confirmePass']))
-// {
-//     throw new Exception("Tous les champs ne sont pas remplis");
-//     $validate = false;
-// }
-//
-// if (strlen($_POST['user']) > 100 || strlen($_POST['mail']) > 255 || strlen($_POST['pass']) > 100 || strlen($_POST['confirmePass']) > 100)
-// {
-//     throw new Exception("Une valeur n'est pas correcte (trop longue)");
-//     $validate = false;
-// }
-//
-// if (($_POST['pass'] !== $_POST['confirmePass']))
-// {
-//     throw new Exception("Confirmez à nouveau votre mot de passe");
-//     $validate = false;
-// }
-//
-// if (!(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $_POST['mail'])))
-// {
-//     throw new Exception("Adresse mail invalide");
-//     $validate = false;
-// }
-// }
