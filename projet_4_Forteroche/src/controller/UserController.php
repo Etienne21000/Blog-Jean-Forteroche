@@ -1,109 +1,68 @@
 <?php
 namespace controller;
 
-use model\UserManager;
+use model\PostManager;
+use model\CommentManager;
 
-class UserController
+class PostController
 {
-    private $user;
+    private $post;
+    private $comments;
 
     public function __construct()
     {
-        $this->user = new UserManager();
+        $this->post = new PostManager();
+        $this->comments = new CommentManager();
     }
 
-    public function addUser($pseudo, $mail, $pass)
+    //Affichage des chapitres sur la page d'accueil
+    public function listPosts()
     {
-        $User = $this->user->add($pseudo, $mail, $pass);
-        // $user = $this->user->verifPseudo($pseudo);
-        if($User === false)
+        $Posts = $this->post->getPosts();
+
+        return $Posts;
+    }
+
+    //Affichage des chapitres sur la page dédiée
+    public function post()
+    {
+        $Posts = $this->post->allPosts();
+
+        return $Posts;
+        // require 'src/view/chapterView.php';
+    }
+
+    public function nbPost()
+    {
+        $countPosts = $this->post->countPosts();
+
+        return $countPosts;
+    }
+
+    public function addPost($id, $title, $content)
+    {
+        $Posts = $this->post->add($title, $content);
+        if($Posts === false)
         {
-            throw new Exception("Impossible de vous inscrire");
+            throw new Exception('impossible d\'ajouter votre article');
         }
-
-        // if (empty($this->user->verifPseudo($_POST['user']))
-        // if($user)
-        // {
-        //     throw new Exception("Ce pseudo existe déjà");
-        // }
     }
 
-    // public function checkUserPseudo($pseudo)
-    // {
-    //     $pseudo = $this->user->verifPseudo($pseudo);
-    // }
-
-    //Call verifPseudo method
-    public function pseudoExist($pseudo)
+    public function getPost()
     {
-        $user = $this->user->verifPseudo($pseudo);
+        $post = $this->post->getOne($_GET['id']);
 
-        return $user;
+        return $post;
     }
 
-    //Call verifMail method from User Manager
-    public function mailExist($mail)
+    public function updatePost($id, $title, $content)
     {
-        $user = $this->user->verifMail($mail);
+        $Post = $this->post->update($id, $title, $content);
 
-        return $user;
-    }
-
-    public function nbUsers()
-    {
-        $countUsers = $this->user->countUsers();
-
-        return $countUsers;
-    }
-
-    public function listUsers()
-    {
-        $Users = $this->user->getUsers();
-
-        return $Users;
-    }
-
-    public function userConnect($pseudo)
-    {
-        $userConnect = $this->user->getPseudo($pseudo);
-
-        // $passVerify = password_verify($_POST['pass'], $data['pass']);
-        //
-        // if(!$passVerify)
-        // {
-        //     throw new \Exception("Mot de passe incorrect");
-        // }
-        //
-        // else
-        // {
-        //     if($passVerify)
-        //     {
-        //         session_start();
-        //         $_SESSION['id'] = $data->id();
-        //         $_SESSION['pseudo'] = $data->pseudo();
-        //     }
-        //     else
-        //     {
-        //         throw new \Exception("Mot de passe erroné");
-        //     }
+        if($Post === false)
+        {
+            throw new Exception("Impossible de mettre à jour l'article");
         }
+    }
 
-
-        // $user = password_verify($_POST['pass'], $userConnect['pass']);
-        //
-        // if($passVerify)
-        // {
-        //     session_start();
-        //     $_SESSION['id'] = $User->id();
-        //     $_SESSION['pseudo'] = $User->pseudo();
-        //
-        //     // header('Location: index.php&action=Admin');
-        // }
-        // else
-        // {
-        //     throw new \Exception("Mot de passe incorrect");
-        // }
-
-        // return $User;
-    // }
 }

@@ -1,107 +1,94 @@
 <?php
 namespace controller;
 
-use model\CommentManager;
-use model\Comment;
+use model\UserManager;
 
-class CommentController
+class UserController
 {
-    private $post;
-    private $comments;
+    private $user;
 
     public function __construct()
     {
-        $this->comments = new CommentManager();
+        $this->user = new UserManager();
     }
 
-    public function lastCom()
+    public function addUser($pseudo, $mail, $pass)
     {
-        $Comments = $this->comments->getLastComments();
-
-        return $Comments;
-    }
-
-    public function allCom()
-    {
-        $Comments = $this->comments->getAllComments();
-
-        return $Comments;
-    }
-
-    public function nbCom()
-    {
-        $countComs = $this->comments->countComments();
-
-        return $countComs;
-    }
-
-    // Methode Add Comment
-    public function newComment($post_id, $author, $comment)
-    {
-        $newComment = $this->comments->addComment($post_id, $author, $comment);
-
-        if($newComment === false)
+        $User = $this->user->add($pseudo, $mail, $pass);
+        // $user = $this->user->verifPseudo($pseudo);
+        if($User === false)
         {
-            throw new Exception('impossible d\'ajouter votre commentaire');
+            throw new Exception("Impossible de vous inscrire");
         }
     }
 
-    //Update comment method
-    public function updateCom($id, $comment)
+    //Call verifPseudo method
+    public function pseudoExist($pseudo)
     {
-        $Comment = $this->comments->updateComment($id, $comment);
-        // $Comment = $this->comments->getCom($id);
-        if ($Comment === false)
-        {
-            throw new Exception("Impossible de mettre à jour le commentaire (controller)");
-        }
+        $user = $this->user->verifPseudo($pseudo);
 
-        // return $Comment;
+        return $user;
     }
 
-    //Methode admin delete comment
-    public function deleteCom($id)
+    //Call verifMail method from User Manager
+    public function mailExist($mail)
     {
-        if(isset($_GET['id']) && $_GET['id'] > 0)
+        $user = $this->user->verifMail($mail);
+
+        return $user;
+    }
+
+    public function nbUsers()
+    {
+        $countUsers = $this->user->countUsers();
+
+        return $countUsers;
+    }
+
+    public function listUsers()
+    {
+        $Users = $this->user->getUsers();
+
+        return $Users;
+    }
+
+    //User connexion method
+    public function userConnect($pseudo)
+    {
+        $user = $this->user->getPseudo($pseudo);
+
+        if (!$user)
         {
-            $Comment = $this->comments->deleteComment($id);
+            throw new Exception("Pseudo invalide (controller)");
         }
+
         else
         {
-            throw new Exception("Impossible supprimer le commentaire (controller)");
+            $passVerify = password_verify($_POST['pass'], $user['pass']);
+            // var_dump($User);
+
+            if($passVerify)
+            {
+                // session_start();
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['pseudo'] = $user['pseudo'];
+            }
+            else
+            {
+                throw new \Exception("Mot de passe invalide (controller)");
+            }
         }
+
+        return $user;
     }
 
-    //Get comment by post
-    public function getCom($id)
+    //Disconnect user
+    public function disconnectUser()
     {
-        $Comment = $this->comments->getComments($id);
+        $_SESSION = array();
+        session_destroy();
 
-        return $Comment;
+        setcookie('pass', '');
+        setcookie('hash_pass', '');
     }
-
-    //Report comment
-    public function reportCom($id)
-    {
-        $reportedCom = $this->comments->reportComment($id);
-
-        return $reportedCom;
-    }
-
-    //Get reported comments
-    public function getReportedCom()
-    {
-        $report = $this->comments->getReportedComments();
-
-        return $report;
-    }
-
-    //Count reported Comments
-    public function nbReported()
-    {
-        $countReport = $this->comments->countReported();
-
-        return $countReport;
-    }
-
 }

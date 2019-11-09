@@ -30,17 +30,9 @@ class UserManager extends Manager
         $req->execute([
             $pseudo
         ]);
+        $user = $req->fetch(\PDO::FETCH_ASSOC);
 
-        $data = $req->fetch(\PDO::FETCH_ASSOC);
-
-        if(!$data)
-        {
-            return false;
-        }
-        else
-        {
-            return new User($data);
-        }
+        return $user;
     }
 
     //Verify if new pseudo is availlable
@@ -53,7 +45,6 @@ class UserManager extends Manager
 
         return $req->fetch(\PDO::FETCH_ASSOC);
 
-        // return $user;
     }
 
     //Check if email exist already

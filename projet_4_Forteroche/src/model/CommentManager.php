@@ -14,7 +14,7 @@ class CommentManager extends Manager
     {
         $Comments = [];
         $req = $this->db->prepare('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires WHERE post_id = ? ORDER BY comment_date DESC LIMIT 0, 5');
+        AS comment_date FROM commentaires WHERE post_id = ? ORDER BY report, comment_date DESC LIMIT 0, 5');
         $req->execute([$post_id]);
 
         while ($data = $req->fetch(\PDO::FETCH_ASSOC))
@@ -25,6 +25,16 @@ class CommentManager extends Manager
         return $Comments;
     }
 
+    //Count comments by post_id à revoir
+    // public function countComByPost($post_id)
+    // {
+    //     $req = $this->db->prepare('SELECT COUNT(*) FROM commentaires WHERE post_id = ?');
+    //     $req->execute([$post_id]);
+    //     $countByPost = $req->fetchColumn();
+    //
+    //     return $countByPost;
+    // }
+
     /*---------------------------------
     Get lasts comments à revoir
     ----------------------------------*/
@@ -32,7 +42,7 @@ class CommentManager extends Manager
     {
         $Comments = [];
         $req = $this->db->query('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires ORDER BY comment_date DESC LIMIT 0, 3');
+        AS comment_date FROM commentaires ORDER BY report, comment_date DESC LIMIT 0, 3');
 
         while ($data = $req->fetch(\PDO::FETCH_ASSOC))
         {
@@ -94,9 +104,7 @@ class CommentManager extends Manager
     public function reportComment($id)
     {
         $req = $this->db->prepare('UPDATE commentaires SET report = 1 WHERE id = ?');
-        /*$reportedCom =*/ $req->execute([$id]);
-
-        // return $reportedCom;
+        $req->execute([$id]);
     }
 
     //Reported comments
@@ -110,28 +118,15 @@ class CommentManager extends Manager
             $com = new Comment($data);
             $report[] = $com;
         }
-        // $report = $req->execute([$id]);
 
         return $report;
     }
 
-    //Show reported comments
-    // $Comments = [];
-    // $req = $this->db->query('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
-    // AS comment_date FROM commentaires ORDER BY comment_date DESC');
-    //
-    // while ($data = $req->fetch(\PDO::FETCH_ASSOC))
-    // {
-    //     $comment = new Comment($data);
-    //     $Comments[] = $comment;
-    // }
-    // return $Comments;
-
     // Create comment method (user)
     public function addComment($post_id, $author, $comment)
     {
-        $req = $this->db->prepare('INSERT INTO commentaires(post_id, author, comment, comment_date)
-        VALUES(?,?,?, NOW())');
+        $req = $this->db->prepare('INSERT INTO commentaires(post_id, author, comment, comment_date, report)
+        VALUES(?,?,?, NOW(), 0)');
         $newComment = $req->execute([
             $post_id,
             $author,
@@ -153,11 +148,10 @@ class CommentManager extends Manager
     {
         $req = $this->db->prepare('UPDATE commentaires SET comment = ?, comment_date = NOW()
         WHERE id = ?');
-        /*$updateComment = */$req->execute([
-        $id,
-        $comment
-    ]);
+        $req->execute([
+            $id,
+            $comment
+        ]);
 
-    // return $updateComment;
-}
+    }
 }

@@ -1,8 +1,6 @@
 <?php
 namespace model;
 
-// use model\Post;
-
 class PostManager extends Manager
 {
     public function __construct()
@@ -48,11 +46,9 @@ class PostManager extends Manager
     //Get post by id
     public function getOne($post_id)
     {
-        // $id = (int) $id;
         $req = $this->db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
         AS creation_date FROM billets WHERE id = ?');
         $req->execute([$post_id]);
-        // $post = $req->fetch(\PDO::FETCH_ASSOC);
         $data = $req->fetch(\PDO::FETCH_ASSOC);
         $post = new Post($data);
 
@@ -85,14 +81,3 @@ class PostManager extends Manager
         $req->execute([$id, $title, $comment]);
     }
 }
-
-
-
-
-
-// $nbPosts = [];
-// $req = $this->db->query('SELECT COUNT(*) FROM billets');
-// $data = $req->fetch(\PDO::FETCH_ASSOC);
-// $nbPosts[] = $data;
-// // var_dump($nbPosts);
-// return $nbPosts;
