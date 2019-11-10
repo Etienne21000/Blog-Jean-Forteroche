@@ -1,113 +1,86 @@
 <?php
 namespace controller;
 
+use model\PostManager;
 use model\CommentManager;
-use model\Comment;
 
-class CommentController
+class PostController
 {
     private $post;
     private $comments;
 
     public function __construct()
     {
+        $this->post = new PostManager();
         $this->comments = new CommentManager();
     }
 
-    public function lastCom()
+    //Affichage des chapitres sur la page d'accueil
+    public function listPosts()
     {
-        $Comments = $this->comments->getLastComments();
+        $Posts = $this->post->getPosts();
 
-        return $Comments;
+        return $Posts;
     }
 
-    public function allCom()
+    //Affichage des chapitres sur la page dédiée
+    public function post()
     {
-        $Comments = $this->comments->getAllComments();
+        $Posts = $this->post->allPosts();
 
-        return $Comments;
+        return $Posts;
+        // require 'src/view/chapterView.php';
     }
 
-    public function nbCom()
+    public function nbPost()
     {
-        $countComs = $this->comments->countComments();
+        $countPosts = $this->post->countPosts();
 
-        return $countComs;
+        return $countPosts;
     }
 
-    //Comments by post
-    // public function nbComByPost()
-    // {
-    //     $countByPost = $this->comments->countComByPost($_GET['post_id']);
-    // }
-
-    // Methode Add Comment
-    public function newComment($post_id, $author, $comment)
+    public function addPost($id, $title, $content)
     {
-        $newComment = $this->comments->addComment($post_id, $author, $comment);
-
-        if($newComment === false)
+        $Posts = $this->post->add($title, $content);
+        if($Posts === false)
         {
-            throw new Exception('impossible d\'ajouter votre commentaire');
+            throw new Exception('impossible d\'ajouter votre article');
         }
     }
 
-    //Update comment method
-    public function updateCom($id, $comment)
+    public function getPost()
     {
-        $Comment = $this->comments->updateComment($id, $comment);
-        // $Comment = $this->comments->getCom($id);
-        if ($Comment === false)
+        $post = $this->post->getOne($_GET['id']);
+
+        return $post;
+    }
+
+    public function updatePost($id, $title, $content)
+    {
+        $Post = $this->post->update($id, $title, $content);
+
+        if($Post === false)
         {
-            throw new Exception("Impossible de mettre à jour le commentaire (controller)");
+            throw new Exception("Impossible de mettre à jour l'article");
         }
-
-        // return $Comment;
-    }
-
-    //Methode admin delete comment
-    public function deleteCom($id)
-    {
-        if(isset($_GET['id']) && $_GET['id'] > 0)
-        {
-            $Comment = $this->comments->deleteComment($id);
-        }
-        else
-        {
-            throw new Exception("Impossible supprimer le commentaire (controller)");
-        }
-    }
-
-    //Get comment by post
-    public function getCom($id)
-    {
-        $Comments = $this->comments->getComments($id);
-
-        return $Comments;
-    }
-
-    //Report comment
-    public function reportCom($id)
-    {
-        $reportedCom = $this->comments->reportComment($id);
-
-        return $reportedCom;
-    }
-
-    //Get reported comments
-    public function getReportedCom()
-    {
-        $report = $this->comments->getReportedComments();
-
-        return $report;
-    }
-
-    //Count reported Comments
-    public function nbReported()
-    {
-        $countReport = $this->comments->countReported();
-
-        return $countReport;
     }
 
 }
+
+
+// $Comments = $this->comments->getLastComments(/*$_GET['id']*/);
+// require 'src/view/indexView.php';
+
+// public function createPost()
+// {
+//     require 'src/view/adminPost.php';
+// }
+
+//Change name for listPosts
+// public function listComments()
+// {
+//     $post = $this->post->getOne($_GET['id']);
+//     $Comment = $this->comments->getComments($_GET['id']);
+//
+//     require 'src/view/postView.php';
+// }

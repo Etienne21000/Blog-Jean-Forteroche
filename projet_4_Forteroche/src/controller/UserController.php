@@ -1,68 +1,104 @@
 <?php
 namespace controller;
 
-use model\PostManager;
-use model\CommentManager;
+use model\UserManager;
 
-class PostController
+class UserController
 {
-    private $post;
-    private $comments;
+    private $user;
 
     public function __construct()
     {
-        $this->post = new PostManager();
-        $this->comments = new CommentManager();
+        $this->user = new UserManager();
     }
 
-    //Affichage des chapitres sur la page d'accueil
-    public function listPosts()
+    public function addUser($pseudo, $mail, $pass)
     {
-        $Posts = $this->post->getPosts();
-
-        return $Posts;
-    }
-
-    //Affichage des chapitres sur la page dédiée
-    public function post()
-    {
-        $Posts = $this->post->allPosts();
-
-        return $Posts;
-        // require 'src/view/chapterView.php';
-    }
-
-    public function nbPost()
-    {
-        $countPosts = $this->post->countPosts();
-
-        return $countPosts;
-    }
-
-    public function addPost($id, $title, $content)
-    {
-        $Posts = $this->post->add($title, $content);
-        if($Posts === false)
+        $User = $this->user->add($pseudo, $mail, $pass);
+        // $user = $this->user->verifPseudo($pseudo);
+        if($User === false)
         {
-            throw new Exception('impossible d\'ajouter votre article');
+            throw new Exception("Impossible de vous inscrire");
         }
+
+        // if (empty($this->user->verifPseudo($_POST['user']))
+        // if($user)
+        // {
+        //     throw new Exception("Ce pseudo existe déjà");
+        // }
     }
 
-    public function getPost()
-    {
-        $post = $this->post->getOne($_GET['id']);
+    // public function checkUserPseudo($pseudo)
+    // {
+    //     $pseudo = $this->user->verifPseudo($pseudo);
+    // }
 
-        return $post;
+    //Call verifPseudo method
+    public function pseudoExist($pseudo)
+    {
+        $user = $this->user->verifPseudo($pseudo);
+
+        return $user;
     }
 
-    public function updatePost($id, $title, $content)
+    //Call verifMail method from User Manager
+    public function mailExist($mail)
     {
-        $Post = $this->post->update($id, $title, $content);
+        $user = $this->user->verifMail($mail);
 
-        if($Post === false)
+        return $user;
+    }
+
+    public function nbUsers()
+    {
+        $countUsers = $this->user->countUsers();
+
+        return $countUsers;
+    }
+
+    public function listUsers()
+    {
+        $Users = $this->user->getUsers();
+
+        return $Users;
+    }
+
+    //User connexion method
+    public function userConnect($pseudo)
+    {
+        $user = $this->user->getPseudo($pseudo);
+
+        if (!$user)
         {
-            throw new Exception("Impossible de mettre à jour l'article");
+            throw new Exception("Pseudo invalide (controller)");
         }
+
+        else
+        {
+            $passVerify = password_verify($_POST['pass'], $user['pass']);
+            // var_dump($User);
+
+            if($passVerify)
+            {
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['pseudo'] = $user['pseudo'];
+            }
+            else
+            {
+                throw new \Exception("Mot de passe invalide (controller)");
+            }
+        }
+
+        // return $user;
     }
 
+    //Disconnect user
+    public function disconnectUser()
+    {
+        $_SESSION = array();
+        session_destroy();
+
+        setcookie('pass', '');
+        setcookie('hash_pass', '');
+    }
 }

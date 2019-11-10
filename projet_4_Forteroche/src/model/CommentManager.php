@@ -25,43 +25,59 @@ class CommentManager extends Manager
         return $Comments;
     }
 
-    //Count comments by post_id à revoir
-    // public function countComByPost($post_id)
-    // {
-    //     $req = $this->db->prepare('SELECT COUNT(*) FROM commentaires WHERE post_id = ?');
-    //     $req->execute([$post_id]);
-    //     $countByPost = $req->fetchColumn();
-    //
-    //     return $countByPost;
-    // }
-
     /*---------------------------------
     Get lasts comments à revoir
     ----------------------------------*/
-    public function getLastComments()
-    {
-        $Comments = [];
-        $req = $this->db->query('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires ORDER BY report, comment_date DESC LIMIT 0, 3');
-
-        while ($data = $req->fetch(\PDO::FETCH_ASSOC))
-        {
-            $comment = new Comment($data);
-            $Comments[] = $comment;
-        }
-        return $Comments;
-    }
+    // public function getLastComments()
+    // {
+    //     $Comments = [];
+    //     $req = $this->db->query('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
+    //     AS comment_date FROM commentaires ORDER BY report, comment_date DESC LIMIT 0, 3');
+    //
+    //     while ($data = $req->fetch(\PDO::FETCH_ASSOC))
+    //     {
+    //         $comment = new Comment($data);
+    //         $Comments[] = $comment;
+    //     }
+    //     return $Comments;
+    // }
 
     /*---------------------------------
     Get all comments
     ----------------------------------*/
-    public function getAllComments()
+    // public function getAllComments()
+    // {
+    //     $Comments = [];
+    //     $req = $this->db->query('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
+    //     AS comment_date FROM commentaires ORDER BY comment_date DESC');
+    //
+    //     while ($data = $req->fetch(\PDO::FETCH_ASSOC))
+    //     {
+    //         $comment = new Comment($data);
+    //         $Comments[] = $comment;
+    //     }
+    //     return $Comments;
+    // }
+
+    /*------------------------------
+        Test list comments
+        with limit variables
+    -------------------------------*/
+    public function getAllComments($start =-1, $limite = -1)
     {
         $Comments = [];
-        $req = $this->db->query('SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires ORDER BY comment_date DESC');
 
-        while ($data = $req->fetch(\PDO::FETCH_ASSOC))
+        $req = 'SELECT id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
+        AS comment_date FROM commentaires ORDER BY comment_date DESC';
+
+        if ($start != -1 || $limite != -1)
+        {
+            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+        }
+
+        $result = $this->db->query($req);
+
+        while ($data = $result->fetch(\PDO::FETCH_ASSOC))
         {
             $comment = new Comment($data);
             $Comments[] = $comment;
@@ -70,7 +86,8 @@ class CommentManager extends Manager
     }
 
     /*-------------------------
-    Get comment by id à revoir dans le controller et index
+    Get comment by id à revoir
+    dans le controller et index
     --------------------------*/
     public function getCom($id)
     {
@@ -107,13 +124,25 @@ class CommentManager extends Manager
         $req->execute([$id]);
     }
 
-    //Reported comments
-    public function getReportedComments()
+    /*------------------------------
+        Test list reported comments
+        with limit variables
+    -------------------------------*/
+    public function getReportedComments($start = -1, $limite = -1)
     {
-        $req = $this->db->query('SELECT id, post_id, author, comment, report, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date
-        FROM commentaires WHERE report = 1 ORDER BY comment_date DESC LIMIT 0, 3');
+        $report = [];
 
-        while ($data = $req->fetch(\PDO::FETCH_ASSOC))
+        $req = 'SELECT id, post_id, author, comment, report, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date
+        FROM commentaires WHERE report = 1 ORDER BY comment_date DESC';
+
+        if ($start != -1 || $limite != -1)
+        {
+            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+        }
+
+        $result = $this->db->query($req);
+
+        while ($data = $result->fetch(\PDO::FETCH_ASSOC))
         {
             $com = new Comment($data);
             $report[] = $com;
@@ -155,3 +184,13 @@ class CommentManager extends Manager
 
     }
 }
+
+//Count comments by post_id à revoir
+// public function countComByPost($post_id)
+// {
+//     $req = $this->db->prepare('SELECT COUNT(*) FROM commentaires WHERE post_id = ?');
+//     $req->execute([$post_id]);
+//     $countByPost = $req->fetchColumn();
+//
+//     return $countByPost;
+// }

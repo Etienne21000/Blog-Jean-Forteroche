@@ -11,6 +11,7 @@ $postController = new PostController();
 $commentController = new CommentController();
 $userController = new UserController();
 
+
 try
 {
     if (isset($_GET['action']))
@@ -20,6 +21,7 @@ try
         {
             $Posts = $postController->listPosts();
             $Comments = $commentController->lastCom();
+            // $countByPost = $commentController->nbComByPost($_GET['post_id']);
             // $Posts = $commentController->nbComById();
 
             require 'src/view/indexView.php';
@@ -53,7 +55,7 @@ try
             if (isset($_GET['id']) && $_GET['id'] > 0)
             {
                 $post = $postController->getPost();
-                $Comment = $commentController->getCom($_GET['id']);
+                $Comments = $commentController->getCom($_GET['id']);
             }
             else
             {
@@ -135,6 +137,7 @@ try
                 if(!empty($_POST['comment']))
                 {
                     $commentController->updateCom($_GET['id'], $_POST['comment']);
+                    // header('Location: index.php?action=listComments&id=' .$_GET['id']);
                 }
                 else
                 {
@@ -145,8 +148,6 @@ try
             {
                 throw new Exception("Aucun identifiant de commentaire envoyé (rooter)");
             }
-
-            // require 'src/view/postView.php' $post_id;
 
             header('Location: index.php?action=listComments&id=' .$_GET['id']);
         }
@@ -164,10 +165,6 @@ try
                 throw new \Exception("Impossible de signaler ce commentaire car aucun identifiant de commentaire envoyé (rooter)");
             }
             echo 'Le message a été signalé';
-            // $post = $postController->getPost();
-            // $Comment = $commentController->getComments($_GET['post_id']);
-            // header('Location: index.php?action=listComments&id=' .$_GET['post_id']);
-
         }
 
         elseif ($_GET['action'] == 'adminCom')
@@ -248,6 +245,8 @@ try
             $countReport = $commentController->nbReported();
 
             $Posts = $postController->post();
+            // $Comments = $commentController->lastCom();
+            // $Users = $userController->listUsers();
 
             require 'src/view/listPostAdminView.php';
         }
@@ -264,10 +263,12 @@ try
             $validate = true;
 
             //Verify pseudo
-            if(empty($_POST['user']) || strlen($_POST['user']) > 100 || !preg_match("#^[a-zA-Z0-9_-]+$#", $_POST['user']))
+            if(empty($_POST['user']) || strlen($_POST['user']) > 100 || !preg_match("#^[a-zà-ùA-Z0-9-\s_-]+$#", $_POST['user']))
             {
                 $validate = false;
                 throw new Exception("Pseudo vide ou incorrecte");
+                // $errors['user'] = 'Pseudo vide ou incorrecte';
+                // die();
             }
 
             //Verify mail
@@ -282,6 +283,8 @@ try
             {
                 $validate = false;
                 throw new Exception("Mot de passe invalide");
+                // $errors['pass'] = 'Mot de pass invalide';
+                // die();
             }
 
             //Confirm pass
@@ -289,13 +292,16 @@ try
             {
                 $validate = false;
                 throw new Exception("Confirmez à nouveau votre mot de passe");
+                // $errors['confirmePass'] = 'Confirmez à nouveau votre mot de passe';
+                // die();
             }
 
             if($validate = true)
             {
+                $hash_pass = $_POST['pass'];
                 if (empty($userController->pseudoExist($_POST['user'])) && empty($userController->mailExist($_POST['mail'])))
                 {
-                    $_POST['pass'] = password_hash($_POST['pass'], PASSWORD_BCRYPT);
+                    $hash_pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
 
                     $User = $userController->addUser($_POST['user'], $_POST['mail'], $_POST['pass']);
 
@@ -303,6 +309,7 @@ try
                 }
                 else {
                     echo '<p>Ce pseudo est déjà utilisé ou le mail est invalide</p>';
+                    // die();
                 }
             }
         }
@@ -314,29 +321,37 @@ try
             {
                 $validate = true;
 
-                if (empty($_POST['pseudo']) || empty($_POST['pass']))
+                //verify if empty fields occured
+                if (empty($_POST['user']) || empty($_POST['pass']))
                 {
-                    echo "<p>Vous n'avez pas rempli tous les champs</p>";
+                    throw new Exception("<p>Vous n'avez pas rempli tous les champs</p>");
                     $validate = false;
                 }
 
+                //Verify length of strings
+                if (strlen($_POST['user']) > 100 || strlen($_POST['pass']) > 255)
+                {
+                    throw new Exception("champ invalide (rooter)");
+                    $validate = false;
+                }
+
+                //if form is ok validate retunr true
                 if ($validate = true)
                 {
-                    $User = $userController->userConnect($_POST['user']);
-
-                    if (!$User)
-                    {
-                        echo "Aucun pseudo ne correspond";
-                    }
-
-                    else
-                    {
-                        $passVerify = password_verify($_POST['pass'], $User['pass']);
-                    }
+                $user = $userController->userConnect($_POST['user']);
+                // header('Location: index.php&action=Admin');
+                require 'src/view/AdminHomeView.php';
+                    // $userManager = new UserManager();
                 }
             }
-            header('Location: index.php&action=Admin');
+        }
 
+        //Disconnect user
+        elseif ($_GET['action'] == 'discUser')
+        {
+            $userController->disconnectUser();
+
+            require 'src/view/indexView.php';
         }
 
         elseif ($_GET['action'] == 'postViewAdmins')
@@ -361,6 +376,7 @@ try
     {
         $Posts = $postController->listPosts();
         $Comments = $commentController->lastCom();
+        // $countByPost = $commentController->nbComByPost();
 
         require 'src/view/indexView.php';
     }
