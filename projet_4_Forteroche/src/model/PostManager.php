@@ -8,13 +8,25 @@ class PostManager extends Manager
         $this->db = $this->dbConnect();
     }
 
-    public function getPosts()
+    /*------------------------------
+        Test list posts
+        with limit variables
+    -------------------------------*/
+    public function getPosts($start =-1, $limite = -1)
     {
         $Posts = [];
-        $req = $this->db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date FROM billets ORDER BY creation_date DESC LIMIT 0, 6');
 
-        while ($data = $req->fetch(\PDO::FETCH_ASSOC))
+        $req = 'SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
+        AS creation_date FROM billets ORDER BY creation_date DESC';
+
+        if ($start != -1 || $limite != -1)
+        {
+            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+        }
+
+        $result = $this->db->query($req);
+
+        while ($data = $result->fetch(\PDO::FETCH_ASSOC))
         {
             $post = new Post($data);
             $Posts[] = $post;
@@ -22,19 +34,19 @@ class PostManager extends Manager
         return $Posts;
     }
 
-    public function allPosts()
-    {
-        $Posts = [];
-        $req = $this->db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date FROM billets ORDER BY creation_date DESC');
-
-        while ($data = $req->fetch(\PDO::FETCH_ASSOC))
-        {
-            $post = new Post($data);
-            $Posts[] = $post;
-        }
-        return $Posts;
-    }
+    // public function allPosts()
+    // {
+    //     $Posts = [];
+    //     $req = $this->db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
+    //     AS creation_date FROM billets ORDER BY creation_date DESC');
+    //
+    //     while ($data = $req->fetch(\PDO::FETCH_ASSOC))
+    //     {
+    //         $post = new Post($data);
+    //         $Posts[] = $post;
+    //     }
+    //     return $Posts;
+    // }
 
     public function countPosts()
     {
@@ -58,7 +70,7 @@ class PostManager extends Manager
     //Methode to delete a post
     public function delete($id)
     {
-        $req = $this->db->prepare('DELETE FROM commentaires WHERE id = ?');
+        $req = $this->db->prepare('DELETE FROM billets WHERE id = ?');
         $req->execute([$id]);
     }
 
