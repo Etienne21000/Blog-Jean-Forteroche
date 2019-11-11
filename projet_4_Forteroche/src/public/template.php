@@ -1,10 +1,11 @@
 <?php
+// $_SESSION['prenom']='Jean';
+// $_SESSION['nom']='Forteroche';
+// $_SESSION['pseudo']='Jean Forteroche';
+// $_SESSION['id'] = '34';
 
-$_SESSION['prenom']='Jean';
-$_SESSION['nom']='Forteroche';
-
-setcookie('pseudo', 'jeanF', time() + 30*24*3600, null, null, false, true);
-setcookie('pays', 'France', time() + 30*24*3600, null, null, false, true);
+// setcookie('pseudo', 'jeanF', time() + 30*24*3600, null, null, false, true);
+// setcookie('pays', 'France', time() + 30*24*3600, null, null, false, true);
 ?>
 
 <!DOCTYPE HTML>
@@ -28,28 +29,29 @@ setcookie('pays', 'France', time() + 30*24*3600, null, null, false, true);
     </div>
 
     <div class="menu nav">
-        <!-- <a href="/">Le blog</a> -->
         <a href="/index.php?action=Accueil"> Le blog</a>
         <a href="/index.php?action=post">Les articles</a>
-        <!-- <a href="indexTest.php?action=post">Les articles</a> -->
         <a href="/index.php?action=AdminConnexion">Connexion</a>
         <a href="/index.php?action=inscription">Inscription</a>
-        <!-- <a href="/index.php?action=Admin"> Admin</a> -->
     </div>
 
     <div id="ID_Utilisateur">
-        <a href="/index.php?action=Admin">
+        <!-- <a href="/index.php?action=Admin"> -->
             <i class="fas fa-user-edit"></i>
             <?php
-            if(isset($_SESSION['prenom']) && isset($_SESSION['nom']))
+            if(isset($_SESSION['pseudo']) && isset($_SESSION['id']))
             {
-                echo  $_SESSION['prenom'] .' ' . $_SESSION['nom'];
+                ?>
+                <a href="/index.php?action=Admin"> <?php echo  $_SESSION['pseudo']; ?> </a>
+                <?php
             }
             else {
-                echo 'se connecter';
+                ?>
+                <a href="index.php?action=AdminConnexion">Connexion</a>
+                <?php
             }
             ?>
-        </a>
+        <!-- </a> -->
     </div>
 </header>
 
@@ -64,7 +66,11 @@ setcookie('pays', 'France', time() + 30*24*3600, null, null, false, true);
         <script src="/src/public/js/formulaire.js" type="text/javascript"></script>
         <script src="/src/public/js/transitions.js" type="text/javascript"></script>
         <script src="/src/public/js/main.js" type="text/javascript"></script>
+        <script src="/src/public/js/tinymce/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
+        <!-- <script src="/src/public/js/tinymce/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
+        <script src="/src/public/js/wysiwyg.js" type="text/javascript"></script> -->
         <!-- <script src="public/js/transition_header.js" type="text/javascript"></script> -->
+        <!--  -->
     </footer>
 </body>
 </html>

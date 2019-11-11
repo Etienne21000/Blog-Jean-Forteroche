@@ -84,6 +84,8 @@
         <script src="/src/public/js/formulaire.js" type="text/javascript"></script>
         <script src="/src/public/js/transitions.js" type="text/javascript"></script>
         <script src="/src/public/js/main.js" type="text/javascript"></script>
+        <script src="/src/public/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
+        <script src="/src/public/js/wysiwyg.js" type="text/javascript"></script>
     </footer>
 </body>
 </html>

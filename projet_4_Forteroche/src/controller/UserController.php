@@ -21,17 +21,7 @@ class UserController
             throw new Exception("Impossible de vous inscrire");
         }
 
-        // if (empty($this->user->verifPseudo($_POST['user']))
-        // if($user)
-        // {
-        //     throw new Exception("Ce pseudo existe déjà");
-        // }
     }
-
-    // public function checkUserPseudo($pseudo)
-    // {
-    //     $pseudo = $this->user->verifPseudo($pseudo);
-    // }
 
     //Call verifPseudo method
     public function pseudoExist($pseudo)

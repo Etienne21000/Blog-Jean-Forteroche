@@ -18,7 +18,15 @@ class PostController
     //Affichage des chapitres sur la page d'accueil
     public function listPosts()
     {
-        $Posts = $this->post->getPosts();
+        $Posts = $this->post->getPosts($start = 0, $limite = 6);
+
+        return $Posts;
+    }
+
+    //Affichage des posts sur la page admin
+    public function adminPost()
+    {
+        $Posts = $this->post->getPosts($start = 0, $limite = 3);
 
         return $Posts;
     }
@@ -26,7 +34,7 @@ class PostController
     //Affichage des chapitres sur la page dédiée
     public function post()
     {
-        $Posts = $this->post->allPosts();
+        $Posts = $this->post->getPosts();
 
         return $Posts;
         // require 'src/view/chapterView.php';
@@ -66,21 +74,3 @@ class PostController
     }
 
 }
-
-
-// $Comments = $this->comments->getLastComments(/*$_GET['id']*/);
-// require 'src/view/indexView.php';
-
-// public function createPost()
-// {
-//     require 'src/view/adminPost.php';
-// }
-
-//Change name for listPosts
-// public function listComments()
-// {
-//     $post = $this->post->getOne($_GET['id']);
-//     $Comment = $this->comments->getComments($_GET['id']);
-//
-//     require 'src/view/postView.php';
-// }

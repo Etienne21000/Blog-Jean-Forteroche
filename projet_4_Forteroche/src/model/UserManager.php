@@ -61,9 +61,9 @@ class UserManager extends Manager
     //add user in db
     public function add($pseudo, $mail, $pass)
     {
-        $req = $this->db->prepare('INSERT INTO users(pseudo, mail, pass, user_date)
-        VALUES(?, ?, ?, NOW())');
-        $req->execute([
+        $req = $this->db->prepare('INSERT INTO users(pseudo, mail, pass, user_date, user_role)
+        VALUES(?, ?, ?, NOW(), 0)');
+        $newUser = $req->execute([
             $pseudo,
             $mail,
             $pass
@@ -79,3 +79,14 @@ class UserManager extends Manager
     }
 
 }
+
+// $data = $req->fetch(\PDO::FETCH_ASSOC);
+
+// if(!$data)
+// {
+//     return false;
+// }
+// else
+// {
+//     return new User($data);
+// }

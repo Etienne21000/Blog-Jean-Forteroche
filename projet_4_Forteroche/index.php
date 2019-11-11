@@ -30,23 +30,33 @@ try
         elseif ($_GET['action'] == 'post')
         {
             $Posts = $postController->post();
-            $countPosts = $postController->nbPost();
+            // $countPosts = $postController->nbPost();
 
             require 'src/view/chapterView.php';
         }
 
         elseif ($_GET['action'] == 'addPost')
         {
+            //Admin session action
+            // if(isset($_SESSION['pseudo']) && $_SESSION['user_role'] = 1)
+            // {
             if(!empty($_POST['title']) && !empty($_POST['content']))
             {
-                $postController->addPost($_GET['id'], $_POST['title'], $_POST['content']);
+                $postController->addPost($_GET['id'], htmlspecialchars($_POST['title']), htmlspecialchars($_POST['content']));
             }
             else
             {
                 throw new Exception("vous n'avez pas remplis tous les champs pour poster votre billet! (rooter)");
             }
 
-            header('Location: index.php?action=listPosts' .$_GET['id']);
+            // header('Location: index.php?action=listPosts' .$_GET['id']);
+            require 'src/view/listPostAdminView.php';
+            // }
+            // else
+            // {
+            //     echo "vous n'êtes pas abilité...";
+            // }
+
         }
 
         //Get post with its comments
@@ -103,6 +113,7 @@ try
             $countPosts = $postController->nbPost();
             $countComs = $commentController->nbCom();
             $countUsers = $userController->nbUsers();
+            $countReport = $commentController->nbReported();
 
             require 'src/view/adminUpdatePostView.php';
         }
@@ -186,9 +197,7 @@ try
             $countPosts = $postController->nbPost();
             $countUsers = $userController->nbUsers();
             $countReport = $commentController->nbReported();
-
-            $report = $commentController->getReportedCom();
-
+            $report = $commentController->getAllReported();
 
             require 'src/view/adminReportedCom.php';
         }
@@ -197,19 +206,20 @@ try
         //Add post
         elseif ($_GET['action'] == 'AddPostAdmin')
         {
+            // if(!empty($_SESSION['pseudo']) && $_SESSION['user_role'] == 1)
+            // {
             $countPosts = $postController->nbPost();
             $countComs = $commentController->nbCom();
             $countUsers = $userController->nbUsers();
             $countReport = $commentController->nbReported();
 
             require 'src/view/adminPost.php';
+            // }
+            // else
+            // {
+            //     echo "vous n'êtes pas habilité";
+            // }
         }
-
-        // //Update post
-        // elseif ($_GET['action'] == 'updatePost')
-        // {
-        //     require 'src/view/adminPost.php';
-        // }
 
         elseif ($_GET['action'] == 'AdminConnexion')
         {
@@ -228,7 +238,7 @@ try
             $countUsers = $userController->nbUsers();
             $countReport = $commentController->nbReported();
 
-            $Posts = $postController->listPosts();
+            $Posts = $postController->adminPost();
             $Comments = $commentController->lastCom();
             $Users = $userController->listUsers();
             $report = $commentController->getReportedCom();
@@ -298,10 +308,10 @@ try
 
             if($validate = true)
             {
-                $hash_pass = $_POST['pass'];
+                // $hash_pass = $_POST['pass'];
                 if (empty($userController->pseudoExist($_POST['user'])) && empty($userController->mailExist($_POST['mail'])))
                 {
-                    $hash_pass = password_hash($_POST['pass'], PASSWORD_BCRYPT);
+                    $_POST['pass'] = password_hash($_POST['pass'], PASSWORD_BCRYPT);
 
                     $User = $userController->addUser($_POST['user'], $_POST['mail'], $_POST['pass']);
 
@@ -309,7 +319,6 @@ try
                 }
                 else {
                     echo '<p>Ce pseudo est déjà utilisé ou le mail est invalide</p>';
-                    // die();
                 }
             }
         }
@@ -338,9 +347,10 @@ try
                 //if form is ok validate retunr true
                 if ($validate = true)
                 {
-                $user = $userController->userConnect($_POST['user']);
-                // header('Location: index.php&action=Admin');
-                require 'src/view/AdminHomeView.php';
+                    $userController->userConnect($_POST['user']);
+                    // header('Location: index.php&action=Admin');
+                    // require 'src/view/AdminHomeView.php';
+                    header('Location: index.php?action=Admin');
                     // $userManager = new UserManager();
                 }
             }
@@ -351,7 +361,8 @@ try
         {
             $userController->disconnectUser();
 
-            require 'src/view/indexView.php';
+            header('Location: index.php?action=Accueil');
+            // require 'src/view/indexView.php';
         }
 
         elseif ($_GET['action'] == 'postViewAdmins')
@@ -369,6 +380,7 @@ try
             {
                 throw new Exception("Aucun identifiant de billet ne correspond (rooter)");
             }
+            // header('Location: index.php?action=Accueil');
             require 'src/view/adminPostView.php';
         }
     }
