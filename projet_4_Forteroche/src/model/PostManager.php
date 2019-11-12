@@ -34,20 +34,6 @@ class PostManager extends Manager
         return $Posts;
     }
 
-    // public function allPosts()
-    // {
-    //     $Posts = [];
-    //     $req = $this->db->query('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
-    //     AS creation_date FROM billets ORDER BY creation_date DESC');
-    //
-    //     while ($data = $req->fetch(\PDO::FETCH_ASSOC))
-    //     {
-    //         $post = new Post($data);
-    //         $Posts[] = $post;
-    //     }
-    //     return $Posts;
-    // }
-
     public function countPosts()
     {
         $countPosts = $this->db->query('SELECT COUNT(*) FROM billets')->fetchColumn();
