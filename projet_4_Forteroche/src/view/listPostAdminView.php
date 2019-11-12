@@ -22,12 +22,12 @@
                     </header>
 
                     <p>
-                        <?= substr(nl2br(htmlspecialchars($data->content())),0,300) . '...'; ?>
+                        <?= substr(html_entity_decode($data->content(), ENT_HTML5, 'UTF-8'),0,300) . '...'; ?>
                     </p>
 
                     <div class="actions">
-                        <button type="button" name="update" class="button1"><a href="index.php?action=postUpdate&id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
-                        <button type="button" name="delete" class="button3"> <a href="index.php?action=">Supprimer <i class="fas fa-trash-alt"></i></a></button>
+                        <button type="button" name="update" class="button1"><a href="index.php?action=postUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
+                        <button type="button" name="delete" class="button3"> <a href="index.php?action=deletePost&amp;id=<?= $data->id();?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
                     </div>
                 </div>
             </a>

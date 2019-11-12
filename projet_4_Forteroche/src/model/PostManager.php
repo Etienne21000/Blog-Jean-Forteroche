@@ -16,8 +16,9 @@ class PostManager extends Manager
     {
         $Posts = [];
 
-        $req = 'SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date FROM billets ORDER BY creation_date DESC';
+        $req = 'SELECT b.id, b.title, b.content, DATE_FORMAT(b.creation_date, \'%d/%m/%Y à %Hh%i\')
+        AS creation_date, COUNT(c.id) AS num_com FROM billets AS b, commentaires AS c
+        WHERE c.post_id = b.id GROUP BY b.id ORDER BY creation_date DESC';
 
         if ($start != -1 || $limite != -1)
         {

@@ -1,4 +1,4 @@
-<?php $title= 'Jean Forteroche, commentaires'; ?>
+<?php $title= 'Jean Forteroche, article'; ?>
 
 <?php  ob_start(); ?>
 
@@ -17,11 +17,11 @@
 
         <div class="actions">
             <button type="button" name="update" class="button1"><a href="index.php?action=postUpdate&id=<?= $post->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
-            <button type="button" name="delete" class="button3"> <a href="index.php?action=">Supprimer <i class="fas fa-trash-alt"></i></a></button>
+            <button type="button" name="delete" class="button3"> <a href="index.php?action=deletePost&id=<?= $post->id(); ?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
         </div>
 
         <p>
-            <?= nl2br(htmlspecialchars($post->content())); ?>
+            <?= html_entity_decode($post->content(), ENT_HTML5, 'UTF-8'); ?>
         </p>
     </article>
 

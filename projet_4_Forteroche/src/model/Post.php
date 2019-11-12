@@ -8,6 +8,7 @@ class Post extends Entity
     private $title;
     private $content;
     private $creation_date;
+    private $num_com;
     // private $date_update;
 
     //Constructor
@@ -49,6 +50,11 @@ class Post extends Entity
         }
     }
 
+    public function setNumcom($num_com)
+    {
+            $this->num_com = (int)$num_com;
+    }
+
     /*---------------------------------------
     Getter Post
     ----------------------------------------*/
@@ -72,5 +78,9 @@ class Post extends Entity
     {
         return $this->creation_date;
     }
+
+    public function num_com()
+    {
+        return $this->num_com;
+    }
 }
-?>

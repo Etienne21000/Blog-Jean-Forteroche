@@ -77,20 +77,22 @@
 						</header>
 
 						<p>
-							<?php echo substr(nl2br(htmlspecialchars($data->content())),0,330) . '...'; ?>
+							<?php /*echo substr(nl2br(htmlspecialchars($data->content())),0,330) . '...'; */?>
+							<?php echo substr(html_entity_decode($data->content(), ENT_HTML5, 'UTF-8'), 0,330) . '...'; ?>
+
 						</p>
 						<p id="continu">
 							<a href="index.php?action=listComments&id=<?= $data->id(); ?>">Lire la suite...</a>
 						</p>
 
 						<div id="icons">
-							<em><a href="index.php?action=listComments&id=<?= $data->id(); ?>"><i class="far fa-comment"></i> </a></em>
+							<em> <?= $data->num_com() . '<i class="far fa-comment"></i>'; ?></em>
+							<!-- <em><a href="index.php?action=listComments&id=<?php/* $data->id(); */?>"><i class="far fa-comment"></i> </a> <?= $countByPost; ?></em> -->
 						</div>
 					</div>
 				</a>
 			<?php endforeach; ?>
 		</article>
-		<a href="index.php?action=AddPostAdmin">Ajouter un article</a>
 	</section>
 
 	<section class="comments">
@@ -116,7 +118,6 @@
 					</div>
 			<?php endforeach; ?>
 		</article>
-		<a href="index.php?action=adminCom"> Tous les commentaires</a>
 	</section>
 
 	<?php $content = ob_get_clean(); ?>
