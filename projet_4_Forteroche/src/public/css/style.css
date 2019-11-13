@@ -12,11 +12,12 @@ body
 a
 {
     text-decoration: none;
+    color: inherit;
 }
 
 a:visited
 {
-color: inherit;
+    color: inherit;
 }
 
 p
@@ -344,16 +345,38 @@ Section 2
     /* box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1); */
 }
 
-.article /*, .comment*/
+.article
 {
     display: flex;
     flex-direction: row;
-    /* flex-direction: column; */
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding-bottom: 30px;
+}
+
+.articleAdmin
+{
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: center;
-    /* align-items: flex-start; */
-    width: 90%;
+    width: 100%;
+    height: auto;
+    padding-bottom: 30px;
+}
+
+.commentAdmin
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* flex-wrap: wrap; */
+    align-items: flex-start;
+    width: 100%;
     height: auto;
     padding-bottom: 30px;
 }
@@ -368,7 +391,7 @@ Section 2
     padding: 0 30px;
     /* margin-bottom: 40px; */
     margin: 15px;
-    border-radius: 10px;
+    border-radius: 5px;
     transition: all .2s ease-in-out;
     box-shadow: 0 1px 1px -6px rgba(0,0,0,0.1), 0 0px 1px 0 rgba(0,0,0,0.1), 0 0px 10px -2px rgba(0,0,0,0.1);
 }
@@ -452,7 +475,7 @@ Comments Home page
     justify-content: flex-start;
 }
 
-.fa-comment, .fa-plus-circle, .fa-reply
+.fa-comment, .fa-plus-circle, .fa-reply, .fa-exclamation-circle
 {
     font-size: 2em;
     color: #459EC0;
@@ -460,7 +483,7 @@ Comments Home page
     margin-right: 40px;
 }
 
-.fa-comment:hover, .fa-plus-circle:hover, .fa-reply:hover
+.fa-comment:hover, .fa-plus-circle:hover, .fa-reply:hover, .fa-exclamation-circle:hover
 {
     color: #11B6FF;
 }
@@ -592,10 +615,46 @@ Admin session
 ------------------------------------*/
 /*1. Connexion page Admin*/
 
+.connexion
+{
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 70px 20px 20px 20px;
+    padding-bottom: 60px;
+    /* box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1); */
+}
 
+.Admin
+{
+    display: flex;
+    flex-direction: row;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    /* align-items: flex-start; */
+    width: 42%;
+    height: auto;
+    padding: 30px;
+    box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1);
+}
 
 /*2.Forms rows*/
-
+#form-admin, #form-inscription
+{
+    /* position: fixed; */
+    width: 100%;
+    /* top:0;
+    left:0; */
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background: rgba(0,0,0,0.22); */
+}
 
 #addPost
 {
@@ -620,7 +679,7 @@ font-size: 1.4em;
 color: #459EC0;
 } */
 
-#form-pseudo, #update-pseudo, #form-title
+#form-pseudo, #update-pseudo, #form-title, #update-title
 {
     width: 250px;
     height: 30px;
@@ -629,7 +688,20 @@ color: #459EC0;
     padding-left: 10px;
 }
 
-
+#form-utilisateur, #form-mp, #form-mail
+{
+    width: 400px;
+    height: 40px;
+    border-bottom: 1px solid #999999;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    /* border-radius: 5px 20px 20px 5px; */
+    /* border-radius: 10px; */
+    /* padding-left: 10px; */
+    /* padding-top: 10px; */
+    font-size: 0.9em;
+}
 
 #form-comment, #update-comment
 {
@@ -656,7 +728,7 @@ color: #459EC0;
 
 }
 
-#submit_btn, #update_submit_btn
+#submit_btn, #update_submit_btn, #submit_adm_btn
 {
     width: 150px;
     height: 35px;
@@ -668,7 +740,7 @@ color: #459EC0;
     transition: 0.3s;
 }
 
-#submit_btn:hover, #submit_adm_btn:hover
+#submit_btn:hover, #submit_adm_btn:hover, #update_submit_btn:hover
 {
     background-color: #f4eee2;
     color: #459EC0;
@@ -678,7 +750,275 @@ color: #459EC0;
 Admin Home View
 ----------------------------*/
 /*1. Bloc aside menu*/
+.titre h4
+{
+    font-family: roboto;
+}
+
+#contentAdminView
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 40px;
+    width: 100%;
+}
+
+/* #adminList:focus
+{
+background: #000;
+color: #fff;
+} */
+
+#asideAdmin
+{
+    width: 230px;
+    /* position: fixed; */
+}
+
+#adminList
+{
+    padding-left:  0;
+    margin-top: 0;
+}
+
+#adminList li
+{
+    list-style-type: none;
+    border-bottom: 1px solid rgba(0,0,0,0.12);
+    height: 40px;
+    padding-top: 22px;
+    font-family: roboto;
+}
+
+/* #adminList li:hover
+{
+background-color: rgba(0,0,0,0.12);
+/* border: none;
+} */
+
+#signalés
+{
+    color: red;
+    font-style: normal;
+}
+
+.menuAdmin, .menuAdminDeco
+{
+    transition : all .2s ease-in-out;
+}
+
+.menuAdmin:hover
+{
+    color: dodgerblue;
+    transform: translateX(5px);
+}
+
+.menuAdminDeco:hover
+{
+    color: red;
+    transform: translateX(5px);
+}
+
+.fa-tachometer-alt, .fa-list-ul
+{
+    font-size: 1em;
+    color: dodgerblue;
+    margin-right: 10px;
+}
+
+.fa-power-off
+{
+    font-size: 1em;
+    color: red;
+    margin-right: 10px;
+}
+
+/* .fa-list-ul
+{
+font-size: 1em;
+color: limegreen;
+margin-right: 10px;
+} */
+
+/*2. Bloc vues*/
+.generalAdmin
+{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 70px 20px 20px 20px;
+    padding: 0 60px;
+    /* box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1); */
+}
+
+#blocInfos
+{
+    width: 80%;
+}
+
+.blocAdmin
+{
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 10px 40px 10px 40px;
+    box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1);
+}
+
+.content
+{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.articleBloc2
+{
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 24%;
+    padding: 0 30px;
+    /* margin-bottom: 40px; */
+    margin: 0 10px 10px 0;
+    border-radius: 10px;
+    transition: all .2s ease-in-out;
+    box-shadow: 0 1px 1px -6px rgba(0,0,0,0.1), 0 0px 1px 0 rgba(0,0,0,0.1), 0 0px 10px -2px rgba(0,0,0,0.1);
+}
+
+.articleBloc2:hover, .commentBloc2:hover, .userBloc:hover
+{
+    box-shadow: 0 1px 15px -6px rgba(0,0,0,0.42), 0 1px 15px 0 rgba(0,0,0,0.12), 0 6px 8px -2px rgba(0,0,0,0.1);
+}
+
+.commentBloc2, .userBloc
+{
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 68%;
+    height: auto;
+    padding: 1px 30px;
+    /* margin-bottom: 40px; */
+    margin: 0 54px 10px 0;
+    border-radius: 10px;
+    transition: all .2s ease-in-out;
+    box-shadow: 0 1px 1px -6px rgba(0,0,0,0.1), 0 0px 1px 0 rgba(0,0,0,0.1), 0 0px 10px -2px rgba(0,0,0,0.1);
+}
+
+.actions
+{
+    margin: 15px 0px 15px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.button1
+{
+    color: #fff;
+    background-color: dodgerblue;
+    font-size: 0.9em;
+    font-family: roboto;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    transition: all .2s ease;
+    margin-right: 30px;
+}
+
+.button2
+{
+    color: #fff;
+    background-color: limegreen;
+    font-size: 0.9em;
+    font-family: roboto;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    transition: all .2s ease;
+    margin-right: 30px;
+}
+
+.button3
+{
+    color: #fff;
+    background-color: red;
+    font-size: 0.9em;
+    font-family: roboto;
+    padding: 12px;
+    border: none;
+    border-radius: 7px;
+    transition: all .2s ease;
+    margin-right: 30px;
+}
+
+.button1 a:visited, .button2 a:visited
+{
+    color: #fff;
+}
+
+.button1:hover, .button2:hover, .button3:hover
+{
+    background-color: #555555;
+    border-radius: 20px;
+}
+
+.fa-list, .fa-pen-nib, .fa-trash-alt, .fa-paper-plane, .fa-check-circle
+{
+    margin-left: 10px;
+}
 
 /*----------------------------
 Admin comment view
 ----------------------------*/
+.articleComment
+{
+    display: flex;
+    flex-direction: row;
+    /* flex-direction: column; */
+    /* justify-content: space-between; */
+    flex-wrap: wrap;
+    align-items: center;
+    /* align-items: flex-start; */
+    width: 100%;
+    height: auto;
+    padding-bottom: 30px;
+}
+
+.allComments
+{
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 43%;
+    height: auto;
+    padding: 0 20px 20px 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    /* border-radius: 10px; */
+    transition: all .2s ease-in-out;
+    box-shadow: 0 1px 1px -6px rgba(0,0,0,0.1), 0 0px 1px 0 rgba(0,0,0,0.1), 0 0px 10px -2px rgba(0,0,0,0.1);
+    /* border-bottom: 1px solid rgba(0, 0, 0, 0.1); */
+}
+
+.allComments:hover
+{
+    box-shadow: 0 1px 15px -6px rgba(0,0,0,0.42), 0 1px 15px 0 rgba(0,0,0,0.12), 0 6px 8px -2px rgba(0,0,0,0.1);
+}
+
+/*---------------------
+Inscription form
+----------------------*/
+
+.alert
+{
+    width: 90%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: red;
+}

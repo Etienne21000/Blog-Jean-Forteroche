@@ -21,9 +21,9 @@
                         <em> <?= htmlspecialchars($data->creation_date());  ?></em>
                     </header>
 
-                    <p>
+                    <!-- <p> -->
                         <?= substr(html_entity_decode($data->content(), ENT_HTML5, 'UTF-8'),0,300) . '...'; ?>
-                    </p>
+                    <!-- </p> -->
 
                     <div class="actions">
                         <button type="button" name="update" class="button1"><a href="index.php?action=postUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>

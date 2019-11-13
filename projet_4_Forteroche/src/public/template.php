@@ -1,14 +1,5 @@
-<?php
-// $_SESSION['prenom']='Jean';
-// $_SESSION['nom']='Forteroche';
-// $_SESSION['pseudo']='Jean Forteroche';
-// $_SESSION['id'] = '34';
 
-// setcookie('pseudo', 'jeanF', time() + 30*24*3600, null, null, false, true);
-// setcookie('pays', 'France', time() + 30*24*3600, null, null, false, true);
-?>
-
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="utf-8"/>

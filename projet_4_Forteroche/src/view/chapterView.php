@@ -7,9 +7,9 @@
 	<header class="titre">
 		<h2>Retrouvez les derniers articles de Jean Forteroche</h2>
 	</header>
-	<p>
-		<?= '(' . $countPosts . ')'; ?> articles
-	</p>
+	<!-- <p>
+		<?php/* echo '(' . $countPosts . ')'; */?> articles
+	</p> -->
 
 	<article class="articles">
 
@@ -41,6 +41,3 @@
 <?php $content = ob_get_clean(); ?>
 
 <?php require 'src/public/template.php'; ?>
-
-</body>
-</html>

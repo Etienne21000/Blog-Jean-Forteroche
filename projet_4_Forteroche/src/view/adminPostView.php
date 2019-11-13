@@ -20,9 +20,9 @@
             <button type="button" name="delete" class="button3"> <a href="index.php?action=deletePost&id=<?= $post->id(); ?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
         </div>
 
-        <p>
+        <!-- <p> -->
             <?= html_entity_decode($post->content(), ENT_HTML5, 'UTF-8'); ?>
-        </p>
+        <!-- </p> -->
     </article>
 
 </article>

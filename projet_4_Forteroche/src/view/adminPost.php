@@ -1,4 +1,4 @@
-<?php $title= 'Jean Forteroche, commentaires'; ?>
+<?php $title= 'Jean Forteroche, ajouter un article'; ?>
 
 <?php  ob_start(); ?>
 
@@ -14,7 +14,7 @@
 		<!-- <article class="article"> -->
 
 		<aside id="addPost">
-			<form action="index.php?action=addPost" method="post">
+			<form action="index.php?action=addPost" method="post" charset="utf-8">
 
 				<p>
 					<label for="form-title">Titre</label>
