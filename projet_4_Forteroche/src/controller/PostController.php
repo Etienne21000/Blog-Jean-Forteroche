@@ -34,10 +34,9 @@ class PostController
     //Affichage des chapitres sur la page dédiée
     public function post()
     {
-        $Posts = $this->post->getPosts();
+        $Posts = $this->post->getAllPosts();
 
         return $Posts;
-        // require 'src/view/chapterView.php';
     }
 
     public function nbPost()
@@ -47,12 +46,31 @@ class PostController
         return $countPosts;
     }
 
+    // public function comByPost()
+    // {
+    //     $num_com = $this->post->countComByPost();
+    //
+    //     return $num_com;
+    // }
+
     public function addPost($id, $title, $content)
     {
         $Posts = $this->post->add($title, $content);
         if($Posts === false)
         {
             throw new Exception('impossible d\'ajouter votre article');
+        }
+    }
+
+    public function deletePost($id)
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $Posts = $this->post->delete($id);
+        }
+        else
+        {
+            throw new \Exception("Impossible de supprimer l'article (controller)");
         }
     }
 

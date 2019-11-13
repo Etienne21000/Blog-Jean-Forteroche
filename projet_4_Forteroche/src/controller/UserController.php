@@ -46,7 +46,16 @@ class UserController
         return $countUsers;
     }
 
+    //Get 3 last users on admin home page
     public function listUsers()
+    {
+        $Users = $this->user->getUsers($start = 0, $limite = 3);
+
+        return $Users;
+    }
+
+    //Get all users from users list
+    public function allUsers()
     {
         $Users = $this->user->getUsers();
 

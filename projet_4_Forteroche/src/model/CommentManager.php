@@ -11,7 +11,6 @@ class CommentManager extends Manager
     }
 
     //Get list of comment by post id
-    //Get joint talbes
     public function getComments($post_id)
     {
         $Comments = [];
@@ -140,7 +139,6 @@ class CommentManager extends Manager
     //     return $newComment;
     // }
 
-    //Test add comment method with PDO security
     public function addComment(Comment $comment)
     {
         $req = $this->db->prepare('INSERT INTO commentaires(post_id, author, comment, comment_date, report)

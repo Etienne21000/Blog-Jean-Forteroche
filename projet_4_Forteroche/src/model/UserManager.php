@@ -9,11 +9,19 @@ class UserManager extends Manager
     }
 
     //Get 3 last users
-    public function getUsers()
+    public function getUsers($start =-1, $limite = -1)
     {
         $Users = [];
-        $req = $this->db->query('SELECT id, pseudo, mail, DATE_FORMAT(user_date, \'%d/%m/%Y à %Hh%i\')
-        AS user_date FROM users ORDER BY user_date DESC LIMIT 0, 3');
+
+        $req = 'SELECT id, pseudo, mail, DATE_FORMAT(user_date, \'%d/%m/%Y à %Hh%i\')
+        AS user_date FROM users WHERE user_role = 0 ORDER BY user_date DESC';
+
+        if ($start != -1 || $limite != -1)
+        {
+            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+        }
+
+        $req = $this->db->query($req);
 
         while ($data = $req->fetch(\PDO::FETCH_ASSOC))
         {

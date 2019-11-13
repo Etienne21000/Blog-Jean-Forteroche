@@ -362,7 +362,7 @@ try
             require 'src/view/adminCommentList.php';
         }
 
-        //Get signle post admin
+        //Get signle post admin à revoir
         elseif ($_GET['action'] == 'signleCom')
         {
             $countComs = $commentController->nbCom();

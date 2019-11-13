@@ -42,14 +42,35 @@ class CommentController
     // }
 
     // Methode Add Comment
-    public function newComment($post_id, $author, $comment)
-    {
-        $newComment = $this->comments->addComment($post_id, $author, $comment);
+    // public function newComment($post_id, $author, $comment)
+    // {
+    //     $newComment = $this->comments->addComment($post_id, $author, $comment);
+    //
+    //     if($newComment === false)
+    //     {
+    //         throw new Exception('impossible d\'ajouter votre commentaire');
+    //     }
+    // }
 
-        if($newComment === false)
-        {
-            throw new Exception('impossible d\'ajouter votre commentaire');
-        }
+    public function newComment()
+    {
+        $comment = new Comment([
+
+        'post_id' => ($_GET['post_id']),
+        'author' => ($_POST['author']),
+        'comment' => ($_POST['comment'])
+    ]);
+
+        // $comment->setIdpost($_GET['post_id']);
+        // $comment->setAuthor($_POST['author']);
+        // $comment->setComment($_POST['comment']);
+
+        $this->comments->addComment($comment);
+
+        // if($newComment === false)
+        // {
+        //     throw new Exception('impossible d\'ajouter votre commentaire');
+        // }
     }
 
     //Update comment method
@@ -86,12 +107,26 @@ class CommentController
         return $Comments;
     }
 
+    //Get one comment by id
+    public function getOne($id)
+    {
+        $Comment = $this->comments->getCom($id);
+
+        return $Comment;
+    }
+
     //Report comment
     public function reportCom($id)
     {
         $reportedCom = $this->comments->reportComment($id);
 
         return $reportedCom;
+    }
+
+    //Validate reported comment
+    public function validCom($id)
+    {
+        $validCom = $this->comments->validateCom($id);
     }
 
     //Get reported comments
