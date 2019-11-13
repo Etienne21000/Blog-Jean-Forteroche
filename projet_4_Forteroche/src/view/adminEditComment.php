@@ -4,26 +4,25 @@
 
 <article class="blocAdmin">
 	<header class="titre">
-		<h3>
-			Modifier l'article
-		</h3>
+		<h4>
+			Modifier le commentaire
+		</h4>
 	</header>
 
 	<div class="content">
-
 		<aside id="addPost">
-			<form action="index.php?action=updatePost&amp;id=<?= $post->id(); ?>" method="POST">
+			<form action="index.php?action=updateComment&amp;id=<?= $Comment->id(); ?>" method="POST">
 
 				<p>
-					<label for="form-title">Titre</label>
-					<br>
-					<input type="text" name="title" id="form-title" value="<?= $post->title();?>" required/>
+					Commentaire de : <?= $Comment->author();?>
+                    <br>
+                    publié le <?= $Comment->comment_date(); ?>
 				</p>
 
 				<p>
-					<label for="form-content">Chapitre</label>
-					<br>
-					<textarea type="textarea" name="content" cols="70" rows="30" id="full-featured-non-premium"><?= $post->content();?></textarea>
+					<!-- <label for="form-content">Chapitre</label>
+					<br> -->
+					<textarea type="textarea" name="content" cols="70" rows="30" id="full-featured-non-premium" value="" ><?= $Comment->comment();?></textarea>
 				</p>
 
 				<p>

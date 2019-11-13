@@ -15,7 +15,8 @@
 			</header>
 
 			<p>
-				<?= nl2br(htmlspecialchars($post->content())); ?>
+				<?= html_entity_decode($post->content(), ENT_HTML5, 'UTF-8'); ?>
+
 			</p>
 			<em><a href="#form" class="js-form" title="Répondre"><i class="fas fa-reply"></i></a></em>
 

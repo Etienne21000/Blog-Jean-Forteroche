@@ -8,6 +8,7 @@ class Post extends Entity
     private $title;
     private $content;
     private $creation_date;
+    private $edition_date;
     private $num_com;
     // private $date_update;
 
@@ -50,6 +51,14 @@ class Post extends Entity
         }
     }
 
+    public function setEditiondate($edition_date)
+    {
+        if(is_string($edition_date))
+        {
+            $this->edition_date = $edition_date;
+        }
+    }
+
     public function setNumcom($num_com)
     {
             $this->num_com = (int)$num_com;
@@ -77,6 +86,11 @@ class Post extends Entity
     public function creation_date()
     {
         return $this->creation_date;
+    }
+
+    public function edition_date()
+    {
+        return $this->edition_date;
     }
 
     public function num_com()

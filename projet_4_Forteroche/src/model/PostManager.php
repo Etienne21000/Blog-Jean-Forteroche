@@ -9,8 +9,8 @@ class PostManager extends Manager
     }
 
     /*------------------------------
-        Test list posts
-        with limit variables
+    Test list posts
+    with limit variables
     -------------------------------*/
     public function getPosts($start =-1, $limite = -1)
     {
@@ -39,7 +39,8 @@ class PostManager extends Manager
         $Posts = [];
 
         $req = 'SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date FROM billets ORDER BY creation_date DESC';
+        AS creation_date, DATE_FORMAT(edition_date, \'%d/%m/%Y à %Hh%i\')
+        AS edition_date FROM billets ORDER BY creation_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
@@ -104,10 +105,15 @@ class PostManager extends Manager
     }
 
     //Methode update post
-    public function update($id, $content)
+    public function update($id, $title, $content)
     {
-        $req = $this->db->prepare('UPDATE billets SET title = ?, content = ?, creation_date = NOW(),
+        $req = $this->db->prepare('UPDATE billets SET title = ?, content = ?, edition_date = NOW()
         WHERE id = ?');
-        $req->execute([$id, $title, $comment]);
+        $req->execute([
+            $title,
+            $content,
+            $id
+        ]);
+
     }
 }

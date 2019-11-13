@@ -45,7 +45,7 @@ try
         {
             if (isset($_GET['id']) && $_GET['id'] > 0)
             {
-                $post = $postController->getPost();
+                $post = $postController->getPost($_GET['id']);
                 $Comments = $commentController->getCom($_GET['id']);
             }
             else
@@ -264,7 +264,7 @@ try
             $countComs = $commentController->nbCom();
             $countUsers = $userController->nbUsers();
             $countReport = $commentController->nbReported();
-            $post = $postController->getPost();
+            $post = $postController->getPost($_GET['id']);
 
             require 'src/view/adminUpdatePostView.php';
         }
@@ -275,7 +275,7 @@ try
             // $post = $postController->getPost();
             if(isset($_GET['id']) && $_GET['id'] > 0)
             {
-                if(!empty($_POST['content']))
+                if(!empty($_POST['content']) && !empty($_POST['title']))
                 {
                     $postController->updatePost($_GET['id'], $_POST['title'], $_POST['content']);
                 }
@@ -286,9 +286,12 @@ try
             }
             else
             {
-                throw new Exception('Aucun id de billet envoyé');
+                throw new Exception('Aucun id de billet envoyé (rooter)');
             }
-            header('Location: index.php?action=postAdmin');
+            // header('Location: index.php?action=postAdmin');
+            header('Location: index.php?action=postViewAdmins&id=' . $_GET['id']);
+            // require 'src/view/adminPostView.php';
+
             // header('Location: index.php&action=AddPostView&id=' . $_GET['id']);
         }
 
@@ -327,6 +330,18 @@ try
             header('Location: index.php?action=listComments&id=' . $_GET['post_id']);
         }
 
+        //Update comment view
+        elseif ($_GET['action'] == 'commentUpdate')
+        {
+            $countPosts = $postController->nbPost();
+            $countComs = $commentController->nbCom();
+            $countUsers = $userController->nbUsers();
+            $countReport = $commentController->nbReported();
+            $Comment = $commentController->getOne($_GET['id']);
+
+            require 'src/view/adminEditComment.php';
+        }
+
         //Update comment
         elseif ($_GET['action'] == 'updateComment')
         {
@@ -335,7 +350,6 @@ try
                 if(!empty($_POST['comment']))
                 {
                     $commentController->updateCom($_GET['id'], $_POST['comment']);
-                    // header('Location: index.php?action=listComments&id=' .$_GET['id']);
                 }
                 else
                 {
@@ -347,7 +361,7 @@ try
                 throw new Exception("Aucun identifiant de commentaire envoyé (rooter)");
             }
 
-            header('Location: index.php?action=listComments&id=' .$_GET['id']);
+            header('Location: index.php?action=signleCom&id=' .$_GET['id']);
         }
 
         elseif ($_GET['action'] == 'adminCom')
@@ -428,7 +442,7 @@ try
         {
             if (isset($_GET['id']) && $_GET['id'] > 0)
             {
-                $post = $postController->getPost();
+                $post = $postController->getPost($_GET['id']);
                 $countPosts = $postController->nbPost();
                 $countComs = $commentController->nbCom();
                 $countUsers = $userController->nbUsers();

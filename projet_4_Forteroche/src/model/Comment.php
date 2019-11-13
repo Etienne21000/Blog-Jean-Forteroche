@@ -10,6 +10,7 @@ class Comment extends Entity
     private $comment;
     private $report;
     private $comment_date;
+    private $edition_com_date;
 
     //Constructor
     public function __construct(array $data)
@@ -60,6 +61,14 @@ class Comment extends Entity
         }
     }
 
+    public function setEditedCommentdate($edition_com_date)
+    {
+        if(is_string($edition_com_date))
+        {
+            $this->edition_com_date = $edition_com_date;
+        }
+    }
+
     /*---------------------------------------
                     Getter Comments
     ----------------------------------------*/
@@ -92,5 +101,10 @@ class Comment extends Entity
     public function comment_date()
     {
         return $this->comment_date;
+    }
+
+    public function comment_edited_date()
+    {
+        return $this->edition_com_date;
     }
 }

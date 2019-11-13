@@ -74,21 +74,21 @@ class PostController
         }
     }
 
-    public function getPost()
+    public function getPost($id)
     {
-        $post = $this->post->getOne($_GET['id']);
+        $post = $this->post->getOne($id);
 
         return $post;
     }
 
     public function updatePost($id, $title, $content)
     {
-        $Post = $this->post->update($id, $title, $content);
+        $this->post->update($id, $title, $content);
 
-        if($Post === false)
-        {
-            throw new Exception("Impossible de mettre à jour l'article");
-        }
+        // if($Post === false)
+        // {
+        //     throw new Exception("Impossible de mettre à jour l'article");
+        // }
     }
 
 }

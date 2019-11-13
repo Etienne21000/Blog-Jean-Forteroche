@@ -182,11 +182,11 @@ class CommentManager extends Manager
     //Update comment
     public function updateComment($id, $comment)
     {
-        $req = $this->db->prepare('UPDATE commentaires SET comment = ?, comment_date = NOW()
+        $req = $this->db->prepare('UPDATE commentaires SET comment = ?, report = 0, edition_com_date = NOW()
         WHERE id = ?');
         $req->execute([
-            $id,
-            $comment
+            $comment,
+            $id
         ]);
     }
 }

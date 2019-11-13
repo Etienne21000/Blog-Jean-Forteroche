@@ -76,12 +76,12 @@ class CommentController
     //Update comment method
     public function updateCom($id, $comment)
     {
-        $Comment = $this->comments->updateComment($id, $comment);
+        $this->comments->updateComment($id, $comment);
         // $Comment = $this->comments->getCom($id);
-        if ($Comment === false)
-        {
-            throw new Exception("Impossible de mettre à jour le commentaire (controller)");
-        }
+        // if ($Comment === false)
+        // {
+        //     throw new Exception("Impossible de mettre à jour le commentaire (controller)");
+        // }
 
         // return $Comment;
     }

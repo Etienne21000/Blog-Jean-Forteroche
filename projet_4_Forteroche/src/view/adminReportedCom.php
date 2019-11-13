@@ -27,7 +27,7 @@
                     </p>
 
                     <div class="actions">
-                        <button type="button" name="update" class="button1"><a href="index.php?action=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
+                        <button type="button" name="update" class="button1"><a href="index.php?action=commentUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
                         <button type="button" name="validate" class="button2"> <a href="index.php?action=validateCom&amp;id=<?= $data->id(); ?>">Valider <i class="fas fa-check-circle"></i></a></button>
                         <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteCom&amp;id=<?= $data->id()?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
                     </div>

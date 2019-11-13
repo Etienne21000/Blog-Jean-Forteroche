@@ -22,7 +22,7 @@
 			</header>
 
 			<p>
-				<?php echo substr(nl2br(htmlspecialchars($data->content())),0,500) . '...'; ?>
+				<?php echo substr(html_entity_decode($data->content(), ENT_HTML5, 'UTF-8'), 0,500) . '...'; ?>
 			</p>
 			<p id="continu">
 				<a href="index.php?action=listComments&post=<?= $data->id(); ?>"> Lire la suite...</a>
