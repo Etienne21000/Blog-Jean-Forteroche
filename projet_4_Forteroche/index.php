@@ -58,20 +58,41 @@ try
         //Add comment
         elseif ($_GET['action'] == 'addComment')
         {
-            if(isset($_GET['post_id']) && $_GET['post_id'] > 0)
-            // if(isset($_GET['id']) && $_GET['id'] > 0)
+            if(isset($_SESSION['pseudo']) && isset($_SESSION['id']))
             {
-                if(!empty($_POST['author']) && !empty($_POST['comment']))
+                // if(isset($_GET['post_id']) && $_GET['post_id'] > 0)
+                if(isset($_GET['id']) && $_GET['id'] > 0)
                 {
-                $commentController->newComment(/*$_GET['post_id'], $_POST['author'], $_POST['comment']*/);
+                    // if(isset($_GET['user_id']) && isset($_GET['user_id']) > 0)
+                    // {
+                        if(!empty($_POST['author']) && !empty($_POST['comment']))
+                        {
+                        $commentController->newComment(/*$_GET['post_id'], $_GET['user_id'], $_POST['author'], $_POST['comment']*/);
+                        }
+                        else
+                        {
+                            throw new Exception("vous n'avez pas remplis tous les champs! (rooter)");
+                        }
+                    // }
+                    // else
+                    // {
+                    //     throw new \Exception("Aucun identifiant d'utilisateur envoyé");
+                    // }
                 }
                 else
                 {
-                    throw new Exception("vous n'avez pas remplis tous les champs! (rooter)");
+                    throw new \Exception("impossible de commenter");
                 }
+
+                header('Location: index.php?action=listComments&id=' . $_GET['id']);
             }
 
-            header('Location: index.php?action=listComments&id=' . $_GET['id']);
+            else
+            {
+                require 'src/view/inscriptionUser.php';
+                // throw new \Exception("Vous devez être connecté pour laisser un commentaire.");
+            }
+
         }
 
         //Report comment by user
@@ -231,7 +252,7 @@ try
             // {
             if(!empty($_POST['title']) && !empty($_POST['content']))
             {
-                $postController->addPost($_GET['id'], htmlspecialchars($_POST['title']), htmlentities($_POST['content']));
+            $postController->addPost(/*htmlspecialchars($_POST['title']), htmlentities($_POST['content'])*/);
             }
             else
             {
@@ -277,7 +298,7 @@ try
             {
                 if(!empty($_POST['content']) && !empty($_POST['title']))
                 {
-                    $postController->updatePost($_GET['id'], $_POST['title'], $_POST['content']);
+                    $postController->updatePost($_GET['id'], htmlspecialchars($_POST['title']), htmlentities($_POST['content']));
                 }
                 else
                 {

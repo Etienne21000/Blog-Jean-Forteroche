@@ -11,6 +11,7 @@ class Comment extends Entity
     private $report;
     private $comment_date;
     private $edition_com_date;
+    private $user_id;
 
     //Constructor
     public function __construct(array $data)
@@ -69,6 +70,11 @@ class Comment extends Entity
         }
     }
 
+    public function setUserId($user_id)
+    {
+            $this->user_id = (int)$user_id;
+    }
+
     /*---------------------------------------
                     Getter Comments
     ----------------------------------------*/
@@ -106,5 +112,10 @@ class Comment extends Entity
     public function comment_edited_date()
     {
         return $this->edition_com_date;
+    }
+
+    public function user_id()
+    {
+        return $this->user_id;
     }
 }

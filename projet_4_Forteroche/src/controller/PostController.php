@@ -3,6 +3,7 @@ namespace controller;
 
 use model\PostManager;
 use model\CommentManager;
+use model\Post;
 
 class PostController
 {
@@ -46,20 +47,14 @@ class PostController
         return $countPosts;
     }
 
-    // public function comByPost()
-    // {
-    //     $num_com = $this->post->countComByPost();
-    //
-    //     return $num_com;
-    // }
-
-    public function addPost($id, $title, $content)
+    public function addPost()
     {
-        $Posts = $this->post->add($title, $content);
-        if($Posts === false)
-        {
-            throw new Exception('impossible d\'ajouter votre article');
-        }
+        $post = new Post([$data]);
+
+        $post->setTitle(htmlspecialchars($_POST['title']));
+        $post->setContent(htmlentities($_POST['content']));
+
+        $this->post->add($post);
     }
 
     public function deletePost($id)
@@ -74,6 +69,13 @@ class PostController
         }
     }
 
+    // public function getPost($id)
+    // {
+    //     $post = $this->post->getOne($id);
+    //
+    //     return $post;
+    // }
+
     public function getPost($id)
     {
         $post = $this->post->getOne($id);
@@ -83,12 +85,34 @@ class PostController
 
     public function updatePost($id, $title, $content)
     {
-        $this->post->update($id, $title, $content);
+        $Post = new Post([$data]);
 
-        // if($Post === false)
-        // {
-        //     throw new Exception("Impossible de mettre à jour l'article");
-        // }
+        $Post->setId($id);
+        $Post->setTitle($title);
+        $Post->setContent($content);
+
+        $this->post->update($Post);
     }
 
+    // public function updatePost($id, $title, $content)
+    // {
+    //     $this->post->update($id, $title, $content);
+    // }
+
 }
+
+// public function comByPost()
+// {
+//     $num_com = $this->post->countComByPost();
+//
+//     return $num_com;
+// }
+
+// public function addPost($id, $title, $content)
+// {
+//     $Posts = $this->post->add($title, $content);
+//     if($Posts === false)
+//     {
+//         throw new Exception('impossible d\'ajouter votre article');
+//     }
+// }

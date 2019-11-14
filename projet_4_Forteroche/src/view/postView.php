@@ -47,8 +47,8 @@
 				<?= nl2br(htmlspecialchars($data->comment())); ?>
 				<div class="icons">
 					<a href="index.php?action=reportComment&id=<?= $data->id(); ?>" title="Signaler"><i class="fas fa-exclamation-circle"></i></a>
-					<a href="index.php?action=deleteCom&amp;id=<?= $data->id() ?>" title="Supprimer"><i class="fas fa-times"></i></a>
-					<a href="#update" class="js-update" title="Mettre à jour"><i class="fas fa-comment-dots"></i></a>
+					<!-- <a href="index.php?action=deleteCom&amp;id=<?php/* $data->id() */?>" title="Supprimer"><i class="fas fa-times"></i></a>
+					<a href="#update" class="js-update" title="Mettre à jour"><i class="fas fa-comment-dots"></i></a> -->
 				</div>
 			</p>
 		</div>
@@ -63,40 +63,6 @@
 A supprimer
 -->
 
-<aside id="update" aria-hidden="true" role="dialog" aria-labelledby="titre-update">
-	<article id="update-wrapper">
-		<i class="fas fa-times" id="cross"></i>
-		<header class="titre titre-update">
-			<h4>Mettre à jour l'article</h4>
-		</header>
-		<?php /*foreach ($post as $data): */?>
-
-			<form action="index.php?action=updatePost&amp;id=<?= $post->id(); ?>" method="POST">
-				<p>
-					Titre : <?= $post->title(); ?>
-					<br>
-					Article à modifier : <?= substr(nl2br(htmlspecialchars($post->content())), 0, 100) . '...'; ?>
-				</p>
-				<?php /*endforeach; */?>
-				<p>
-					<label for="form-comment">Titre</label>
-					<br>
-					<input type="text" name="title" id="update-title" placeholder="titre" required>
-				</p>
-
-				<p>
-					<label for="form-comment">contenu</label>
-					<br>
-					<textarea type="text" name="comment" id="update-comment" placeholder="message" required></textarea>
-				</p>
-
-				<p>
-					<button type="submit" value="poster" name="submit" id="update_submit_btn">poster</button>
-				</p>
-			</form>
-		</article>
-	</aside>
-
 	<aside id="form" aria-hidden="true" role="dialog" aria-labelledby="titre-form">
 		<article id="form-wrapper">
 			<i class="fas fa-times" id="cross"></i>
@@ -106,9 +72,11 @@ A supprimer
 			<?php /*foreach ($Posts as $data):*/ ?>
 				<form action="index.php?action=addComment&amp;id=<?= $post->id(); ?>" method="POST">
 					<p>
+						<?php /*echo $_SESSION['pseudo']; */?>
+						<br>
 						<label for="form-pseudo">Pseudo</label>
 						<br>
-						<input type="text" name="author" id="form-pseudo" placeholder="pseudo" required/>
+						<input type="text" name="author" id="form-pseudo" value="<?php echo $_SESSION['pseudo']; ?>" required/>
 					</p>
 
 					<p>
@@ -127,13 +95,13 @@ A supprimer
 
 		<!--Update form-->
 
-		<aside id="update" aria-hidden="true" role="dialog" aria-labelledby="titre-update">
+		<!-- <aside id="update" aria-hidden="true" role="dialog" aria-labelledby="titre-update">
 			<article id="update-wrapper">
 				<i class="fas fa-times" id="crossUpdate"></i>
 				<header class="titre titre-update">
 					<h4>Mettre à jour le commentaire</h4>
 				</header>
-				<form action="index.php?action=updateComment&amp;id=<?= $post->id(); ?>" method="POST">
+				<form action="index.php?action=updateComment&amp;id=<?php/* $post->id(); */?>" method="POST">
 					<?php/* foreach ($Comment as $data): */?>
 						<p>
 							Auteur :
@@ -152,7 +120,7 @@ A supprimer
 						</p>
 					</form>
 				</article>
-			</aside>
+			</aside> -->
 
 			<?php $content = ob_get_clean(); ?>
 

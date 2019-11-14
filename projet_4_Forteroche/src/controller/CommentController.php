@@ -42,36 +42,44 @@ class CommentController
     // }
 
     // Methode Add Comment
-    // public function newComment($post_id, $author, $comment)
-    // {
-    //     $newComment = $this->comments->addComment($post_id, $author, $comment);
-    //
-    //     if($newComment === false)
-    //     {
-    //         throw new Exception('impossible d\'ajouter votre commentaire');
-    //     }
-    // }
-
-    public function newComment()
+    public function newComment(/*$post_id, $user_id, $author, $comment*/)
     {
-        $comment = new Comment([
+        $comment = new Comment([$data]);
 
-        'post_id' => ($_GET['post_id']),
-        'author' => ($_POST['author']),
-        'comment' => ($_POST['comment'])
-    ]);
+        // $Comment->setIdpost($_POST['post_id']);
+        // $Comment->setUserId($_POST['user_id']);
+        // $Comment->setAuthor($_POST['author']);
+        // $Comment->setComment(htmlspecialchars($_POST['comment']));
 
-        // $comment->setIdpost($_GET['post_id']);
-        // $comment->setAuthor($_POST['author']);
-        // $comment->setComment($_POST['comment']);
+        $comment->setIdpost($_POST['post_id']);
+        $comment->setUserId($_POST['user_id']);
+        $comment->setAuthor($_POST['author']);
+        $comment->setComment($_POST['comment']);
 
         $this->comments->addComment($comment);
 
-        // if($newComment === false)
-        // {
-        //     throw new Exception('impossible d\'ajouter votre commentaire');
-        // }
     }
+
+    // public function newComment()
+    // {
+    //     $comment = new Comment([
+    //
+    //     'post_id' => ($_GET['post_id']),
+    //     'author' => ($_POST['author']),
+    //     'comment' => ($_POST['comment'])
+    // ]);
+    //
+    //     // $comment->setIdpost($_GET['post_id']);
+    //     // $comment->setAuthor($_POST['author']);
+    //     // $comment->setComment($_POST['comment']);
+    //
+    //     $this->comments->addComment($comment);
+    //
+    //     // if($newComment === false)
+    //     // {
+    //     //     throw new Exception('impossible d\'ajouter votre commentaire');
+    //     // }
+    // }
 
     //Update comment method
     public function updateCom($id, $comment)

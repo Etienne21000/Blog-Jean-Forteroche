@@ -86,7 +86,6 @@
 
 						<div id="icons">
 							<em> <?= $data->num_com() . '<i class="far fa-comment"></i>'; ?></em>
-							<!-- <em><a href="index.php?action=listComments&id=<?php/* $data->id(); */?>"><i class="far fa-comment"></i> </a> <?= $countByPost; ?></em> -->
 						</div>
 					</div>
 				</a>
