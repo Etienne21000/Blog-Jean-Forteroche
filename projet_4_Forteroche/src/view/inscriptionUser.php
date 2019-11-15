@@ -30,7 +30,7 @@
 				<p>
 					<label for="form-utilisateur">Pseudo</label>
 					<br>
-					<input type="text" name="user" id="form-utilisateur" placeholder="" required/>
+					<input type="text" name="pseudo" id="form-utilisateur" placeholder="" required/>
 				</p>
 
 				<p>

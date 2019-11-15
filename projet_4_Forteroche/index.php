@@ -25,9 +25,6 @@ try
         {
             $Posts = $postController->listPosts();
             $Comments = $commentController->lastCom();
-            // $num_com = $postController->comByPost();
-            // $countByPost = $commentController->nbComByPost($_GET['post_id']);
-            // $Posts = $commentController->nbComById();
 
             require 'src/view/indexView.php';
         }
@@ -124,7 +121,7 @@ try
         //User inscription public
         elseif ($_GET['action'] == 'userInscription')
         {
-            $_POST['user'] = htmlspecialchars($_POST['user']);
+            $_POST['pseudo'] = htmlspecialchars($_POST['pseudo']);
             $_POST['mail'] = htmlspecialchars($_POST['mail']);
             $_POST['pass'] = htmlspecialchars($_POST['pass']);
             $_POST['confirmePass'] = htmlspecialchars($_POST['confirmePass']);
@@ -133,7 +130,7 @@ try
             $validate = true;
 
             //Verify pseudo
-            if(empty($_POST['user']) || strlen($_POST['user']) > 100 || !preg_match("#^[a-zà-ùA-Z0-9-\s_-]+$#", $_POST['user']))
+            if(empty($_POST['pseudo']) || strlen($_POST['pseudo']) > 100 || !preg_match("#^[a-zà-ùA-Z0-9-\s_-]+$#", $_POST['pseudo']))
             {
                 $validate = false;
                 throw new Exception("Pseudo vide ou incorrecte");
@@ -169,11 +166,11 @@ try
             if($validate = true)
             {
                 // $hash_pass = $_POST['pass'];
-                if (empty($userController->pseudoExist($_POST['user'])) && empty($userController->mailExist($_POST['mail'])))
+                if (empty($userController->pseudoExist($_POST['pseudo'])) && empty($userController->mailExist($_POST['mail'])))
                 {
                     $_POST['pass'] = password_hash($_POST['pass'], PASSWORD_BCRYPT);
 
-                    $User = $userController->addUser($_POST['user'], $_POST['mail'], $_POST['pass']);
+                    $userController->addUser($_POST['pseudo'], $_POST['mail'], $_POST['pass']);
 
                     require 'src/view/adminConnexionView.php';
                 }
@@ -191,14 +188,14 @@ try
                 $validate = true;
 
                 //verify if empty fields occured
-                if (empty($_POST['user']) || empty($_POST['pass']))
+                if (empty($_POST['pseudo']) || empty($_POST['pass']))
                 {
                     throw new Exception("<p>Vous n'avez pas rempli tous les champs</p>");
                     $validate = false;
                 }
 
                 //Verify length of strings
-                if (strlen($_POST['user']) > 100 || strlen($_POST['pass']) > 255)
+                if (strlen($_POST['pseudo']) > 100 || strlen($_POST['pass']) > 255)
                 {
                     throw new Exception("champ invalide (rooter)");
                     $validate = false;
@@ -207,7 +204,7 @@ try
                 //if form is ok validate retunr true
                 if ($validate = true)
                 {
-                    $userController->userConnect($_POST['user']);
+                    $userController->userConnect($_POST['pseudo']);
                     // header('Location: index.php&action=Admin');
                     // require 'src/view/AdminHomeView.php';
                     header('Location: index.php?action=Admin');
@@ -368,14 +365,14 @@ try
         {
             if(isset($_GET['id']) && $_GET['id'] > 0)
             {
-                if(!empty($_POST['comment']))
-                {
-                    $commentController->updateCom($_GET['id'], $_POST['comment']);
-                }
-                else
-                {
-                    throw new \Exception("Vous n'avez pas rempli tous les champs");
-                }
+                // if(!empty($_POST['comment']))
+                // {
+                    $commentController->updateCom($_GET['id'], htmlentities(($_POST['comment'])));
+                // }
+                // else
+                // {
+                //     throw new \Exception("Vous n'avez pas rempli tous les champs");
+                // }
             }
             else
             {

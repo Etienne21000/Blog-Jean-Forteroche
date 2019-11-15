@@ -2,6 +2,7 @@
 namespace controller;
 
 use model\UserManager;
+use model\User;
 
 class UserController
 {
@@ -12,17 +13,32 @@ class UserController
         $this->user = new UserManager();
     }
 
+    //Add user
     public function addUser($pseudo, $mail, $pass)
     {
-        $User = $this->user->add($pseudo, $mail, $pass);
-        // $user = $this->user->verifPseudo($pseudo);
-        if($User === false)
-        {
-            throw new Exception("Impossible de vous inscrire");
-        }
+        $User = new User([$data]);
 
+        $User->setPseudo($pseudo);
+        $User->setMail($mail);
+        $User->setPassword($pass);
+
+        $this->user->add($User);
     }
 
+
+    //Delete user
+    public function deleteU($id)
+    {
+        if(isset($_GET['id']) && $_GET['id'] > 0)
+        {
+            $User = $this->user->delete($id);
+        }
+        else
+        {
+            throw new \Exception("impossiblme de supprimer le commentaire");
+
+        }
+    }
     //Call verifPseudo method
     public function pseudoExist($pseudo)
     {
@@ -69,7 +85,7 @@ class UserController
 
         if (!$user)
         {
-            throw new Exception("Pseudo invalide (controller)");
+            throw new \Exception("Pseudo invalide (controller)");
         }
 
         else
@@ -87,8 +103,6 @@ class UserController
                 throw new \Exception("Mot de passe invalide (controller)");
             }
         }
-
-        // return $user;
     }
 
     //Disconnect user

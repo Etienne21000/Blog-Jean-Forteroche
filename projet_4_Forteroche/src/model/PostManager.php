@@ -12,12 +12,12 @@ class PostManager extends Manager
     Test list posts
     with limit variables
     -------------------------------*/
-    public function getPosts($start =-1, $limite = -1)
+    public function getPosts($start = -1, $limite = -1)
     {
         $Posts = [];
 
         $req = 'SELECT b.id, b.title, b.content, DATE_FORMAT(b.creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date, COUNT(c.id) AS num_com FROM billets AS b, commentaires AS c WHERE c.post_id = b.id GROUP BY b.id ORDER BY creation_date DESC';
+        AS creation_date, COUNT(c.id) AS num_com FROM billets AS b INNER JOIN commentaires AS c ON b.id = c.post_id/*WHERE c.post_id = b.id*/ GROUP BY b.id ORDER BY creation_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
@@ -78,41 +78,24 @@ class PostManager extends Manager
     public function getOne($id)
     {
         $req = $this->db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date FROM billets WHERE id = ?');
-        $req->execute([$id]);
+        AS creation_date FROM billets WHERE id = :id');
+
+        $req->bindValue(':id', $id, \PDO::PARAM_INT);
+        $req->execute();
+
         $data = $req->fetch(\PDO::FETCH_ASSOC);
         $post = new Post($data);
 
         return $post;
     }
-    // public function getOne($id)
-    // {
-    //     $req = $this->db->prepare('SELECT p.id, p.title, p.content, DATE_FORMAT(p.creation_date, \'%d/%m/%Y à %Hh%i\')
-    //     AS creation_date FROM billets p INNER JOIN commentaires c ON c.post_id = p.id WHERE p.id = ?');
-    //     $req->execute([$id]);
-    //     $data = $req->fetch(\PDO::FETCH_ASSOC);
-    //     $post = new Post($data);
-    //
-    //     return $post;
-    // }
 
     //Methode to delete a post
     public function delete($id)
     {
-        $req = $this->db->prepare('DELETE FROM billets WHERE id = ?');
-        $req->execute([$id]);
+        $req = $this->db->prepare('DELETE FROM billets WHERE id = :id');
+        $req->bindValue(':id', $id, \PDO::PARAM_INT);
+        $req->execute();
     }
-
-    //Methode add a post
-    // public function add($title, $content)
-    // {
-    //     $req = $this->db->prepare('INSERT INTO billets(title, content, creation_date)
-    //     VALUES(?,?, NOW())');
-    //     $req->execute([
-    //         $title,
-    //         $content
-    //     ]);
-    // }
 
     public function add(Post $post)
     {
@@ -138,15 +121,27 @@ class PostManager extends Manager
         $req->execute();
 
     }
-    // public function update($id, $title, $content)
-    // {
-    //     $req = $this->db->prepare('UPDATE billets SET title = ?, content = ?, edition_date = NOW()
-    //     WHERE id = ?');
-    //     $req->execute([
-    //         $title,
-    //         $content,
-    //         $id
-    //     ]);
-    //
-    // }
 }
+
+//Methode add a post
+// public function add($title, $content)
+// {
+//     $req = $this->db->prepare('INSERT INTO billets(title, content, creation_date)
+//     VALUES(?,?, NOW())');
+//     $req->execute([
+//         $title,
+//         $content
+//     ]);
+// }
+
+// public function update($id, $title, $content)
+// {
+//     $req = $this->db->prepare('UPDATE billets SET title = ?, content = ?, edition_date = NOW()
+//     WHERE id = ?');
+//     $req->execute([
+//         $title,
+//         $content,
+//         $id
+//     ]);
+//
+// }

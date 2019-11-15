@@ -56,7 +56,7 @@
                     <li class="menuAdmin"><a href="index.php?action=postAdmin"><i class="fas fa-list-ul"></i>Articles  <?= '(' . $countPosts . ')'; ?></a></li>
                     <li class="menuAdmin"><a href="index.php?action=adminCom"><i class="fas fa-list-ul"></i>Commentaires <?= '(' . $countComs . ')';?></a></li>
                     <li class="menuAdmin"><a href="index.php?action=reportList"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $countReport . '</em>)';?></a></li>
-                    <li class="menuAdmin"><i class="fas fa-list-ul"></i>Utilisateurs <?= '(' . $countUsers . ')'; ?> </li>
+                    <li class="menuAdmin"><a href="index.php?action=listUsers"><i class="fas fa-list-ul"></i>Utilisateurs <?= '(' . $countUsers . ')'; ?> </a></li>
                     <li class="menuAdminDeco"><a href="index.php?action=discUser"><i class="fas fa-power-off"></i> Deconnexion</a></li>
                 </ul>
             </aside>

@@ -22,8 +22,11 @@
                     </header>
 
                     <!-- <p> -->
-                        <?= substr(html_entity_decode($data->content(), ENT_HTML5, 'UTF-8'),0,300) . '...'; ?>
+                    <?= substr(html_entity_decode($data->content(), ENT_HTML5, 'UTF-8'),0,300) . '...'; ?>
                     <!-- </p> -->
+                    <p>
+                    Cet article à été commenté <?= htmlspecialchars($data->num_com()); ?> fois.
+                    </p>
 
                     <div class="actions">
                         <button type="button" name="update" class="button1"><a href="index.php?action=postUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>

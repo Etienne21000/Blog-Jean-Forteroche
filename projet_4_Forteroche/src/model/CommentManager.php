@@ -15,8 +15,11 @@ class CommentManager extends Manager
     {
         $Comments = [];
         $req = $this->db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires WHERE post_id = ? && report = 0 ORDER BY comment_date DESC LIMIT 0, 5');
-        $req->execute([$id]);
+        AS comment_date FROM commentaires WHERE post_id = :post_id && report = 0 ORDER BY comment_date DESC LIMIT 0, 5');
+
+        $req->bindValue(':post_id', $id, \PDO::PARAM_INT);
+
+        $req->execute();
 
         while ($data = $req->fetch(\PDO::FETCH_ASSOC))
         {
@@ -27,7 +30,7 @@ class CommentManager extends Manager
     }
 
     /*------------------------------
-    Test list comments
+    list comments
     with limit variables
     -------------------------------*/
 
@@ -35,8 +38,11 @@ class CommentManager extends Manager
     {
         $Comments = [];
 
-        $req = 'SELECT c.id, c.user_id, c.author, c.comment, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires c INNER JOIN users u ON u.id = c.user_id AND u.pseudo = c.author WHERE report = 0 ORDER BY comment_date DESC';
+        // $req = 'SELECT commentaires.id, commentaires.user_id, commentaires.comment, commentaires.author AS author, users.pseudo AS pseudo, DATE_FORMAT(commentaires.comment_date, \'%d/%m/%Y à %Hh%i\')
+        // AS comment_date FROM commentaires INNER JOIN users ON commentaires.user_id = users.id AND author = pseudo WHERE commentaires.report = 0 ORDER BY comment_date DESC';
+
+        $req = 'SELECT c.id, c.user_id, c.comment, c.author, u.pseudo, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
+        AS comment_date FROM commentaires AS c INNER JOIN users AS u ON c.user_id = u.id WHERE report = 0 ORDER BY comment_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
@@ -60,8 +66,11 @@ class CommentManager extends Manager
     public function getCom($id)
     {
         $req = $this->db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires WHERE id = ?');
-        $req->execute([$id]);
+        AS comment_date FROM commentaires WHERE id = :id');
+
+        $req->bindValue(':id', $id, \PDO::PARAM_INT);
+
+        $req->execute();
 
         $data = $req->fetch(\PDO::FETCH_ASSOC);
         $Comment = new Comment($data);
@@ -88,19 +97,25 @@ class CommentManager extends Manager
     //Get all reported comments
     public function reportComment($id)
     {
-        $req = $this->db->prepare('UPDATE commentaires SET report = 1 WHERE id = ?');
-        $req->execute([$id]);
+        $req = $this->db->prepare('UPDATE commentaires SET report = 1 WHERE id = :id');
+
+        $req->bindValue(':id', $id, \PDO::PARAM_INT);
+
+        $req->execute();
     }
 
     //Validate a reported comment
     public function validateCom($id)
     {
-        $req = $this->db->prepare('UPDATE commentaires SET report = 0 WHERE id = ?');
-        $req->execute([$id]);
+        $req = $this->db->prepare('UPDATE commentaires SET report = 0 WHERE id = :id');
+
+        $req->bindValue(':id', $id, \PDO::PARAM_INT);
+
+        $req->execute();
     }
 
     /*------------------------------
-    Test list reported comments
+    list reported comments
     with limit variables
     -------------------------------*/
     public function getReportedComments($start = -1, $limite = -1)
@@ -141,21 +156,6 @@ class CommentManager extends Manager
     //     return $newComment;
     // }
 
-    //Test jointure table
-    // public function addComment($post_id, $user_id, $comment)
-    // {
-    //     $req = $this->db->prepare('INSERT INTO commentaires(post_id, user_id, comment, comment_date, report)
-    //     -- SELECT c.user_id FROM users u INNER JOIN commentaires c ON c.user_id = u.id
-    //     VALUES(?,?,?, NOW(), 0)');
-    //
-    //     $newComment = $req->execute([
-    //         $post_id,
-    //         $user_id,
-    //         $comment
-    //     ]);
-    //
-    //     return $newComment;
-    // }
 
     public function addComment(Comment $comment)
     {
@@ -167,28 +167,29 @@ class CommentManager extends Manager
         $req->bindValue(':author', $comment->author());
         $req->bindValue(':comment', $comment->comment());
 
-        /*$newComment = */
         $req->execute();
-
-        // return $newComment;
     }
 
     //Delet comment (admin session)
     public function deleteComment($id)
     {
-        $req = $this->db->prepare('DELETE FROM commentaires WHERE id = ?');
-        $req->execute([$id]);
+        $req = $this->db->prepare('DELETE FROM commentaires WHERE id = :id');
+
+        $req->bindValue(':id', $id, \PDO::PARAM_INT);
+
+        $req->execute();
     }
 
-    //Update comment
-    public function updateComment($id, $comment)
+    //Update comment method
+    public function updateComment(Comment $comment)
     {
-        $req = $this->db->prepare('UPDATE commentaires SET comment = ?, report = 0, edition_com_date = NOW()
-        WHERE id = ?');
-        $req->execute([
-            $comment,
-            $id
-        ]);
+        $req = $this->db->prepare('UPDATE commentaires SET comment = :comment, report = 0, edition_com_date = NOW()
+        WHERE id = :id');
+
+        $req->bindValue(':comment', $comment->comment());
+        $req->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
+
+        $req->execute();
     }
 }
 

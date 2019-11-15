@@ -34,10 +34,12 @@ class UserManager extends Manager
     //Check if pseudo exist to connect user
     public function getPseudo($pseudo)
     {
-        $req = $this->db->prepare('SELECT id, pseudo, pass FROM users WHERE pseudo = ?');
-        $req->execute([
-            $pseudo
-        ]);
+        $req = $this->db->prepare('SELECT id, pseudo, pass FROM users WHERE pseudo = :pseudo');
+
+        $req->bindValue('pseudo', $pseudo);
+
+        $req->execute();
+
         $user = $req->fetch(\PDO::FETCH_ASSOC);
 
         return $user;
@@ -46,36 +48,56 @@ class UserManager extends Manager
     //Verify if new pseudo is availlable
     public function verifPseudo($pseudo)
     {
-        $req = $this->db->prepare('SELECT pseudo FROM users WHERE LOWER(pseudo) = ?');
-        $req->execute([
-            strtolower($pseudo)
-        ]);
+        $req = $this->db->prepare('SELECT pseudo FROM users WHERE LOWER(pseudo) = :pseudo');
+
+        $req->bindValue('pseudo', strtolower($pseudo));
+
+        $req->execute();
 
         return $req->fetch(\PDO::FETCH_ASSOC);
-
     }
 
     //Check if email exist already
     public function verifMail($mail)
     {
-        $req = $this->db->prepare('SELECT mail FROM users WHERE mail = ?');
-        $req->execute([
-            $mail
-        ]);
+        $req = $this->db->prepare('SELECT mail FROM users WHERE mail = :mail');
+
+        $req->bindValue(':mail', $mail);
+
+        $req->execute();
 
         return $req->fetch(\PDO::FETCH_ASSOC);
     }
 
     //add user in db
-    public function add($pseudo, $mail, $pass)
+    // public function add($pseudo, $mail, $pass)
+    // {
+    //     $req = $this->db->prepare('INSERT INTO users(pseudo, mail, pass, user_date, user_role)
+    //     VALUES(?, ?, ?, NOW(), 0)');
+    //     $newUser = $req->execute([
+    //         $pseudo,
+    //         $mail,
+    //         $pass
+    //     ]);
+    // }
+    public function add(User $user)
     {
         $req = $this->db->prepare('INSERT INTO users(pseudo, mail, pass, user_date, user_role)
-        VALUES(?, ?, ?, NOW(), 0)');
-        $newUser = $req->execute([
-            $pseudo,
-            $mail,
-            $pass
-        ]);
+        VALUES(:pseudo, :mail, :pass, NOW(), 0)');
+
+        $req->bindValue(':pseudo', $user->pseudo());
+        $req->bindValue(':mail', $user->mail());
+        $req->bindValue(':pass', $user->passWord());
+
+        /*$newUser = */$req->execute();
+    }
+
+    //delete user
+    public function deleteUser($id)
+    {
+        $req = $this->db->prepare('DELETE FROM users WHERE id = :id');
+        $req->bindValue(':id', $id, \PDO::PARAM_INT);
+        $req->execute();
     }
 
     //Count users

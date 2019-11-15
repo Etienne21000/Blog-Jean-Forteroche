@@ -19,10 +19,14 @@
                     publié le <?= $Comment->comment_date(); ?>
 				</p>
 
+				<!-- <p>
+					<input type="texte" name="author" id="form-title" value="<?php/* $Comment->author(); */?>" required/>
+				</p> -->
+
 				<p>
 					<!-- <label for="form-content">Chapitre</label>
 					<br> -->
-					<textarea type="textarea" name="content" cols="70" rows="30" id="full-featured-non-premium" value="" ><?= $Comment->comment();?></textarea>
+					<textarea type="textarea" name="comment" cols="70" rows="30" id="full-featured-non-premium"><?= $Comment->comment();?></textarea>
 				</p>
 
 				<p>

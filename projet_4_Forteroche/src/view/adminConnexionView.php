@@ -17,7 +17,7 @@
 				<p>
 					<label for="form-utilisateur">Nom d'utilisateur</label>
 					<br>
-					<input type="text" name="user" id="form-utilisateur" placeholder="nom d'utilisateur" required/>
+					<input type="text" name="pseudo" id="form-utilisateur" placeholder="nom d'utilisateur" required/>
 				</p>
 
 				<p>

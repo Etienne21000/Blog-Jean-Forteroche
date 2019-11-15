@@ -16,6 +16,7 @@
                     <div class="allComments">
                         <header class="titreh3">
                             <p>
+                                <?php /*htmlspecialchars($data->user_id()); */?>
                                 <?= htmlspecialchars($data->author()); ?>
                             </p>
                         </header>
@@ -24,13 +25,9 @@
                             publié le : <?php echo htmlspecialchars($data->comment_date()); ?>
                             <br>
 
-                            <?= substr(nl2br(htmlspecialchars($data->comment())),0,50) . '...'; ?>
+                            <?= substr(html_entity_decode($data->comment()),0,50) . '...'; ?>
                         </p>
 
-                        <!-- <div class="icons">
-                            <a href="index.php?action=deleteCom&amp;id=<?php/* $data->id()*/ ?>" title="Supprimer"><i class="fas fa-times"></i></a>
-                            <a href="#update" class="js-update" title="Mettre à jour"><i class="fas fa-comment-dots"></i></a>
-                        </div> -->
                         <div class="actions">
                             <button type="button" name="update" class="button1"><a href="index.php?action=commentUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
                             <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteCom&amp;id=<?= $data->id()?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
