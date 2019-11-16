@@ -52,7 +52,7 @@ class PostController
         $post = new Post([$data]);
 
         $post->setTitle(htmlspecialchars($_POST['title']));
-        $post->setContent(htmlentities($_POST['content']));
+        $post->setContent(htmlspecialchars($_POST['content']));
 
         $this->post->add($post);
     }

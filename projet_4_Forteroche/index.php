@@ -295,7 +295,7 @@ try
             {
                 if(!empty($_POST['content']) && !empty($_POST['title']))
                 {
-                    $postController->updatePost($_GET['id'], htmlspecialchars($_POST['title']), htmlentities($_POST['content']));
+                    $postController->updatePost($_GET['id'], htmlspecialchars($_POST['title']), html_entity_decode($_POST['content']));
                 }
                 else
                 {

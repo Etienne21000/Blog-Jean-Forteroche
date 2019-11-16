@@ -11,6 +11,7 @@ autosave_prefix: "{path}{query}-{id}-",
 autosave_restore_when_empty: false,
 autosave_retention: "2m",
 image_advtab: true,
+entity_encoding: "row",
 content_css: [
 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
 '//www.tiny.cloud/css/codepen.min.css'
