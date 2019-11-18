@@ -116,7 +116,7 @@
 
     <div class="content">
         <?php foreach ($Users as $data): ?>
-            <a href="">
+            <a href="index.php?action=singleUser&id=<?= $data->id(); ?>">
                 <div class="userBloc">
 
                     <p>
@@ -129,6 +129,8 @@
 
                     <p>
                         inscrit depuis le :  <?= htmlspecialchars($data->user_date()); ?>
+                        <br>
+                        <?= htmlspecialchars($data->num_com()); ?> commentaires posté
                     </p>
                 </div>
             </a>

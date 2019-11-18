@@ -8,13 +8,32 @@ class UserManager extends Manager
         $this->db = $this->dbConnect();
     }
 
-    //Get 3 last users
+    //Get signle user with role
+    public function getUser($id/*, $user_role*/)
+    {
+        $req = $this->db->prepare('SELECT u.id, u.pseudo, u.mail, r.slug, r.level, DATE_FORMAT(u.user_date, \'%d/%m/%Y à %Hh%i\')
+        AS user_date FROM users AS u INNER JOIN roles AS r ON u.user_role = r.level WHERE u.id = :id');
+        // $req = $this->db->prepare('SELECT id, pseudo, mail, user_role, DATE_FORMAT(user_date, \'%d/%m/%Y à %Hh%i\')
+        // AS user_date FROM users WHERE id = :id');
+
+        $req->bindValue('id', $id, \PDO::PARAM_INT);
+        // $req->bindValue('user_role', $user_role, \PDO::PARAM_INT);
+
+        $req->execute();
+
+        $data = $req->fetch(\PDO::FETCH_ASSOC);
+        $user = new User($data);
+
+        return $user;
+    }
+
+    //Get users with comments join
     public function getUsers($start =-1, $limite = -1)
     {
         $Users = [];
 
-        $req = 'SELECT id, pseudo, mail, DATE_FORMAT(user_date, \'%d/%m/%Y à %Hh%i\')
-        AS user_date FROM users WHERE user_role = 0 ORDER BY user_date DESC';
+        $req = 'SELECT u.id, u.pseudo, u.mail, DATE_FORMAT(u.user_date, \'%d/%m/%Y à %Hh%i\')
+        AS user_date, COUNT(c.id) AS num_com FROM users AS u LEFT OUTER JOIN commentaires AS c ON u.id = c.user_id GROUP BY u.id ORDER BY user_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
@@ -30,6 +49,29 @@ class UserManager extends Manager
         }
         return $Users;
     }
+
+    //Get users
+    // public function getUsers($start =-1, $limite = -1)
+    // {
+    //     $Users = [];
+    //
+    //     $req = 'SELECT id, pseudo, mail, DATE_FORMAT(user_date, \'%d/%m/%Y à %Hh%i\')
+    //     AS user_date FROM users WHERE user_role = 1 ORDER BY user_date DESC';
+    //
+    //     if ($start != -1 || $limite != -1)
+    //     {
+    //         $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+    //     }
+    //
+    //     $req = $this->db->query($req);
+    //
+    //     while ($data = $req->fetch(\PDO::FETCH_ASSOC))
+    //     {
+    //         $user = new User($data);
+    //         $Users[] = $user;
+    //     }
+    //     return $Users;
+    // }
 
     //Check if pseudo exist to connect user
     public function getPseudo($pseudo)

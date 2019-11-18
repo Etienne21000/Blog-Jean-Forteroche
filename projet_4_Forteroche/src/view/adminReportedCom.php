@@ -23,7 +23,7 @@
                         publié le : <?php echo htmlspecialchars($data->comment_date()); ?>
                         <br>
 
-                        <?= substr(nl2br(htmlspecialchars($data->comment())),0,50) . '...'; ?>
+                        <?= substr(nl2br(html_entity_decode($data->comment())),0,50) . '...'; ?>
                     </p>
 
                     <div class="actions">

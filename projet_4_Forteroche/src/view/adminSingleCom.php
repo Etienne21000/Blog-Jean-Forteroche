@@ -3,8 +3,8 @@
 <?php  ob_start(); ?>
 
 <article class="blocAdmin">
-    <a href="index.php?action=adminCom"> <i class="fas fa-arrow-circle-left"></i> retour</a>
-
+        <a href="index.php?action=reportList"> <i class="fas fa-arrow-circle-left"></i> retour</a>
+        <!-- <a href="index.php?action=adminCom"> <i class="fas fa-arrow-circle-left"></i> retour</a> -->
     <article class="commentAdmin">
         <header class="titre">
             <h3>

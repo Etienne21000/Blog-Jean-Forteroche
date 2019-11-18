@@ -17,30 +17,7 @@ class PostManager extends Manager
         $Posts = [];
 
         $req = 'SELECT b.id, b.title, b.content, DATE_FORMAT(b.creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date, COUNT(c.id) AS num_com FROM billets AS b INNER JOIN commentaires AS c ON b.id = c.post_id/*WHERE c.post_id = b.id*/ GROUP BY b.id ORDER BY creation_date DESC';
-
-        if ($start != -1 || $limite != -1)
-        {
-            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
-        }
-
-        $result = $this->db->query($req);
-
-        while ($data = $result->fetch(\PDO::FETCH_ASSOC))
-        {
-            $post = new Post($data);
-            $Posts[] = $post;
-        }
-        return $Posts;
-    }
-
-    public function getAllPosts($start =-1, $limite = -1)
-    {
-        $Posts = [];
-
-        $req = 'SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date, DATE_FORMAT(edition_date, \'%d/%m/%Y à %Hh%i\')
-        AS edition_date FROM billets ORDER BY creation_date DESC';
+        AS creation_date, COUNT(c.id) AS num_com FROM billets AS b LEFT OUTER JOIN commentaires AS c ON b.id = c.post_id/*WHERE c.post_id = b.id*/ GROUP BY b.id ORDER BY creation_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
@@ -63,16 +40,6 @@ class PostManager extends Manager
 
         return $countPosts;
     }
-
-    // public function countComByPost()
-    // {
-    //     $req = $this->db->query($req = 'SELECT b.id, COUNT(c.id) AS num_com FROM billets AS b, commentaires AS c
-    //     WHERE c.post_id = b.id GROUP BY b.id ORDER BY creation_date DESC');
-    //
-    //     $num_com = $req->fetch(\PDO::FETCH_ASSOC);
-    //
-    //     return $num_com;
-    // }
 
     //Get post by id
     public function getOne($id)
@@ -122,26 +89,3 @@ class PostManager extends Manager
 
     }
 }
-
-//Methode add a post
-// public function add($title, $content)
-// {
-//     $req = $this->db->prepare('INSERT INTO billets(title, content, creation_date)
-//     VALUES(?,?, NOW())');
-//     $req->execute([
-//         $title,
-//         $content
-//     ]);
-// }
-
-// public function update($id, $title, $content)
-// {
-//     $req = $this->db->prepare('UPDATE billets SET title = ?, content = ?, edition_date = NOW()
-//     WHERE id = ?');
-//     $req->execute([
-//         $title,
-//         $content,
-//         $id
-//     ]);
-//
-// }

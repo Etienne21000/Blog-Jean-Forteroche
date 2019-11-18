@@ -14,18 +14,13 @@
 			<form action="index.php?action=updateComment&amp;id=<?= $Comment->id(); ?>" method="POST">
 
 				<p>
-					Commentaire de : <?= $Comment->author();?>
+					Commentaire de : <?= $Comment->author(); ?>
                     <br>
                     publié le <?= $Comment->comment_date(); ?>
 				</p>
-
-				<!-- <p>
-					<input type="texte" name="author" id="form-title" value="<?php/* $Comment->author(); */?>" required/>
-				</p> -->
-
 				<p>
-					<!-- <label for="form-content">Chapitre</label>
-					<br> -->
+					<label for="form-content">Commentaire à modifier</label>
+					<br>
 					<textarea type="textarea" name="comment" cols="70" rows="30" id="full-featured-non-premium"><?= $Comment->comment();?></textarea>
 				</p>
 

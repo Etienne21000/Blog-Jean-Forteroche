@@ -35,7 +35,7 @@ class PostController
     //Affichage des chapitres sur la page dédiée
     public function post()
     {
-        $Posts = $this->post->getAllPosts();
+        $Posts = $this->post->getPosts();
 
         return $Posts;
     }
@@ -68,13 +68,6 @@ class PostController
             throw new \Exception("Impossible de supprimer l'article (controller)");
         }
     }
-
-    // public function getPost($id)
-    // {
-    //     $post = $this->post->getOne($id);
-    //
-    //     return $post;
-    // }
 
     public function getPost($id)
     {

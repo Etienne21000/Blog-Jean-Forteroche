@@ -11,6 +11,8 @@ class User extends Entity
     private $mail;
     private $user_date;
     private $user_role;
+    private $slug;
+    private $num_com;
 
     public function __construct(array $data)
     {
@@ -54,7 +56,17 @@ class User extends Entity
 
     public function setuserRole($user_role)
     {
-        $this->user_role = (bool)$user_role;
+        $this->user_role = (int)$user_role;
+    }
+
+    public function setSlug($slug)
+    {
+        $this->slug = (int)$slug;
+    }
+
+    public function setNumCom($num_com)
+    {
+        $this->num_com = (int)$num_com;
     }
 
     /*---------------------------------------
@@ -89,5 +101,15 @@ class User extends Entity
     public function user_role()
     {
         return $this->user_role;
+    }
+
+    public function slug()
+    {
+        return $this->slug;
+    }
+
+    public function num_com()
+    {
+        return $this->num_com;
     }
 }

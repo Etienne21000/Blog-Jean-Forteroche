@@ -63,12 +63,13 @@ class CommentManager extends Manager
     Get comment by id à revoir
     dans le controller et index
     --------------------------*/
-    public function getCom($id)
+    public function getCom($id /*, $report*/)
     {
-        $req = $this->db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires WHERE id = :id');
+        $req = $this->db->prepare('SELECT id, post_id, author, comment,/* report*/ DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
+        AS comment_date FROM commentaires WHERE id = :id /*&& report = :report*/');
 
         $req->bindValue(':id', $id, \PDO::PARAM_INT);
+        // $req->bindValue(':report', $report);
 
         $req->execute();
 
@@ -81,7 +82,7 @@ class CommentManager extends Manager
     //Count total of comments
     public function countComments()
     {
-        $countComs = $this->db->query('SELECT COUNT(*) FROM commentaires')->fetchColumn();
+        $countComs = $this->db->query('SELECT COUNT(*) FROM commentaires WHERE report = 0')->fetchColumn();
 
         return $countComs;
     }
@@ -192,20 +193,3 @@ class CommentManager extends Manager
         $req->execute();
     }
 }
-
-//Count comments by post_id à revoir
-// public function countComByPost($post_id)
-// {
-//     $req = $this->db->prepare('SELECT COUNT(*) FROM commentaires WHERE post_id = ?');
-//     $req->execute([$post_id]);
-//     $countByPost = $req->fetchColumn();
-//
-//     return $countByPost;
-// }
-
-// $$newComment->fetch(\PDO::FETCH_ASSOC);
-// $req->execute([
-//     'post_id' => (int) $post_id,
-//     'author' => $author,
-//     'comment'=> $comment
-// ]);

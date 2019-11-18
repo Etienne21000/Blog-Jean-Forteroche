@@ -78,6 +78,14 @@ class UserController
         return $Users;
     }
 
+    //Get single user infos
+    public function getOneUser($id)
+    {
+        $user = $this->user->getUser($id);
+
+        return $user;
+    }
+
     //User connexion method
     public function userConnect($pseudo)
     {

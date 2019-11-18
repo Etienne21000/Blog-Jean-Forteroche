@@ -44,11 +44,9 @@
 
 		<div class="comment">
 			<p>
-				<?= nl2br(htmlspecialchars($data->comment())); ?>
+				<?= nl2br(html_entity_decode($data->comment())); ?>
 				<div class="icons">
 					<a href="index.php?action=reportComment&id=<?= $data->id(); ?>" title="Signaler"><i class="fas fa-exclamation-circle"></i></a>
-					<!-- <a href="index.php?action=deleteCom&amp;id=<?php/* $data->id() */?>" title="Supprimer"><i class="fas fa-times"></i></a>
-					<a href="#update" class="js-update" title="Mettre à jour"><i class="fas fa-comment-dots"></i></a> -->
 				</div>
 			</p>
 		</div>

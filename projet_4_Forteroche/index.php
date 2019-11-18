@@ -62,14 +62,14 @@ try
                 {
                     // if(isset($_GET['user_id']) && isset($_GET['user_id']) > 0)
                     // {
-                        if(!empty($_POST['author']) && !empty($_POST['comment']))
-                        {
-                        $commentController->newComment(/*$_GET['post_id'], $_GET['user_id'], $_POST['author'], $_POST['comment']*/);
-                        }
-                        else
-                        {
-                            throw new Exception("vous n'avez pas remplis tous les champs! (rooter)");
-                        }
+                    if(!empty($_POST['author']) && !empty($_POST['comment']))
+                    {
+                    $commentController->newComment(/*$_GET['post_id'], $_GET['user_id'], $_POST['author'], $_POST['comment']*/);
+                    }
+                    else
+                    {
+                        throw new Exception("vous n'avez pas remplis tous les champs! (rooter)");
+                    }
                     // }
                     // else
                     // {
@@ -104,8 +104,8 @@ try
             {
                 throw new \Exception("Impossible de signaler ce commentaire car aucun identifiant de commentaire envoyé (rooter)");
             }
-            // header('Location: index.php&action=listComments&id=' . $_GET['id']);
-            echo 'Le message a été signalé';
+            // header('Location: index.php&action=listComments&id=' . $_GET['post_id']);
+            // echo 'Le message a été signalé';
         }
 
         elseif ($_GET['action'] == 'AdminConnexion')
@@ -227,7 +227,7 @@ try
         ----------------------------------------------------*/
 
         /*---------------------------
-                1. post's actions
+        1. post's actions
         ---------------------------*/
 
         elseif ($_GET['action'] == 'AddPostAdmin')
@@ -330,7 +330,7 @@ try
 
 
         /*---------------------------
-            2. comment's actions
+        2. comment's actions
         ---------------------------*/
 
         //Delete comment
@@ -345,7 +345,7 @@ try
                 throw new Exception("Impossible de supprimer ce commentaire. (rooter)");
             }
 
-            header('Location: index.php?action=listComments&id=' . $_GET['post_id']);
+            header('Location: index.php?action=reportList');
         }
 
         //Update comment view
@@ -365,14 +365,14 @@ try
         {
             if(isset($_GET['id']) && $_GET['id'] > 0)
             {
-                // if(!empty($_POST['comment']))
-                // {
-                    $commentController->updateCom($_GET['id'], htmlentities(($_POST['comment'])));
-                // }
-                // else
-                // {
-                //     throw new \Exception("Vous n'avez pas rempli tous les champs");
-                // }
+                if(!empty($_POST['comment']))
+                {
+                    $commentController->updateCom($_GET['id'], html_entity_decode(($_POST['comment'])));
+                }
+                else
+                {
+                    throw new \Exception("Vous n'avez pas rempli tous les champs");
+                }
             }
             else
             {
@@ -422,23 +422,23 @@ try
         elseif ($_GET['action'] == 'validateCom')
         {
 
-                if (isset($_GET['id']) && $_GET['id'] > 0)
-                {
-                    $validCom = $commentController->validCom($_GET['id']);
-                }
+            if (isset($_GET['id']) && $_GET['id'] > 0)
+            {
+                $validCom = $commentController->validCom($_GET['id']);
+            }
 
-                else
-                {
-                    throw new \Exception("Impossible de signaler ce commentaire car aucun identifiant de commentaire envoyé (rooter)");
-                }
+            else
+            {
+                throw new \Exception("Impossible de signaler ce commentaire car aucun identifiant de commentaire envoyé (rooter)");
+            }
 
-                header('Location: index.php?action=reportList');
+            header('Location: index.php?action=reportList');
 
             // header('Location: index.php?action=signleCom&id=' . $_GET['id']);
         }
 
         /*---------------------------
-            3. Admin's actions
+        3. Admin's actions
         ---------------------------*/
 
         elseif ($_GET['action'] == 'Admin')
@@ -487,8 +487,19 @@ try
             require 'src/view/adminListUsers.php';
         }
 
+        elseif ($_GET['action'] == 'singleUser')
+        {
+            $countComs = $commentController->nbCom();
+            $countPosts = $postController->nbPost();
+            $countUsers = $userController->nbUsers();
+            $countReport = $commentController->nbReported();
+            $user = $userController->getOneUser($_GET['id']);
+
+            require 'src/view/adminSingleUser.php';
+        }
+
         /*---------------------------
-            3. Admin's actions
+        3. Admin's actions
         ---------------------------*/
     }
 
