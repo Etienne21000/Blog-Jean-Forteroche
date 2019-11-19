@@ -40,4 +40,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require 'src/public/templateAdmin.php'; ?>
+<?php require 'src/public/template.php'; ?>

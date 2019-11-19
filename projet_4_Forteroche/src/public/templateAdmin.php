@@ -22,6 +22,7 @@
         <a href="/index.php?action=post">Les articles</a>
         <a href="/index.php?action=AdminConnexion">Connexion</a>
         <a href="/index.php?action=inscription">Inscription</a>
+        <a href="/index.php?action=discUser">Déconnexion</a>
     </div>
 
     <div id="ID_Utilisateur">
@@ -49,14 +50,17 @@
                 <a href="index.php?action=Accueil" title="Retour à l'accueil">Bonjour <?php echo  $_SESSION['pseudo']; ?></a>
             </h3>
         </header>
+
         <div id="contentAdminView">
             <aside id="asideAdmin">
                 <ul id="adminList">
-                    <li class="menuAdmin"><a href="index.php?action=Admin"><i class="fas fa-tachometer-alt"></i>Tableau de bord</a></li>
-                    <li class="menuAdmin"><a href="index.php?action=postAdmin"><i class="fas fa-list-ul"></i>Articles  <?= '(' . $countPosts . ')'; ?></a></li>
-                    <li class="menuAdmin"><a href="index.php?action=adminCom"><i class="fas fa-list-ul"></i>Commentaires <?= '(' . $countComs . ')';?></a></li>
-                    <li class="menuAdmin"><a href="index.php?action=reportList"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $countReport . '</em>)';?></a></li>
-                    <li class="menuAdmin"><a href="index.php?action=listUsers"><i class="fas fa-list-ul"></i>Utilisateurs <?= '(' . $countUsers . ')'; ?> </a></li>
+                    <?php if($_SESSION['user_role'] == 2):?>
+                        <li class="menuAdmin"><a href="index.php?action=Admin"><i class="fas fa-tachometer-alt"></i>Tableau de bord</a></li>
+                        <li class="menuAdmin"><a href="index.php?action=postAdmin"><i class="fas fa-list-ul"></i>Articles  <?= '(' . $countPosts . ')'; ?></a></li>
+                        <li class="menuAdmin"><a href="index.php?action=adminCom"><i class="fas fa-list-ul"></i>Commentaires <?= '(' . $countComs . ')';?></a></li>
+                        <li class="menuAdmin"><a href="index.php?action=reportList"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $countReport . '</em>)';?></a></li>
+                        <li class="menuAdmin"><a href="index.php?action=listUsers"><i class="fas fa-list-ul"></i>Utilisateurs <?= '(' . $countUsers . ')'; ?> </a></li>
+                    <?php endif; ?>
                     <li class="menuAdminDeco"><a href="index.php?action=discUser"><i class="fas fa-power-off"></i> Deconnexion</a></li>
                 </ul>
             </aside>

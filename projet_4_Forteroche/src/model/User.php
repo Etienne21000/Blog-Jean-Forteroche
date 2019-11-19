@@ -11,7 +11,7 @@ class User extends Entity
     private $mail;
     private $user_date;
     private $user_role;
-    private $slug;
+    private $user_slug;
     private $num_com;
 
     public function __construct(array $data)
@@ -59,9 +59,12 @@ class User extends Entity
         $this->user_role = (int)$user_role;
     }
 
-    public function setSlug($slug)
+    public function setUserSlug($user_slug)
     {
-        $this->slug = (int)$slug;
+        if (is_string($user_slug))
+        {
+            $this->user_slug = $user_slug;
+        }
     }
 
     public function setNumCom($num_com)
@@ -103,13 +106,14 @@ class User extends Entity
         return $this->user_role;
     }
 
-    public function slug()
+    public function user_slug()
     {
-        return $this->slug;
+        return $this->user_slug;
     }
 
     public function num_com()
     {
         return $this->num_com;
     }
+
 }

@@ -65,6 +65,8 @@ try
                     if(!empty($_POST['author']) && !empty($_POST['comment']))
                     {
                     $commentController->newComment(/*$_GET['post_id'], $_GET['user_id'], $_POST['author'], $_POST['comment']*/);
+                        header('Location: index.php?action=listComments&id=' . $_GET['id']);
+
                     }
                     else
                     {
@@ -81,7 +83,7 @@ try
                     throw new \Exception("impossible de commenter");
                 }
 
-                header('Location: index.php?action=listComments&id=' . $_GET['id']);
+                // header('Location: index.php?action=listComments&id=' . $_GET['id']);
             }
 
             else
@@ -92,19 +94,20 @@ try
 
         }
 
-        //Report comment by user
+        //Report comment by user revoir la redirection id
         elseif ($_GET['action'] == 'reportComment')
         {
             if (isset($_GET['id']) && $_GET['id'] > 0)
             {
                 $reportedCom = $commentController->reportCom($_GET['id']);
+
+                header('Location: index.php&action=listComments&id=' . $_GET['id']);
             }
 
             else
             {
                 throw new \Exception("Impossible de signaler ce commentaire car aucun identifiant de commentaire envoyé (rooter)");
             }
-            // header('Location: index.php&action=listComments&id=' . $_GET['post_id']);
             // echo 'Le message a été signalé';
         }
 
@@ -134,8 +137,6 @@ try
             {
                 $validate = false;
                 throw new Exception("Pseudo vide ou incorrecte");
-                // $errors['user'] = 'Pseudo vide ou incorrecte';
-                // die();
             }
 
             //Verify mail
@@ -207,7 +208,14 @@ try
                     $userController->userConnect($_POST['pseudo']);
                     // header('Location: index.php&action=Admin');
                     // require 'src/view/AdminHomeView.php';
-                    header('Location: index.php?action=Admin');
+                    if($_SESSION['user_role'] == 2)
+                    {
+                        header('Location: index.php?action=Admin');
+                    }
+                    else
+                    {
+                        header('Location: index.php?action=Accueil');
+                    }
                     // $userManager = new UserManager();
                 }
             }
@@ -223,7 +231,7 @@ try
         }
 
         /*---------------------------------------------------
-        Admin actions with specific acces role = 1
+        Admin actions with specific acces role = 2
         ----------------------------------------------------*/
 
         /*---------------------------
@@ -232,14 +240,14 @@ try
 
         elseif ($_GET['action'] == 'AddPostAdmin')
         {
-            // if(!empty($_SESSION['pseudo']) && $_SESSION['user_role'] == 1)
+            // if($_SESSION['user_role'] == 2)
             // {
-            $countPosts = $postController->nbPost();
-            $countComs = $commentController->nbCom();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-
-            require 'src/view/adminPost.php';
+                $countPosts = $postController->nbPost();
+                $countComs = $commentController->nbCom();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
+                require 'src/view/adminPost.php';
+            // }
         }
 
         elseif ($_GET['action'] == 'addPost')
@@ -263,28 +271,33 @@ try
 
         elseif ($_GET['action'] == 'deletePost')
         {
-            if(isset($_GET['id']) && $_GET['id'] > 0)
-            {
-                $postController->deletePost($_GET['id']);
-            }
-            else
-            {
-                throw new Exception("Impossible de supprimer cet article. (rooter)");
-            }
-            // require 'src/view/listPostAdminView.php';
-            header('Location: index.php?action=postAdmin');
+            // if($_SESSION['user_role'] == 2)
+            // {
+                if(isset($_GET['id']) && $_GET['id'] > 0)
+                {
+                    $postController->deletePost($_GET['id']);
+                }
+                else
+                {
+                    throw new Exception("Impossible de supprimer cet article. (rooter)");
+                }
+                header('Location: index.php?action=postAdmin');
+            // }
         }
 
         //Update post view
         elseif ($_GET['action'] == 'postUpdate')
         {
-            $countPosts = $postController->nbPost();
-            $countComs = $commentController->nbCom();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-            $post = $postController->getPost($_GET['id']);
+            // if($_SESSION['user_role'] == 2)
+            // {
+                $countPosts = $postController->nbPost();
+                $countComs = $commentController->nbCom();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
+                $post = $postController->getPost($_GET['id']);
 
-            require 'src/view/adminUpdatePostView.php';
+                require 'src/view/adminUpdatePostView.php';
+            // }
         }
 
         //Update post
@@ -316,16 +329,19 @@ try
         //Liste of all posts admin page
         elseif ($_GET['action'] == 'postAdmin')
         {
-            $countPosts = $postController->nbPost();
-            $countComs = $commentController->nbCom();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
+            // if($_SESSION['user_role'] == 2)
+            // {
+                $countPosts = $postController->nbPost();
+                $countComs = $commentController->nbCom();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
 
-            $Posts = $postController->post();
-            // $Comments = $commentController->lastCom();
-            // $Users = $userController->listUsers();
+                $Posts = $postController->post();
+                // $Comments = $commentController->lastCom();
+                // $Users = $userController->listUsers();
 
-            require 'src/view/listPostAdminView.php';
+                require 'src/view/listPostAdminView.php';
+            // }
         }
 
 
@@ -351,13 +367,16 @@ try
         //Update comment view
         elseif ($_GET['action'] == 'commentUpdate')
         {
-            $countPosts = $postController->nbPost();
-            $countComs = $commentController->nbCom();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-            $Comment = $commentController->getOne($_GET['id']);
+            // if($_SESSION['user_role'] == 2)
+            // {
+                $countPosts = $postController->nbPost();
+                $countComs = $commentController->nbCom();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
+                $Comment = $commentController->getOne($_GET['id']);
 
-            require 'src/view/adminEditComment.php';
+                require 'src/view/adminEditComment.php';
+            // }
         }
 
         //Update comment
@@ -384,14 +403,17 @@ try
 
         elseif ($_GET['action'] == 'adminCom')
         {
-            $Comments = $commentController->allCom();
-            $countComs = $commentController->nbCom();
-            $countPosts = $postController->nbPost();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
+            // if($_SESSION['user_role'] == 2)
+            // {
+                $Comments = $commentController->allCom();
+                $countComs = $commentController->nbCom();
+                $countPosts = $postController->nbPost();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
 
-            // require 'src/view/AdminComView.php';
-            require 'src/view/adminCommentList.php';
+                // require 'src/view/AdminComView.php';
+                require 'src/view/adminCommentList.php';
+            // }
         }
 
         //Get signle post admin à revoir
@@ -443,17 +465,24 @@ try
 
         elseif ($_GET['action'] == 'Admin')
         {
-            $countPosts = $postController->nbPost();
-            $countComs = $commentController->nbCom();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
+            if($_SESSION['user_role'] == 1)
+            {
+                echo "Vous n'avez pas accès à cette section";
+            }
+            else
+            {
+                $countPosts = $postController->nbPost();
+                $countComs = $commentController->nbCom();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
 
-            $Posts = $postController->adminPost();
-            $Comments = $commentController->lastCom();
-            $Users = $userController->listUsers();
-            $report = $commentController->getReportedCom();
+                $Posts = $postController->adminPost();
+                $Comments = $commentController->lastCom();
+                $Users = $userController->listUsers();
+                $report = $commentController->getReportedCom();
 
-            require 'src/view/AdminHomeView.php';
+                require 'src/view/AdminHomeView.php';
+            }
         }
 
         elseif ($_GET['action'] == 'postViewAdmins')
@@ -496,6 +525,31 @@ try
             $user = $userController->getOneUser($_GET['id']);
 
             require 'src/view/adminSingleUser.php';
+        }
+
+        elseif ($_GET['action'] == 'userInfos')
+        {
+            $countComs = $commentController->nbCom();
+            $countPosts = $postController->nbPost();
+            $countUsers = $userController->nbUsers();
+            $countReport = $commentController->nbReported();
+            $user = $userController->getOneUser($_SESSION['id']);
+
+            require 'src/view/adminSingleUser.php';
+        }
+
+        elseif ($_GET['action'] == 'deleteUser')
+        {
+            if(isset($_GET['id']) && $_GET['id'] > 0)
+            {
+                $userController->deleteU($_GET['id']);
+
+                header('Location: index.php?action=Accueil');
+            }
+            else
+            {
+                throw new \Exception("impossiblme de supprimer le compte");
+            }
         }
 
         /*---------------------------

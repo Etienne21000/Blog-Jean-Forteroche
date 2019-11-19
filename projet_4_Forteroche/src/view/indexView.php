@@ -77,7 +77,7 @@
 						</header>
 
 						<!-- <p> -->
-							<?php echo substr(html_entity_decode($data->content(), ENT_HTML5, 'UTF-8'), 0,330) . '...'; ?>
+							<?php echo substr(html_entity_decode($data->content()), 0, 330) . '...'; ?>
 
 						<!-- </p> -->
 						<p id="continu">

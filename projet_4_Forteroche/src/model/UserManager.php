@@ -9,15 +9,12 @@ class UserManager extends Manager
     }
 
     //Get signle user with role
-    public function getUser($id/*, $user_role*/)
+    public function getUser($id)
     {
-        $req = $this->db->prepare('SELECT u.id, u.pseudo, u.mail, r.slug, r.level, DATE_FORMAT(u.user_date, \'%d/%m/%Y à %Hh%i\')
-        AS user_date FROM users AS u INNER JOIN roles AS r ON u.user_role = r.level WHERE u.id = :id');
-        // $req = $this->db->prepare('SELECT id, pseudo, mail, user_role, DATE_FORMAT(user_date, \'%d/%m/%Y à %Hh%i\')
-        // AS user_date FROM users WHERE id = :id');
+        $req = $this->db->prepare('SELECT u.id, u.pseudo, u.mail, u.user_role, u.user_slug, DATE_FORMAT(u.user_date, \'%d/%m/%Y à %Hh%i\')
+        AS user_date, COUNT(c.id) AS num_com FROM users AS u LEFT OUTER JOIN commentaires AS c ON u.id = c.user_id WHERE u.id = :id');
 
         $req->bindValue('id', $id, \PDO::PARAM_INT);
-        // $req->bindValue('user_role', $user_role, \PDO::PARAM_INT);
 
         $req->execute();
 
@@ -49,34 +46,11 @@ class UserManager extends Manager
         }
         return $Users;
     }
-
-    //Get users
-    // public function getUsers($start =-1, $limite = -1)
-    // {
-    //     $Users = [];
-    //
-    //     $req = 'SELECT id, pseudo, mail, DATE_FORMAT(user_date, \'%d/%m/%Y à %Hh%i\')
-    //     AS user_date FROM users WHERE user_role = 1 ORDER BY user_date DESC';
-    //
-    //     if ($start != -1 || $limite != -1)
-    //     {
-    //         $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
-    //     }
-    //
-    //     $req = $this->db->query($req);
-    //
-    //     while ($data = $req->fetch(\PDO::FETCH_ASSOC))
-    //     {
-    //         $user = new User($data);
-    //         $Users[] = $user;
-    //     }
-    //     return $Users;
-    // }
-
+    
     //Check if pseudo exist to connect user
     public function getPseudo($pseudo)
     {
-        $req = $this->db->prepare('SELECT id, pseudo, pass FROM users WHERE pseudo = :pseudo');
+        $req = $this->db->prepare('SELECT id, pseudo, pass, user_role FROM users WHERE pseudo = :pseudo');
 
         $req->bindValue('pseudo', $pseudo);
 
@@ -125,7 +99,7 @@ class UserManager extends Manager
     public function add(User $user)
     {
         $req = $this->db->prepare('INSERT INTO users(pseudo, mail, pass, user_date, user_role)
-        VALUES(:pseudo, :mail, :pass, NOW(), 0)');
+        VALUES(:pseudo, :mail, :pass, NOW(), 1)');
 
         $req->bindValue(':pseudo', $user->pseudo());
         $req->bindValue(':mail', $user->mail());

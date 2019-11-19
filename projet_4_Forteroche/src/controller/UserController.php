@@ -16,7 +16,7 @@ class UserController
     //Add user
     public function addUser($pseudo, $mail, $pass)
     {
-        $User = new User([$data]);
+        $User = new User(['data']);
 
         $User->setPseudo($pseudo);
         $User->setMail($mail);
@@ -29,15 +29,15 @@ class UserController
     //Delete user
     public function deleteU($id)
     {
-        if(isset($_GET['id']) && $_GET['id'] > 0)
-        {
+        // if(isset($_GET['id']) && $_GET['id'] > 0)
+        // {
             $User = $this->user->delete($id);
-        }
-        else
-        {
-            throw new \Exception("impossiblme de supprimer le commentaire");
-
-        }
+        // }
+        // else
+        // {
+        //     throw new \Exception("impossiblme de supprimer le compte");
+        //
+        // }
     }
     //Call verifPseudo method
     public function pseudoExist($pseudo)
@@ -81,7 +81,7 @@ class UserController
     //Get single user infos
     public function getOneUser($id)
     {
-        $user = $this->user->getUser($id);
+    $user = $this->user->getUser($id);
 
         return $user;
     }
@@ -105,6 +105,7 @@ class UserController
             {
                 $_SESSION['id'] = $user['id'];
                 $_SESSION['pseudo'] = $user['pseudo'];
+                $_SESSION['user_role'] = $user['user_role'];
             }
             else
             {

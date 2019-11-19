@@ -45,7 +45,7 @@
 
     <div class="content">
         <?php foreach ($Comments as $data): ?>
-            <a href="index.php?action=listComments&id=<?= $data->id()?>">
+            <a href="index.php?action=signleCom&id=<?= $data->id()?>">
                 <div class="commentBloc2">
 
                     <p>

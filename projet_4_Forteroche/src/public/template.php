@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,7 +10,6 @@
     <link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/src/public/css/style.css"/>
     <link rel="stylesheet" href="/src/public/faw/css/all.min.css"/>
-    <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css"> -->
 </head>
 
 <header class="top">
@@ -24,31 +22,42 @@
         <a href="/index.php?action=post">Les articles</a>
         <a href="/index.php?action=AdminConnexion">Connexion</a>
         <a href="/index.php?action=inscription">Inscription</a>
+        <a href="/index.php?action=discUser">Déconnexion</a>
     </div>
 
     <div id="ID_Utilisateur">
         <!-- <a href="/index.php?action=Admin"> -->
-            <i class="fas fa-user-edit"></i>
-            <?php
-            if(isset($_SESSION['pseudo']) && isset($_SESSION['id']))
-            {
-                ?>
+        <i class="fas fa-user-edit"></i>
+        <?php
+        if(isset($_SESSION['pseudo']) && isset($_SESSION['id']))
+        {
+            ?>
+            <?php if($_SESSION['user_role'] == 2) {?>
                 <a href="/index.php?action=Admin"> <?php echo  $_SESSION['pseudo']; ?> </a>
-                <?php
-            }
-            else {
-                ?>
-                <a href="index.php?action=AdminConnexion">Connexion</a>
+            <?php }
+            elseif ($_SESSION['user_role'] == 1) {?>
+                <a href="/index.php?action=userInfos"> <?= $_SESSION['pseudo']?></a>
                 <?php
             }
             ?>
+            <?php
+        }
+        else
+        {
+            ?>
+            <a href="index.php?action=AdminConnexion">Connexion</a>
+            <?php
+        }
+        ?>
         <!-- </a> -->
     </div>
 </header>
 
 <body>
 
+
     <?= $content?>
+    
 
     <footer>
         <p> COPYRIGHT </p>
@@ -57,11 +66,8 @@
         <script src="/src/public/js/formulaire.js" type="text/javascript"></script>
         <script src="/src/public/js/transitions.js" type="text/javascript"></script>
         <script src="/src/public/js/main.js" type="text/javascript"></script>
-        <script src="/src/public/js/tinymce/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
-        <!-- <script src="/src/public/js/tinymce/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
-        <script src="/src/public/js/wysiwyg.js" type="text/javascript"></script> -->
-        <!-- <script src="public/js/transition_header.js" type="text/javascript"></script> -->
-        <!--  -->
+        <script src="/src/public/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
+        <script src="/src/public/js/wysiwyg.js" type="text/javascript"></script>
     </footer>
 </body>
 </html>

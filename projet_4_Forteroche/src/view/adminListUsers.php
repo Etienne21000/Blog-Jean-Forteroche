@@ -32,8 +32,7 @@
                         </p>
 
                         <div class="actions">
-                            <button type="button" name="update" class="button1"><a href="index.php?action=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
-                            <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteCom&amp;id=<?= $data->id()?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
+                            <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteUser&amp;id=<?= $data->id()?>">Supprimer le compte <i class="fas fa-trash-alt"></i></a></button>
                         </div>
                     </div>
                 </a>
