@@ -14,6 +14,7 @@ class CommentManager extends Manager
     public function getComments($id)
     {
         $Comments = [];
+
         $req = $this->db->prepare('SELECT id, post_id, author, comment, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
         AS comment_date FROM commentaires WHERE post_id = :post_id && report = 0 ORDER BY comment_date DESC LIMIT 0, 5');
 
@@ -38,9 +39,6 @@ class CommentManager extends Manager
     {
         $Comments = [];
 
-        // $req = 'SELECT commentaires.id, commentaires.user_id, commentaires.comment, commentaires.author AS author, users.pseudo AS pseudo, DATE_FORMAT(commentaires.comment_date, \'%d/%m/%Y à %Hh%i\')
-        // AS comment_date FROM commentaires INNER JOIN users ON commentaires.user_id = users.id AND author = pseudo WHERE commentaires.report = 0 ORDER BY comment_date DESC';
-
         $req = 'SELECT c.id, c.user_id, c.comment, c.author, u.pseudo, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
         AS comment_date FROM commentaires AS c INNER JOIN users AS u ON c.user_id = u.id WHERE report = 0 ORDER BY comment_date DESC';
 
@@ -60,16 +58,14 @@ class CommentManager extends Manager
     }
 
     /*-------------------------
-    Get comment by id à revoir
-    dans le controller et index
+    Get comment by id
     --------------------------*/
-    public function getCom($id /*, $report*/)
+    public function getCom($id)
     {
-        $req = $this->db->prepare('SELECT id, post_id, author, comment,/* report*/ DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires WHERE id = :id /*&& report = :report*/');
+        $req = $this->db->prepare('SELECT id, post_id, author, comment,DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
+        AS comment_date FROM commentaires WHERE id = :id');
 
         $req->bindValue(':id', $id, \PDO::PARAM_INT);
-        // $req->bindValue(':report', $report);
 
         $req->execute();
 
@@ -141,22 +137,6 @@ class CommentManager extends Manager
 
         return $report;
     }
-
-    // Create comment method (user)
-    // public function addComment($post_id, $user_id, $comment)
-    // {
-    //     $req = $this->db->prepare('INSERT INTO commentaires(post_id, user_id, comment, comment_date, report)
-    //     VALUES(?,?,?, NOW(), 0)');
-    //     $newComment = $req->execute([
-    //         $post_id,
-    //         $user_id,
-    //         $author,
-    //         $comment
-    //     ]);
-    //
-    //     return $newComment;
-    // }
-
 
     public function addComment(Comment $comment)
     {

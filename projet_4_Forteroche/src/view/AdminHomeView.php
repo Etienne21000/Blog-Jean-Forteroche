@@ -49,11 +49,11 @@
                 <div class="commentBloc2">
 
                     <p>
-                        <?php echo htmlspecialchars($data->author()); ?>
+                        <?= htmlspecialchars($data->author()); ?>
                     </p>
 
                     <p>
-                        <?php echo htmlspecialchars($data->comment_date()); ?>
+                        <?= htmlspecialchars($data->comment_date()); ?>
                     </p>
 
                     <p>
@@ -118,17 +118,12 @@
         <?php foreach ($Users as $data): ?>
             <a href="index.php?action=singleUser&id=<?= $data->id(); ?>">
                 <div class="userBloc">
-
                     <p>
                         <?= htmlspecialchars($data->pseudo()); ?>
-                    </p>
-
-                    <p>
+                        <br>
                         <?= htmlspecialchars($data->mail()); ?>
-                    </p>
-
-                    <p>
-                        inscrit depuis le :  <?= htmlspecialchars($data->user_date()); ?>
+                        <br>
+                        inscrit depuis le :  <?php echo htmlspecialchars($data->user_date()); ?>
                         <br>
                         <?= htmlspecialchars($data->num_com()); ?> commentaires posté
                     </p>

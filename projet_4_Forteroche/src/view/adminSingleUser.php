@@ -16,7 +16,7 @@
         </p>
 
         <p>
-            <?=  'inscrit le : ' . htmlspecialchars($user->user_date()); ?>
+            <?=  'inscrit depuit le : ' . htmlspecialchars($user->user_date()); ?>
         </p>
 
         <p>

@@ -46,7 +46,7 @@ class UserManager extends Manager
         }
         return $Users;
     }
-    
+
     //Check if pseudo exist to connect user
     public function getPseudo($pseudo)
     {

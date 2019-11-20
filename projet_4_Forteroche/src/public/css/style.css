@@ -40,16 +40,52 @@ p
     position: fixed;
     z-index: 99;
     background-color: rgba(69, 158, 192, 0.6);
-    /* background-color: #459EC0;*/
-    /* box-shadow: 0 8px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1); */ */
 }
 
-/* .top-scroll
+.top-Admin
 {
-background-color: rgba(69, 158, 192, 0.8);
-background-color: #459EC0;
-box-shadow: 0 8px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1);
-} */
+    height: 60px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    position: fixed;
+    z-index: 99;
+    background-color: #fff;
+}
+
+.menu_ham_admin span
+{
+    height: 3px;
+    background: rgb(69, 158, 192);
+    width: 100%;
+    position: absolute;
+    top: 20px;
+    left: 0;
+}
+
+.menu_ham_admin span:before
+{
+    content:'';
+    height: 3px;
+    background: rgb(69, 158, 192);
+    width: 100%;
+    position: absolute;
+    top: -10px;
+    left: 0;
+}
+
+.menu_ham_admin span:after
+{
+    content:'';
+    height: 3px;
+    background: rgb(69, 158, 192);
+    width: 100%;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
 
 #ID_Utilisateur
 {
@@ -58,8 +94,17 @@ box-shadow: 0 8px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4
     text-align: justify;
     margin-top:  20px;
     margin-right: 20px;
-    /* line-height: 1.7em; */
     color: #fff;
+}
+
+#ID_Utilisateur_admin
+{
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    text-align: justify;
+    margin-top:  20px;
+    margin-left: 70px;
+    color: rgb(69, 158, 192);
 }
 
 /*-------------------------
@@ -78,11 +123,22 @@ Menu
     border-radius: 5px; */
 }
 
+.menu_ham_admin
+{
+    height: 30px;
+    width: 30px;
+    position: relative;
+    margin-left: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    /* border: 1px solid #fff;
+    border-radius: 5px; */
+}
+
 .menu_ham span
 {
     height: 3px;
     background: #fff;
-    /* background: linear-gradient(45deg, rgba(221,0,107,1) 0%, rgb(235,105,7) 100%); */
     width: 100%;
     position: absolute;
     top: 20px;
@@ -140,7 +196,43 @@ Menu
     color: #11B6FF;
 }
 
+.menu_admin
+{
+    height: 200px;
+    width: 200px;
+    background-color: #fff;
+    /* background-color: rgba(69, 158, 192, 0.6); */
+
+
+}
+
+.menu_admin a
+{
+    color: #fff;
+    text-decoration: none;
+    font-family: 'Special Elite', cursive;
+    font-size: 1em;
+    text-align: left;
+    display: block;
+    padding-top: 30px;
+    padding-left: 50px;
+}
+
+.menu_admin a:hover
+{
+    /* transform: scale(1.1); */
+    color: #11B6FF;
+}
+
 .nav
+{
+    margin-left: -100%;
+    position: absolute;
+    margin-top: 50px;
+    transition-duration: 0.9s;
+}
+
+.nav_admin
 {
     margin-left: -100%;
     position: absolute;
@@ -159,7 +251,18 @@ Menu
     height: auto;
     padding-bottom: 30px;
     background-color: rgba(69, 158, 192, 0.6);
+}
 
+.nav_open_admin
+{
+    margin-left: 0;
+    margin-top: 48px;
+    transition-duration: 0.5s;
+    z-index: 99;
+    background-color: transparent;
+    height: auto;
+    padding-bottom: 30px;
+    background-color: rgb(69, 158, 192);
 }
 
 #banniere
@@ -755,6 +858,11 @@ Admin Home View
     font-family: roboto;
 }
 
+.Scroll
+{
+    display: none;
+}
+
 #contentAdminView
 {
     display: flex;
@@ -771,9 +879,10 @@ background: #000;
 color: #fff;
 } */
 
-#asideAdmin
+.asideAdmin
 {
     width: 230px;
+    /* display: none; */
     /* position: fixed; */
 }
 
@@ -821,7 +930,7 @@ background-color: rgba(0,0,0,0.12);
     transform: translateX(5px);
 }
 
-.fa-tachometer-alt, .fa-list-ul
+.fa-tachometer-alt, .fa-list-ul, .fa-igloo
 {
     font-size: 1em;
     color: dodgerblue;
@@ -852,7 +961,10 @@ margin-right: 10px;
     align-items: flex-start;
     margin: 70px 20px 20px 20px;
     padding: 0 60px;
-    /* box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1); */
+
+
+    /* align-items: center; */
+
 }
 
 #blocInfos
@@ -1021,4 +1133,196 @@ Inscription form
     display: flex;
     flex-direction: column;
     background-color: red;
+}
+
+/*----------------------------
+Media quieries 300px - 768px
+-----------------------------*/
+
+@media all and (min-width: 300px) and (max-width: 320px)
+{
+}
+
+@media all and (min-width: 321px) and (max-width: 767px)
+{
+
+    /*------------- Home page -------------*/
+    #ID_Utilisateur_admin
+    {
+        margin-left: 12px;
+    }
+
+    .reveal
+    {
+        opacity : 1;
+        transform: translateY(0);
+    }
+
+
+    #banniere_description h1
+    {
+        font-size: 5em;
+    }
+
+    .titre
+    {
+        font-size: 1em;
+    }
+
+    #bio
+    {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .presentation
+    {
+        width: 90%;
+    }
+
+    .general
+    {
+        margin: 14px 10px 10px 10px;
+    }
+
+    .general .reveal
+    {
+        display: none;
+    }
+
+    .article
+    {
+        flex-direction: column;
+        flex-wrap: nowrap;
+    }
+
+    .articleBloc
+    {
+        height: auto;
+        width: 80%;
+    }
+
+    /*------------- Admin connect -------------*/
+
+    .Admin
+    {
+        width: 85%;
+    }
+
+    #form-utilisateur, #form-mp, #form-mail
+    {
+        width: 100%;
+    }
+
+    .connexion
+    {
+        padding-bottom: 0;
+    }
+
+    /*------------- Admin Home page -------------*/
+
+    #contentAdminView
+    {
+        flex-direction: column;
+        margin-top:  0;
+    }
+
+    #blocInfos
+    {
+        width: 100%;
+    }
+
+    .asideAdmin
+    {
+        width: 90%;
+        padding-left: 10px;
+        background-color: #fff;
+        /* display: none; */
+        transition : all .2s ease-in-out;
+    }
+
+    #adminList
+    {
+        padding: 0;
+        /* display: none; */
+        /* padding-inline-start: 40px; */
+    }
+
+    .Scroll
+    {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .blocAdmin
+    {
+        width: 95%;
+        padding: 10px;
+        box-shadow: none;
+    }
+
+    .content
+    {
+        width: 88%%;
+        flex-direction: column;
+    }
+
+    .articleBloc2, .allComments
+    {
+        width: 90%;
+        padding: 0 15px;
+        margin: 0 0px 10px 0;
+    }
+
+    .generalAdmin
+    {
+        padding: 0;
+        margin: 45px 5px 10px 5px;
+        width: 95%;
+    }
+
+    .commentBloc2, .userBloc
+    {
+        width: 90%;
+        margin: 0 0px 10px 0;
+        padding: 1px 15px;
+    }
+
+    .actions
+    {
+        justify-content: space-around;
+    }
+
+    .button1, .button2, .button3
+    {
+        margin-right: 0;
+    }
+
+    #date
+    {
+        font-size: 1em;
+    }
+
+    /*------------- Forms users -------------*/
+
+    #form-wrapper
+    {
+        width: 85%;
+    }
+
+    #form-comment
+    {
+        width: 95%;
+    }
+
+    #form-pseudo
+    {
+        width: 95%;
+    }
+
+    /* .menuScroll
+    {
+        width: 100%;
+    } */
 }

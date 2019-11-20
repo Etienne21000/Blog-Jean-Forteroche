@@ -20,9 +20,13 @@
     <div class="menu nav">
         <a href="/index.php?action=Accueil"> Le blog</a>
         <a href="/index.php?action=post">Les articles</a>
-        <a href="/index.php?action=AdminConnexion">Connexion</a>
-        <a href="/index.php?action=inscription">Inscription</a>
-        <a href="/index.php?action=discUser">Déconnexion</a>
+        <?php if(!isset($_SESSION['id']) && !isset($_SESSION['pseudo'])):?>
+            <a href="/index.php?action=AdminConnexion">Connexion</a>
+            <a href="/index.php?action=inscription">Inscription</a>
+        <?php endif; ?>
+        <?php if(isset($_SESSION['id']) && isset($_SESSION['pseudo'])): ?>
+            <a href="/index.php?action=discUser">Déconnexion</a>
+        <?php endif;?>
     </div>
 
     <div id="ID_Utilisateur">
@@ -57,12 +61,14 @@
 
 
     <?= $content?>
-    
+
 
     <footer>
         <p> COPYRIGHT </p>
-        <script src="/src/public/js/ajax.js" type="text/javascript"></script>
+        <!-- <script src="/src/public/js/ajax.js" type="text/javascript"></script> -->
         <script src="/src/public/js/menu.js" type="text/javascript"></script>
+        <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script>
+        <!-- <script src="/src/public/js/menuAdmin.js" type="text/javascript"></script> -->
         <script src="/src/public/js/formulaire.js" type="text/javascript"></script>
         <script src="/src/public/js/transitions.js" type="text/javascript"></script>
         <script src="/src/public/js/main.js" type="text/javascript"></script>

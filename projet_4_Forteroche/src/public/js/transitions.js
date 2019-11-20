@@ -5,7 +5,15 @@ const options = {
     threshold: ratio
 };
 
+// getFocus(){
+//     if(screen.width <= 1023){
+//         this.aside.focus();
+//         this.aside.scrollIntoView({behavior:"smooth"});
+//     }
+// };
+
 const handleIntersect = function(entries, observer){
+    // this.getFocus();
     entries.forEach(function(entry){
         if(entry.intersectionRatio > ratio)
         {

@@ -13,7 +13,6 @@ class Form {
         this.formOpen.addEventListener('click', this.openForm.bind(this));
         this.cross.addEventListener('click', this.closeForm.bind(this));
         this.formUpdate.forEach(function(elem){
-            //Plutot faire une boucle for pour la compatibilité
             elem.addEventListener('click', this.openUpdate.bind(this));
         }.bind(this));
         this.crossUpdate.addEventListener('click', this.closeUpdate.bind(this));

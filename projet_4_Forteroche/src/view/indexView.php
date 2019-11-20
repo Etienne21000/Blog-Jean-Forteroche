@@ -16,7 +16,7 @@
 		<div id="slider">
 			<div class="slide">
 				<span id="calque"> </span>
-				<img src="src/public/images/alaska3.jpg" alt="glacier Alaska"/>
+				<img src="src/public/images/alaska1.jpg" alt="glacier Alaska"/>
 			</div>
 		</div>
 	</section>
@@ -73,7 +73,7 @@
 							<h3>
 								<?php echo htmlspecialchars($data->title()); ?>
 							</h3>
-							<em> <?php echo htmlspecialchars($data->creation_date()); ?></em>
+							<em> <?php echo htmlspecialchars($data->creation_date() /*== $data->edition_date() ? '-' : $data->edition_date()->format('d/m/Y à H/hi')*/); ?></em>
 						</header>
 
 						<!-- <p> -->

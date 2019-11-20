@@ -12,20 +12,9 @@
     <link rel="stylesheet" href="/src/public/faw/css/all.min.css"/>
 </head>
 
-<header class="top">
-    <div class="menu_ham">
-        <span></span>
-    </div>
+<header class="top-Admin">
 
-    <div class="menu nav">
-        <a href="/index.php?action=Accueil"> Le blog</a>
-        <a href="/index.php?action=post">Les articles</a>
-        <a href="/index.php?action=AdminConnexion">Connexion</a>
-        <a href="/index.php?action=inscription">Inscription</a>
-        <a href="/index.php?action=discUser">Déconnexion</a>
-    </div>
-
-    <div id="ID_Utilisateur">
+    <div id="ID_Utilisateur_admin">
         <a href="/index.php?action=Accueil" title="retour à l'accueil du site">
             <i class="fas fa-user-edit"></i>
             <?php
@@ -52,7 +41,15 @@
         </header>
 
         <div id="contentAdminView">
-            <aside id="asideAdmin">
+            <!-- <div class="menuScroll"></div> -->
+            <a href="#adminList" class="Scroll">
+                <p>Menu
+                    <i class="fas fa-chevron-down"></i>
+                </p>
+            </a>
+
+
+            <aside class="asideAdmin">
                 <ul id="adminList">
                     <?php if($_SESSION['user_role'] == 2):?>
                         <li class="menuAdmin"><a href="index.php?action=Admin"><i class="fas fa-tachometer-alt"></i>Tableau de bord</a></li>
@@ -61,9 +58,11 @@
                         <li class="menuAdmin"><a href="index.php?action=reportList"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $countReport . '</em>)';?></a></li>
                         <li class="menuAdmin"><a href="index.php?action=listUsers"><i class="fas fa-list-ul"></i>Utilisateurs <?= '(' . $countUsers . ')'; ?> </a></li>
                     <?php endif; ?>
+                    <li class="menuAdmin"><a href="index.php?action=Accueil"><i class="fas fa-igloo"></i>Accueil</a></li>
                     <li class="menuAdminDeco"><a href="index.php?action=discUser"><i class="fas fa-power-off"></i> Deconnexion</a></li>
                 </ul>
             </aside>
+
             <div id="blocInfos">
                 <?= $content?>
             </div>
@@ -72,8 +71,10 @@
 
     <footer>
         <p> COPYRIGHT </p>
-        <script src="/src/public/js/ajax.js" type="text/javascript"></script>
-        <script src="/src/public/js/menu.js" type="text/javascript"></script>
+        <!-- <script src="/src/public/js/ajax.js" type="text/javascript"></script> -->
+        <!-- <script src="/src/public/js/menu.js" type="text/javascript"></script> -->
+        <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script>
+        <!-- <script src="/src/public/js/menuAdmin.js" type="text/javascript"></script> -->
         <script src="/src/public/js/formulaire.js" type="text/javascript"></script>
         <script src="/src/public/js/transitions.js" type="text/javascript"></script>
         <script src="/src/public/js/main.js" type="text/javascript"></script>
