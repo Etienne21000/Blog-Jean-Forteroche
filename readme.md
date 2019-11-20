@@ -14,3 +14,7 @@ Les lecteurs doivent pouvoir "signaler" les commentaires pour que ceux-ci remont
 L'interface d'administration sera protégée par mot de passe. La rédaction de billets se fera dans une interface WYSIWYG basée sur TinyMCE, pour que Jean n'ait pas besoin de rédiger son histoire en HTML (on comprend qu'il n'ait pas très envie !).
 
 Vous développerez en PHP sans utiliser de framework pour vous familiariser avec les concepts de base de la programmation. Le code sera construit sur une architecture MVC. Vous développerez autant que possible en orienté objet (au minimum, le modèle doit être construit sous forme d'objet).<br>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0f2f996d48d85f1ddb97a6df8c4c735de2f0b193
