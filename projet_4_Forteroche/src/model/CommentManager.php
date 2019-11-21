@@ -39,8 +39,8 @@ class CommentManager extends Manager
     {
         $Comments = [];
 
-        $req = 'SELECT c.id, c.user_id, c.comment, c.author, u.pseudo, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires AS c INNER JOIN users AS u ON c.user_id = u.id WHERE report = 0 ORDER BY comment_date DESC';
+        $req = 'SELECT id, user_id, comment, author, DATE_FORMAT(comment_date, \'%d/%m/%Y à %Hh%i\')
+        AS comment_date FROM commentaires WHERE report = 0 ORDER BY comment_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
