@@ -17,7 +17,7 @@ class PostManager extends Manager
         $Posts = [];
 
         $req = 'SELECT b.id, b.title, b.content, DATE_FORMAT(b.creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date, COUNT(c.id) AS num_com FROM billets AS b LEFT OUTER JOIN commentaires AS c
+        AS creation_date, COUNT(c.id) AS num_com FROM billets AS b LEFT JOIN commentaires AS c
         ON b.id = c.post_id GROUP BY b.id ORDER BY creation_date DESC';
 
         if ($start != -1 || $limite != -1)
@@ -45,8 +45,9 @@ class PostManager extends Manager
     //Get post by id
     public function getOne($id)
     {
-        $req = $this->db->prepare('SELECT id, title, content, DATE_FORMAT(creation_date, \'%d/%m/%Y à %Hh%i\')
-        AS creation_date FROM billets WHERE id = :id');
+        $req = $this->db->prepare('SELECT b.id, b.title, b.content, DATE_FORMAT(b.creation_date, \'%d/%m/%Y à %Hh%i\')
+        AS creation_date,COUNT(c.id) AS num_com FROM billets AS b LEFT JOIN commentaires AS c
+        ON b.id = c.post_id WHERE b.id = :id AND c.report = 0');
 
         $req->bindValue(':id', $id, \PDO::PARAM_INT);
         $req->execute();
@@ -87,6 +88,5 @@ class PostManager extends Manager
         $req->bindValue(':id', $post->id(), \PDO::PARAM_INT);
 
         $req->execute();
-
     }
 }

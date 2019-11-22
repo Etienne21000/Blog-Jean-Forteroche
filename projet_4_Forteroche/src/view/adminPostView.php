@@ -3,8 +3,6 @@
 <?php  ob_start(); ?>
 
 <article class="blocAdmin">
-    <a href="index.php?action=postAdmin"> <i class="fas fa-arrow-circle-left"></i> retour</a>
-
     <article class="articleAdmin">
         <header class="titre">
             <h3>
@@ -23,6 +21,33 @@
         <!-- <p> -->
             <?= html_entity_decode($post->content(), ENT_HTML5, 'UTF-8'); ?>
         <!-- </p> -->
+    </article>
+
+    <p>
+        <?= htmlspecialchars($post->num_com());?> <a href="">commentaires postés</a>
+    </p>
+
+    <article class="commentsPost">
+
+    	<?php foreach ($Comments as $data): ?>
+    		<p class="author">
+
+    			<?= htmlspecialchars($data->pseudo()); ?>
+    			le
+    			<?= htmlspecialchars($data->comment_date()); ?>
+    		</p>
+
+    		<div class="comment">
+    			<p>
+    				<?= nl2br(html_entity_decode($data->comment())); ?>
+    			</p>
+                <div class="actions">
+                    <button type="button" name="signleCom" class="button1"><a href="index.php?action=signleCom&id=<?= $data->id()?>">Voir le commentaire </a></button>
+                </div>
+    		</div>
+
+    	<?php endforeach; ?>
+
     </article>
 
 </article>

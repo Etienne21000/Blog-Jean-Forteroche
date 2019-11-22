@@ -86,26 +86,4 @@ class PostController
 
         $this->post->update($Post);
     }
-
-    // public function updatePost($id, $title, $content)
-    // {
-    //     $this->post->update($id, $title, $content);
-    // }
-
 }
-
-// public function comByPost()
-// {
-//     $num_com = $this->post->countComByPost();
-//
-//     return $num_com;
-// }
-
-// public function addPost($id, $title, $content)
-// {
-//     $Posts = $this->post->add($title, $content);
-//     if($Posts === false)
-//     {
-//         throw new Exception('impossible d\'ajouter votre article');
-//     }
-// }

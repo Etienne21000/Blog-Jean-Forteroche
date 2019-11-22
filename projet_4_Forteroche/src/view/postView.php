@@ -15,111 +15,79 @@
 			</header>
 
 			<p>
-				<?= html_entity_decode($post->content(), ENT_HTML5, 'UTF-8'); ?>
-
+				<?= html_entity_decode($post->content()); ?>
 			</p>
-			<em><a href="#form" class="js-form" title="Répondre"><i class="fas fa-reply"></i></a></em>
+			<?php if($_SESSION):?>
+				<em>
+					<a href="#form" class="js-form" title="Répondre"><i class="fas fa-reply"></i></a>
+				</em>
+			<?php endif; ?>
+			<?php if(!$_SESSION):?>
+				<p>
+					<a href="index.php?action=AdminConnexion"><i class="fas fa-sign-in-alt"></i>Connectez-vous pour laisser un commentaire</a>
+				</p>
+			<?php endif; ?>
+		</article>
+	</div>
 
-			<!-- <div class="icons">
-			<a href="#update" class="js-update" title="Mettre à jour"><i class="fas fa-comment-dots"></i></a>
-		</div> -->
+	<article class="commentaires">
+		<header class="titre">
+			<h4>Retrouvez les derniers commentaires</h4>
+		</header>
 
-		<a href="index.php?action=Accueil">Retour à l'accueil</a>
+		<?php foreach ($Comments as $data): ?>
+			<p class="author">
+
+				<strong><?= htmlspecialchars($data->pseudo()); ?>
+				</strong>
+				le
+				<?= htmlspecialchars($data->comment_date()); ?>
+			</p>
+
+			<div class="comment">
+				<p>
+					<?= nl2br(html_entity_decode($data->comment())); ?>
+					<div class="icons">
+						<a href="index.php?action=reportComment&id=<?= $data->id(); ?>" title="Signaler"><i class="fas fa-exclamation-circle"></i></a>
+					</div>
+				</p>
+			</div>
+		<?php endforeach; ?>
+
+
 	</article>
-</div>
-
-<article class="commentaires">
-	<header class="titre">
-		<h4>Retrouvez les derniers commentaires</h4>
-	</header>
-
-	<?php foreach ($Comments as $data): ?>
-		<p class="author">
-
-			<strong><?= htmlspecialchars($data->pseudo()); ?>
-			</strong>
-			le
-			<?= htmlspecialchars($data->comment_date()); ?>
-		</p>
-
-		<div class="comment">
-			<p>
-				<?= nl2br(html_entity_decode($data->comment())); ?>
-				<div class="icons">
-					<a href="index.php?action=reportComment&id=<?= $data->id(); ?>" title="Signaler"><i class="fas fa-exclamation-circle"></i></a>
-				</div>
-			</p>
-		</div>
-	<?php endforeach; ?>
-
-	<!-- <em><a href="#form" class="js-form" title="Répondre"><i class="fas fa-reply"></i></a></em> -->
-
-</article>
 </section>
 
-<!--
-A supprimer
--->
+<aside id="form" aria-hidden="true" role="dialog" aria-labelledby="titre-form">
+	<article id="form-wrapper">
+		<i class="fas fa-times" id="cross"></i>
+		<header class="titre titre-form">
+			<h4>Laissez un commentaire</h4>
+		</header>
+		<?php /*foreach ($Posts as $data):*/ ?>
+			<form action="index.php?action=addComment&amp;id=<?= $post->id(); ?>" method="POST">
+				<p>
+					<?php /*echo $_SESSION['pseudo']; */?>
+					<br>
+					<label for="form-pseudo">Pseudo</label>
+					<br>
+					<input type="text" name="author" id="form-pseudo" value="<?php echo $_SESSION['pseudo']; ?>" required/>
+				</p>
 
-	<aside id="form" aria-hidden="true" role="dialog" aria-labelledby="titre-form">
-		<article id="form-wrapper">
-			<i class="fas fa-times" id="cross"></i>
-			<header class="titre titre-form">
-				<h4>Laissez un commentaire</h4>
-			</header>
-			<?php /*foreach ($Posts as $data):*/ ?>
-				<form action="index.php?action=addComment&amp;id=<?= $post->id(); ?>" method="POST">
-					<p>
-						<?php /*echo $_SESSION['pseudo']; */?>
-						<br>
-						<label for="form-pseudo">Pseudo</label>
-						<br>
-						<input type="text" name="author" id="form-pseudo" value="<?php echo $_SESSION['pseudo']; ?>" required/>
-					</p>
+				<p>
+					<label for="form-comment">message</label>
+					<br>
+					<textarea type="text" name="comment" id="form-comment" placeholder="message" required></textarea>
+				</p>
 
-					<p>
-						<label for="form-comment">message</label>
-						<br>
-						<textarea type="text" name="comment" id="form-comment" placeholder="message" required></textarea>
-					</p>
+				<p>
+					<button type="submit" value="poster" name="submit" id="submit_btn">poster</button>
+				</p>
+			</form>
+		</article>
 
-					<p>
-						<button type="submit" value="poster" name="submit" id="submit_btn">poster</button>
-					</p>
-				</form>
-			</article>
+	</aside>
 
-		</aside>
+	<?php $content = ob_get_clean(); ?>
 
-		<!--Update form-->
-
-		<!-- <aside id="update" aria-hidden="true" role="dialog" aria-labelledby="titre-update">
-			<article id="update-wrapper">
-				<i class="fas fa-times" id="crossUpdate"></i>
-				<header class="titre titre-update">
-					<h4>Mettre à jour le commentaire</h4>
-				</header>
-				<form action="index.php?action=updateComment&amp;id=<?php/* $post->id(); */?>" method="POST">
-					<?php/* foreach ($Comment as $data): */?>
-						<p>
-							Auteur :
-							<br>
-							Commentarie à modifier :
-						</p>
-						<?php /*endforeach; */?>
-						<p>
-							<label for="form-comment">message</label>
-							<br>
-							<textarea type="text" name="comment" id="update-comment" placeholder="message" required></textarea>
-						</p>
-
-						<p>
-							<button type="submit" value="poster" name="submit" id="update_submit_btn">poster</button>
-						</p>
-					</form>
-				</article>
-			</aside> -->
-
-			<?php $content = ob_get_clean(); ?>
-
-			<?php require 'src/public/template.php'; ?>
+	<?php require 'src/public/template.php'; ?>

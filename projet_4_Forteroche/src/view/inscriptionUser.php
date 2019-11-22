@@ -22,6 +22,7 @@
 				Inscription
 			</h4>
 		</header>
+
 		<p>
 			<a href="index.php?action=AdminConnexion">Déjà inscrit ?</a>
 		</p>
@@ -56,6 +57,14 @@
 				</p>
 			</form>
 		</div>
+
+		<?php if($error)
+		{?>
+			<p id="error">
+				<?php echo $error;?>
+			</p>
+		<?php	}?>
+
 	</aside>
 
 </section>

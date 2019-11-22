@@ -444,7 +444,7 @@ Section 2
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 30px 20px;
+    margin: 20px 20px;
     /* box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1); */
 }
 
@@ -452,7 +452,7 @@ Section 2
 {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    /* justify-content: center; */
     flex-wrap: wrap;
     align-items: center;
     width: 100%;
@@ -578,7 +578,7 @@ Comments Home page
     justify-content: flex-start;
 }
 
-.fa-comment, .fa-plus-circle, .fa-reply, .fa-exclamation-circle
+.fa-comment, .fa-plus-circle, .fa-reply, .fa-exclamation-circle, .fa-sign-in-alt
 {
     font-size: 2em;
     color: #459EC0;
@@ -586,7 +586,7 @@ Comments Home page
     margin-right: 40px;
 }
 
-.fa-comment:hover, .fa-plus-circle:hover, .fa-reply:hover, .fa-exclamation-circle:hover
+.fa-comment:hover, .fa-plus-circle:hover, .fa-reply:hover, .fa-exclamation-circle:hover, .fa-sign-in-alt:hover
 {
     color: #11B6FF;
 }
@@ -627,11 +627,6 @@ Page formulaire
     margin-bottom: 10px;
 }
 
-/* #author
-{
-font-size: 1.2em;
-} */
-
 .comment
 {
     display: flex;
@@ -653,13 +648,6 @@ font-size: 1.2em;
     font-weight: 100;
     line-height: 1.4em;
 }
-
-/* #icons2
-{
-display: flex;
-flex-direction: row;
-justify-content: space-between;
-} */
 
 .fa-times
 {
@@ -684,18 +672,6 @@ justify-content: space-between;
 {
     color: #11B6FF;
 }
-
-/*Old form display*/
-/* #formulaire
-{
-width: 97%;
-display: flex;
-flex-direction: column;
-justify-content: space-between;
-align-items: center;
-margin: 20px;
-box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1);
-} */
 
 /*New form in popup*/
 #form, #update
@@ -776,12 +752,6 @@ Admin session
     box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1);
 }
 
-/* #cross
-{
-font-size: 1.4em;
-color: #459EC0;
-} */
-
 #form-pseudo, #update-pseudo, #form-title, #update-title
 {
     width: 250px;
@@ -849,6 +819,11 @@ color: #459EC0;
     color: #459EC0;
 }
 
+#error
+{
+    color: red;
+}
+
 /*---------------------------
 Admin Home View
 ----------------------------*/
@@ -873,12 +848,6 @@ Admin Home View
     width: 100%;
 }
 
-/* #adminList:focus
-{
-background: #000;
-color: #fff;
-} */
-
 .asideAdmin
 {
     width: 230px;
@@ -900,12 +869,6 @@ color: #fff;
     padding-top: 22px;
     font-family: roboto;
 }
-
-/* #adminList li:hover
-{
-background-color: rgba(0,0,0,0.12);
-/* border: none;
-} */
 
 #signalés
 {
@@ -978,6 +941,16 @@ margin-right: 10px;
     margin-bottom: 10px;
     padding: 10px 40px 10px 40px;
     box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1);
+}
+
+.commentsPost
+{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 90%;
+    margin: auto;
+    padding-bottom: 30px;
 }
 
 .content

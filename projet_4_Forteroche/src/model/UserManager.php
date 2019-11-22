@@ -12,7 +12,7 @@ class UserManager extends Manager
     public function getUser($id)
     {
         $req = $this->db->prepare('SELECT u.id, u.pseudo, u.mail, u.user_role, u.user_slug, DATE_FORMAT(u.user_date, \'%d/%m/%Y à %Hh%i\')
-        AS user_date, COUNT(c.id) AS num_com FROM users AS u LEFT OUTER JOIN commentaires AS c ON u.id = c.user_id WHERE u.id = :id');
+        AS user_date, COUNT(c.id) AS num_com FROM users AS u LEFT OUTER JOIN commentaires AS c ON u.id = c.user_id WHERE u.id = :id AND c.report = 0');
 
         $req->bindValue('id', $id, \PDO::PARAM_INT);
 

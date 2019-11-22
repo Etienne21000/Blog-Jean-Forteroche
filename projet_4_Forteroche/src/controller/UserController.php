@@ -25,19 +25,10 @@ class UserController
         $this->user->add($User);
     }
 
-
     //Delete user
     public function deleteU($id)
     {
-        // if(isset($_GET['id']) && $_GET['id'] > 0)
-        // {
-            $User = $this->user->delete($id);
-        // }
-        // else
-        // {
-        //     throw new \Exception("impossiblme de supprimer le compte");
-        //
-        // }
+        $User = $this->user->deleteUser($id);
     }
     //Call verifPseudo method
     public function pseudoExist($pseudo)
@@ -81,7 +72,7 @@ class UserController
     //Get single user infos
     public function getOneUser($id)
     {
-    $user = $this->user->getUser($id);
+        $user = $this->user->getUser($id);
 
         return $user;
     }
@@ -91,27 +82,7 @@ class UserController
     {
         $user = $this->user->getPseudo($pseudo);
 
-        if (!$user)
-        {
-            throw new \Exception("Pseudo invalide (controller)");
-        }
-
-        else
-        {
-            $passVerify = password_verify($_POST['pass'], $user['pass']);
-            // var_dump($User);
-
-            if($passVerify)
-            {
-                $_SESSION['id'] = $user['id'];
-                $_SESSION['pseudo'] = $user['pseudo'];
-                $_SESSION['user_role'] = $user['user_role'];
-            }
-            else
-            {
-                throw new \Exception("Mot de passe invalide (controller)");
-            }
-        }
+        return $user;
     }
 
     //Disconnect user

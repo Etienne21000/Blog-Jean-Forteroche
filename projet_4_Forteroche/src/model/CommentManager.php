@@ -11,19 +11,46 @@ class CommentManager extends Manager
     }
 
     //Get list of comment by post id
-    public function getComments($id)
+    // public function getComments($id)
+    // {
+    //     $Comments = [];
+    //
+    //     $req = $this->db->prepare('SELECT c.id, c.post_id, u.pseudo, c.comment, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
+    //     AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id
+    //     WHERE c.post_id = :post_id AND c.report = 0 ORDER BY comment_date DESC LIMIT 0, 5');
+    //
+    //     $req->bindValue(':post_id', $id, \PDO::PARAM_INT);
+    //
+    //     $req->execute();
+    //
+    //     while ($data = $req->fetch(\PDO::FETCH_ASSOC))
+    //     {
+    //         $comment = new Comment($data);
+    //         $Comments[] = $comment;
+    //     }
+    //     return $Comments;
+    // }
+
+    public function getComments($id, $start =-1, $limite = -1)
     {
         $Comments = [];
 
-        $req = $this->db->prepare('SELECT c.id, c.post_id, u.pseudo, c.comment, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
+        $req = 'SELECT c.id, c.post_id, u.pseudo, c.comment, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
         AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id
-        WHERE c.post_id = :post_id AND c.report = 0 ORDER BY comment_date DESC LIMIT 0, 5');
+        WHERE c.post_id = :post_id AND c.report = 0 ORDER BY comment_date DESC';
 
-        $req->bindValue(':post_id', $id, \PDO::PARAM_INT);
+        if ($start != -1 || $limite != -1)
+        {
+            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+        }
 
-        $req->execute();
+        $result = $this->db->prepare($req);
 
-        while ($data = $req->fetch(\PDO::FETCH_ASSOC))
+        $result->bindValue(':post_id', $id, \PDO::PARAM_INT);
+
+        $result->execute();
+
+        while ($data = $result->fetch(\PDO::FETCH_ASSOC))
         {
             $comment = new Comment($data);
             $Comments[] = $comment;
@@ -142,11 +169,11 @@ class CommentManager extends Manager
 
     public function addComment(Comment $comment)
     {
-        $req = $this->db->prepare('INSERT INTO commentaires(post_id, user_id, author, comment, comment_date, report)
-        VALUES(:post_id, :user_id, :author, :comment, NOW(), 0)');
+        $req = $this->db->prepare('INSERT INTO commentaires(post_id,/* user_id,*/ author, comment, comment_date, report)
+        VALUES(:post_id, /*:user_id,*/ :author, :comment, NOW(), 0)');
 
         $req->bindValue(':post_id', $comment->post_id(), \PDO::PARAM_INT);
-        $req->bindValue(':user_id', $comment->user_id(), \PDO::PARAM_INT);
+        // $req->bindValue(':user_id', $comment->user_id(), \PDO::PARAM_INT);
         $req->bindValue(':author', $comment->author());
         $req->bindValue(':comment', $comment->comment());
 

@@ -16,7 +16,7 @@
                     <div class="allComments">
                         <header class="titreh3">
                             <p>
-                                pseudo : <?= htmlspecialchars($data->pseudo()); ?>
+                                <?= htmlspecialchars($data->pseudo()); ?>
                             </p>
                         </header>
 

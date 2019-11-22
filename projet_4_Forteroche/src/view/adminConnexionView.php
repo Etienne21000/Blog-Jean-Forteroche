@@ -4,6 +4,7 @@
 
 <section class="connexion">
 	<aside class="Admin">
+
 		<header class="titre">
 			<h4>
 				Connexion
@@ -12,6 +13,8 @@
 		<p>
 			<a href="index.php?action=inscription">Pas encore inscrit ?</a>
 		</p>
+
+
 		<div id="form-admin">
 			<form action="index.php?action=connectUser" method="POST">
 				<p>
@@ -31,6 +34,12 @@
 				</p>
 			</form>
 		</div>
+		<?php if($error)
+		{?>
+			<p id="error">
+				<?php echo $error;?>
+			</p>
+		<?php	}?>
 	</aside>
 </section>
 

@@ -85,7 +85,7 @@
 						</p>
 
 						<div id="icons">
-							<em><i class="far fa-comment"><?= $data->num_com();?></i></em>
+							<em><i class="far fa-comment"></i><?= $data->num_com();?></em>
 						</div>
 					</div>
 				</a>

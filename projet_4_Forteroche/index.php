@@ -100,6 +100,7 @@ try
             if (isset($_GET['id']) && $_GET['id'] > 0)
             {
                 $reportedCom = $commentController->reportCom($_GET['id']);
+                // $post = $postController->getPost($_GET['id']);
 
                 header('Location: index.php&action=listComments&id=' . $_GET['id']);
             }
@@ -113,72 +114,102 @@ try
 
         elseif ($_GET['action'] == 'AdminConnexion')
         {
+            $error = null;
             require 'src/view/adminConnexionView.php';
         }
 
         elseif ($_GET['action'] == 'inscription')
         {
+            $error = null;
             require 'src/view/inscriptionUser.php';
         }
 
         //User inscription public
         elseif ($_GET['action'] == 'userInscription')
         {
-            $_POST['pseudo'] = htmlspecialchars($_POST['pseudo']);
-            $_POST['mail'] = htmlspecialchars($_POST['mail']);
-            $_POST['pass'] = htmlspecialchars($_POST['pass']);
-            $_POST['confirmePass'] = htmlspecialchars($_POST['confirmePass']);
-            $errors = array();
-
-            $validate = true;
-
-            //Verify pseudo
-            if(empty($_POST['pseudo']) || strlen($_POST['pseudo']) > 100 || !preg_match("#^[a-zà-ùA-Z0-9-\s_-]+$#", $_POST['pseudo']))
+            if (!empty($_POST))
             {
-                $validate = false;
-                throw new Exception("Pseudo vide ou incorrecte");
-            }
+                $_POST['pseudo'] = htmlspecialchars($_POST['pseudo']);
+                $_POST['mail'] = htmlspecialchars($_POST['mail']);
+                $_POST['pass'] = htmlspecialchars($_POST['pass']);
+                $_POST['confirmePass'] = htmlspecialchars($_POST['confirmePass']);
+                $errors = array();
 
-            //Verify mail
-            if(empty($_POST['mail']) || strlen($_POST['mail']) > 255 || !filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL))
-            {
-                $validate = false;
-                throw new Exception("Adresse mail invalide");
-            }
 
-            //Verufy passWord
-            if(empty($_POST['pass']) || strlen($_POST['pass']) > 255 || !preg_match("#^[a-zA-Z0-9_-]+.{8,}$#", $_POST['pass']))
-            {
-                $validate = false;
-                throw new Exception("Mot de passe invalide");
-                // $errors['pass'] = 'Mot de pass invalide';
-                // die();
-            }
+                $validate = true;
+                $error = null;
 
-            //Confirm pass
-            if (($_POST['pass'] !== $_POST['confirmePass']))
-            {
-                $validate = false;
-                throw new Exception("Confirmez à nouveau votre mot de passe");
-                // $errors['confirmePass'] = 'Confirmez à nouveau votre mot de passe';
-                // die();
-            }
-
-            if($validate = true)
-            {
-                // $hash_pass = $_POST['pass'];
-                if (empty($userController->pseudoExist($_POST['pseudo'])) && empty($userController->mailExist($_POST['mail'])))
+                //Verify pseudo
+                if(empty($_POST['pseudo']) || strlen($_POST['pseudo']) > 100 || !preg_match("#^[a-zà-ùA-Z0-9-\s_-]+$#", $_POST['pseudo']))
                 {
-                    $_POST['pass'] = password_hash($_POST['pass'], PASSWORD_BCRYPT);
-
-                    $userController->addUser($_POST['pseudo'], $_POST['mail'], $_POST['pass']);
-
-                    require 'src/view/adminConnexionView.php';
+                    $validate = false;
+                    $error = 5;
                 }
-                else {
-                    echo '<p>Ce pseudo est déjà utilisé ou le mail est invalide</p>';
+
+                //Verify mail
+                if(empty($_POST['mail']) || strlen($_POST['mail']) > 255 || !filter_var($_POST['mail'], FILTER_VALIDATE_EMAIL))
+                {
+                    $validate = false;
+                    $error = 6;
+                }
+
+                //Verufy passWord
+                if(empty($_POST['pass']) || strlen($_POST['pass']) > 255 || !preg_match("#^[a-zA-Z0-9_-]+.{8,}$#", $_POST['pass']))
+                {
+                    $validate = false;
+                    $error = 7;
+                }
+
+                //Confirm pass
+                if (($_POST['pass'] !== $_POST['confirmePass']))
+                {
+                    $validate = false;
+                    $error = 8;
+                }
+
+                if($validate = true)
+                {
+                    // $hash_pass = $_POST['pass'];
+                    if (empty($userController->pseudoExist($_POST['pseudo'])) && empty($userController->mailExist($_POST['mail'])))
+                    {
+                        $_POST['pass'] = password_hash($_POST['pass'], PASSWORD_BCRYPT);
+
+                        $userController->addUser(htmlspecialchars($_POST['pseudo']), htmlspecialchars($_POST['mail']), htmlspecialchars($_POST['pass']));
+
+                        // require 'src/view/adminConnexionView.php';
+                        header('Location: index.php?action=AdminConnexion');
+                    }
+                    else {
+                        $error = 9;
+                        // echo '<p>Ce pseudo est déjà utilisé ou le mail est invalide</p>';
+                    }
                 }
             }
+
+            switch ($error)
+            {
+                case 5:
+                $error = '* Pseudo invalide';
+                break;
+
+                case 6:
+                $error = '* Mail invalide';
+                break;
+
+                case 7:
+                $error = '* Mot de passe invalide';
+                break;
+
+                case 8:
+                $error = '* Confirmez à nouveau votre mot de passe';
+                break;
+
+                case 9:
+                $error = '* Ce pseudo ou cette adresse mail est déjà utilisé(e)';
+                break;
+            }
+
+            require 'src/view/inscriptionUser.php';
         }
 
         //User connection
@@ -187,38 +218,81 @@ try
             if (!empty($_POST))
             {
                 $validate = true;
+                $error = null;
 
-                //verify if empty fields occured
+                //verify if empty fields
                 if (empty($_POST['pseudo']) || empty($_POST['pass']))
                 {
-                    throw new Exception("<p>Vous n'avez pas rempli tous les champs</p>");
+                    $erreur = 1;
                     $validate = false;
                 }
 
                 //Verify length of strings
                 if (strlen($_POST['pseudo']) > 100 || strlen($_POST['pass']) > 255)
                 {
-                    throw new Exception("champ invalide (rooter)");
+                    $error = 2;
                     $validate = false;
                 }
 
                 //if form is ok validate retunr true
                 if ($validate = true)
                 {
-                    $userController->userConnect($_POST['pseudo']);
-                    // header('Location: index.php&action=Admin');
-                    // require 'src/view/AdminHomeView.php';
-                    if($_SESSION['user_role'] == 2)
+                    $user = $userController->userConnect($_POST['pseudo']);
+
+                    if (!$user)
                     {
-                        header('Location: index.php?action=Admin');
+                        $error = 3;
                     }
+
                     else
                     {
-                        header('Location: index.php?action=Accueil');
+                        $passVerify = password_verify($_POST['pass'], $user['pass']);
+
+                        if($passVerify)
+                        {
+                            $_SESSION['id'] = $user['id'];
+                            $_SESSION['pseudo'] = $user['pseudo'];
+                            $_SESSION['user_role'] = $user['user_role'];
+
+                            if($_SESSION['user_role'] == 2)
+                            {
+                                header('Location: index.php?action=Admin');
+                            }
+                            else
+                            {
+                                header('Location: index.php?action=Accueil');
+                            }
+                        }
+
+                        else
+                        {
+                            $error = 4;
+                        }
                     }
-                    // $userManager = new UserManager();
                 }
             }
+
+            switch ($error)
+            {
+                case 1:
+                $error = '* Veuillez renseigner votre pseudo';
+                break;
+
+                case 2:
+                $error = '* Veuillez renseigner votre mot de passe';
+                break;
+
+                case 3:
+                $error = '* Pseudo invalide';
+                break;
+
+                case 4:
+                $error = '* Mot de passe invalide';
+                break;
+            }
+
+            // header('Location: index.php?action=AdminConnexion');
+            require 'src/view/adminConnexionView.php';
         }
 
         //Disconnect user
@@ -227,7 +301,6 @@ try
             $userController->disconnectUser();
 
             header('Location: index.php?action=Accueil');
-            // require 'src/view/indexView.php';
         }
 
         /*---------------------------------------------------
@@ -240,21 +313,16 @@ try
 
         elseif ($_GET['action'] == 'AddPostAdmin')
         {
-            // if($_SESSION['user_role'] == 2)
-            // {
-                $countPosts = $postController->nbPost();
-                $countComs = $commentController->nbCom();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
-                require 'src/view/adminPost.php';
-            // }
+            $countPosts = $postController->nbPost();
+            $countComs = $commentController->nbCom();
+            $countUsers = $userController->nbUsers();
+            $countReport = $commentController->nbReported();
+            require 'src/view/adminPost.php';
         }
 
         elseif ($_GET['action'] == 'addPost')
         {
             //Admin session action
-            // if(isset($_SESSION['pseudo']) && $_SESSION['user_role'] = 1)
-            // {
             if(!empty($_POST['title']) && !empty($_POST['content']))
             {
             $postController->addPost(/*htmlspecialchars($_POST['title']), htmlentities($_POST['content'])*/);
@@ -266,44 +334,36 @@ try
 
             header('Location: index.php?action=postAdmin');
 
-            // require 'src/view/listPostAdminView.php';
         }
 
         elseif ($_GET['action'] == 'deletePost')
         {
-            // if($_SESSION['user_role'] == 2)
-            // {
-                if(isset($_GET['id']) && $_GET['id'] > 0)
-                {
-                    $postController->deletePost($_GET['id']);
-                }
-                else
-                {
-                    throw new Exception("Impossible de supprimer cet article. (rooter)");
-                }
-                header('Location: index.php?action=postAdmin');
-            // }
+            if(isset($_GET['id']) && $_GET['id'] > 0)
+            {
+                $postController->deletePost($_GET['id']);
+            }
+            else
+            {
+                throw new Exception("Impossible de supprimer cet article. (rooter)");
+            }
+            header('Location: index.php?action=postAdmin');
         }
 
         //Update post view
         elseif ($_GET['action'] == 'postUpdate')
         {
-            // if($_SESSION['user_role'] == 2)
-            // {
-                $countPosts = $postController->nbPost();
-                $countComs = $commentController->nbCom();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
-                $post = $postController->getPost($_GET['id']);
+            $countPosts = $postController->nbPost();
+            $countComs = $commentController->nbCom();
+            $countUsers = $userController->nbUsers();
+            $countReport = $commentController->nbReported();
+            $post = $postController->getPost($_GET['id']);
 
-                require 'src/view/adminUpdatePostView.php';
-            // }
+            require 'src/view/adminUpdatePostView.php';
         }
 
         //Update post
         elseif ($_GET['action'] == 'updatePost')
         {
-            // $post = $postController->getPost();
             if(isset($_GET['id']) && $_GET['id'] > 0)
             {
                 if(!empty($_POST['content']) && !empty($_POST['title']))
@@ -319,29 +379,20 @@ try
             {
                 throw new Exception('Aucun id de billet envoyé (rooter)');
             }
-            // header('Location: index.php?action=postAdmin');
             header('Location: index.php?action=postViewAdmins&id=' . $_GET['id']);
-            // require 'src/view/adminPostView.php';
-
-            // header('Location: index.php&action=AddPostView&id=' . $_GET['id']);
         }
 
         //Liste of all posts admin page
         elseif ($_GET['action'] == 'postAdmin')
         {
-            // if($_SESSION['user_role'] == 2)
-            // {
-                $countPosts = $postController->nbPost();
-                $countComs = $commentController->nbCom();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
+            $countPosts = $postController->nbPost();
+            $countComs = $commentController->nbCom();
+            $countUsers = $userController->nbUsers();
+            $countReport = $commentController->nbReported();
 
-                $Posts = $postController->post();
-                // $Comments = $commentController->lastCom();
-                // $Users = $userController->listUsers();
+            $Posts = $postController->post();
 
-                require 'src/view/listPostAdminView.php';
-            // }
+            require 'src/view/listPostAdminView.php';
         }
 
 
@@ -367,16 +418,13 @@ try
         //Update comment view
         elseif ($_GET['action'] == 'commentUpdate')
         {
-            // if($_SESSION['user_role'] == 2)
-            // {
-                $countPosts = $postController->nbPost();
-                $countComs = $commentController->nbCom();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
-                $Comment = $commentController->getOne($_GET['id']);
+            $countPosts = $postController->nbPost();
+            $countComs = $commentController->nbCom();
+            $countUsers = $userController->nbUsers();
+            $countReport = $commentController->nbReported();
+            $Comment = $commentController->getOne($_GET['id']);
 
-                require 'src/view/adminEditComment.php';
-            // }
+            require 'src/view/adminEditComment.php';
         }
 
         //Update comment
@@ -403,17 +451,13 @@ try
 
         elseif ($_GET['action'] == 'adminCom')
         {
-            // if($_SESSION['user_role'] == 2)
-            // {
-                $Comments = $commentController->allCom();
-                $countComs = $commentController->nbCom();
-                $countPosts = $postController->nbPost();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
+            $Comments = $commentController->allCom();
+            $countComs = $commentController->nbCom();
+            $countPosts = $postController->nbPost();
+            $countUsers = $userController->nbUsers();
+            $countReport = $commentController->nbReported();
 
-                // require 'src/view/AdminComView.php';
-                require 'src/view/adminCommentList.php';
-            // }
+            require 'src/view/adminCommentList.php';
         }
 
         //Get signle post admin à revoir
@@ -455,8 +499,6 @@ try
             }
 
             header('Location: index.php?action=reportList');
-
-            // header('Location: index.php?action=signleCom&id=' . $_GET['id']);
         }
 
         /*---------------------------
@@ -490,6 +532,7 @@ try
             if (isset($_GET['id']) && $_GET['id'] > 0)
             {
                 $post = $postController->getPost($_GET['id']);
+                $Comments = $commentController->getComAdmin($_GET['id']);
                 $countPosts = $postController->nbPost();
                 $countComs = $commentController->nbCom();
                 $countUsers = $userController->nbUsers();
@@ -561,7 +604,6 @@ try
     {
         $Posts = $postController->listPosts();
         $Comments = $commentController->lastCom();
-        // $countByPost = $commentController->nbComByPost();
 
         require 'src/view/indexView.php';
     }

@@ -67,7 +67,6 @@
 
     <div class="actions">
         <button type="button" name="listCom" class="button1"><a href="index.php?action=adminCom">Liste <i class="fas fa-list"></i></a></button>
-        <button type="button" name="editCom" class="button2"><a href="">signalés</a></button>
     </div>
 </article>
 
@@ -103,7 +102,6 @@
 
     <div class="actions">
         <button type="button" name="listComReported" class="button1"><a href="index.php?action=reportList">Liste <i class="fas fa-list"></i></a></button>
-        <button type="button" name="editCom" class="button2"><a href="">signalés</a></button>
     </div>
 </article>
 
@@ -134,7 +132,6 @@
 
     <div class="actions">
         <button type="button" name="listUser" class="button1"><a href="index.php?action=listUsers">Liste <i class="fas fa-list"></i></a></button>
-        <button type="button" name="editUser" class="button2"><a href="">Modifier</a></button>
     </div>
 </article>
 

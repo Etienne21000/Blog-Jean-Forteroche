@@ -35,12 +35,6 @@ class CommentController
         return $countComs;
     }
 
-    //Comments by post
-    // public function nbComByPost()
-    // {
-    //     $countByPost = $this->comments->countComByPost($_GET['post_id']);
-    // }
-
     // Methode Add Comment
     public function newComment(/*$post_id, $user_id, $author, $comment*/)
     {
@@ -51,35 +45,14 @@ class CommentController
         // $Comment->setAuthor($_POST['author']);
         // $Comment->setComment(htmlspecialchars($_POST['comment']));
 
-        $comment->setIdpost($_POST['post_id']);
-        $comment->setUserId($_POST['user_id']);
-        $comment->setAuthor($_POST['author']);
-        $comment->setComment($_POST['comment']);
+        $comment->setIdpost(htmlspecialchars($_POST['post_id']));
+        // $comment->setUserId(htmlspecialchars($_POST['user_id']));
+        $comment->setAuthor(htmlspecialchars($_POST['author']));
+        $comment->setComment(htmlspecialchars($_POST['comment']));
 
         $this->comments->addComment($comment);
 
     }
-
-    // public function newComment()
-    // {
-    //     $comment = new Comment([
-    //
-    //     'post_id' => ($_GET['post_id']),
-    //     'author' => ($_POST['author']),
-    //     'comment' => ($_POST['comment'])
-    // ]);
-    //
-    //     // $comment->setIdpost($_GET['post_id']);
-    //     // $comment->setAuthor($_POST['author']);
-    //     // $comment->setComment($_POST['comment']);
-    //
-    //     $this->comments->addComment($comment);
-    //
-    //     // if($newComment === false)
-    //     // {
-    //     //     throw new Exception('impossible d\'ajouter votre commentaire');
-    //     // }
-    // }
 
     //Update comment method
     public function updateCom($id, $comment)
@@ -107,6 +80,14 @@ class CommentController
 
     //Get comment by post
     public function getCom($id)
+    {
+        $Comments = $this->comments->getComments($id, $start = 0, $limite = 5);
+
+        return $Comments;
+    }
+
+    //Get comment by post Admin
+    public function getComAdmin($id)
     {
         $Comments = $this->comments->getComments($id);
 

@@ -28,7 +28,7 @@
         </p>
 
         <div class="actions">
-            <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteCom&amp;id=<?php /*echo $user->id()*/?>">Supprimer le compte <i class="fas fa-trash-alt"></i></a></button>
+            <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteUser&amp;id=<?= $user->id(); ?>">Supprimer le compte <i class="fas fa-trash-alt"></i></a></button>
         </div>
 
     </article>
