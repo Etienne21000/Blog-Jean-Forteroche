@@ -36,7 +36,7 @@
 	<?php foreach ($Comments as $data): ?>
 		<p class="author">
 
-			<strong><?= htmlspecialchars($data->author()); ?>
+			<strong><?= htmlspecialchars($data->pseudo()); ?>
 			</strong>
 			le
 			<?= htmlspecialchars($data->comment_date()); ?>

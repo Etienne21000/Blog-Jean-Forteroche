@@ -17,7 +17,7 @@
                     <header class="titreh3">
                         <p>
                             <?php /*htmlspecialchars($data->user_id()); */?>
-                            <?= htmlspecialchars($data->author()); ?>
+                            <?= htmlspecialchars($data->pseudo()); ?>
                         </p>
                     </header>
 

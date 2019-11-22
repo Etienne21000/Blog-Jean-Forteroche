@@ -12,6 +12,7 @@ class Comment extends Entity
     private $comment_date;
     private $edition_com_date;
     private $user_id;
+    private $pseudo;
 
     //Constructor
     public function __construct(array $data)
@@ -75,6 +76,14 @@ class Comment extends Entity
             $this->user_id = (int)$user_id;
     }
 
+    public function setPseudo($pseudo)
+    {
+        if(is_string($pseudo))
+        {
+            $this->pseudo = $pseudo;
+        }
+    }
+
     /*---------------------------------------
                     Getter Comments
     ----------------------------------------*/
@@ -117,5 +126,10 @@ class Comment extends Entity
     public function user_id()
     {
         return $this->user_id;
+    }
+
+    public function pseudo()
+    {
+        return $this->pseudo;
     }
 }

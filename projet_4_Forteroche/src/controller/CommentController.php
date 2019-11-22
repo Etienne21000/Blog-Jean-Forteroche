@@ -114,9 +114,9 @@ class CommentController
     }
 
     //Get one comment by id
-    public function getOne($id /*, $report*/)
+    public function getOne($id)
     {
-    $Comment = $this->comments->getCom($id /*, $report*/);
+    $Comment = $this->comments->getCom($id);
 
         return $Comment;
     }

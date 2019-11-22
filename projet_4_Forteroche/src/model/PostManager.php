@@ -9,8 +9,8 @@ class PostManager extends Manager
     }
 
     /*------------------------------
-    Test list posts
-    with limit variables
+            Get All posts
+            with variable limit
     -------------------------------*/
     public function getPosts($start = -1, $limite = -1)
     {

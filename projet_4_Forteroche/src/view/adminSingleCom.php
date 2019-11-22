@@ -8,7 +8,7 @@
     <article class="commentAdmin">
         <header class="titre">
             <h3>
-                <?= htmlspecialchars($Comment->author()); ?>
+                <?= htmlspecialchars($Comment->pseudo()); ?>
             </h3>
             <p id="date">
                 <?= 'Commentaire posté le : ' . htmlspecialchars($Comment->comment_date()); ?>

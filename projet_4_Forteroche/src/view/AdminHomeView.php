@@ -49,7 +49,7 @@
                 <div class="commentBloc2">
 
                     <p>
-                        <?= htmlspecialchars($data->author()); ?>
+                        <?= htmlspecialchars($data->pseudo()); ?>
                     </p>
 
                     <p>
@@ -85,7 +85,7 @@
                 <div class="commentBloc2">
 
                     <p>
-                        <?= htmlspecialchars($data->author()); ?>
+                        <?= htmlspecialchars($data->pseudo()); ?>
                     </p>
 
                     <p>
