@@ -10,27 +10,6 @@ class CommentManager extends Manager
         $this->db = $this->dbConnect();
     }
 
-    //Get list of comment by post id
-    // public function getComments($id)
-    // {
-    //     $Comments = [];
-    //
-    //     $req = $this->db->prepare('SELECT c.id, c.post_id, u.pseudo, c.comment, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
-    //     AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id
-    //     WHERE c.post_id = :post_id AND c.report = 0 ORDER BY comment_date DESC LIMIT 0, 5');
-    //
-    //     $req->bindValue(':post_id', $id, \PDO::PARAM_INT);
-    //
-    //     $req->execute();
-    //
-    //     while ($data = $req->fetch(\PDO::FETCH_ASSOC))
-    //     {
-    //         $comment = new Comment($data);
-    //         $Comments[] = $comment;
-    //     }
-    //     return $Comments;
-    // }
-
     public function getComments($id, $start =-1, $limite = -1)
     {
         $Comments = [];
@@ -169,12 +148,11 @@ class CommentManager extends Manager
 
     public function addComment(Comment $comment)
     {
-        $req = $this->db->prepare('INSERT INTO commentaires(post_id,/* user_id,*/ author, comment, comment_date, report)
-        VALUES(:post_id, /*:user_id,*/ :author, :comment, NOW(), 0)');
+        $req = $this->db->prepare('INSERT INTO commentaires(post_id, user_id, comment, comment_date, report)
+        VALUES(:post_id, :user_id, :comment, NOW(), 0)');
 
         $req->bindValue(':post_id', $comment->post_id(), \PDO::PARAM_INT);
-        // $req->bindValue(':user_id', $comment->user_id(), \PDO::PARAM_INT);
-        $req->bindValue(':author', $comment->author());
+        $req->bindValue(':user_id', $comment->user_id(), \PDO::PARAM_INT);
         $req->bindValue(':comment', $comment->comment());
 
         $req->execute();

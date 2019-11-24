@@ -15,7 +15,7 @@
 			</header>
 
 			<p>
-				<?= html_entity_decode($post->content()); ?>
+				<?= html_entity_decode(htmlspecialchars($post->content())); ?>
 			</p>
 			<?php if($_SESSION):?>
 				<em>
@@ -46,7 +46,7 @@
 
 			<div class="comment">
 				<p>
-					<?= nl2br(html_entity_decode($data->comment())); ?>
+					<?= nl2br(html_entity_decode(htmlspecialchars($data->comment()))); ?>
 					<div class="icons">
 						<a href="index.php?action=reportComment&id=<?= $data->id(); ?>" title="Signaler"><i class="fas fa-exclamation-circle"></i></a>
 					</div>
@@ -64,14 +64,10 @@
 		<header class="titre titre-form">
 			<h4>Laissez un commentaire</h4>
 		</header>
-		<?php /*foreach ($Posts as $data):*/ ?>
 			<form action="index.php?action=addComment&amp;id=<?= $post->id(); ?>" method="POST">
+
 				<p>
-					<?php /*echo $_SESSION['pseudo']; */?>
-					<br>
-					<label for="form-pseudo">Pseudo</label>
-					<br>
-					<input type="text" name="author" id="form-pseudo" value="<?php echo $_SESSION['pseudo']; ?>" required/>
+					<?php echo $_SESSION['pseudo']; ?>
 				</p>
 
 				<p>

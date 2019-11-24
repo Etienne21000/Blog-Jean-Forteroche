@@ -57,41 +57,33 @@ try
         {
             if(isset($_SESSION['pseudo']) && isset($_SESSION['id']))
             {
-                // if(isset($_GET['post_id']) && $_GET['post_id'] > 0)
                 if(isset($_GET['id']) && $_GET['id'] > 0)
                 {
-                    // if(isset($_GET['user_id']) && isset($_GET['user_id']) > 0)
-                    // {
-                    if(!empty($_POST['author']) && !empty($_POST['comment']))
-                    {
-                    $commentController->newComment(/*$_GET['post_id'], $_GET['user_id'], $_POST['author'], $_POST['comment']*/);
-                        header('Location: index.php?action=listComments&id=' . $_GET['id']);
+                    $user_id = $_SESSION['id'];
 
+                    if(!empty($_POST['comment']))
+                    {
+                        $commentController->newComment($_GET['id'], $user_id, htmlspecialchars($_POST['comment']));
                     }
+
                     else
                     {
                         throw new Exception("vous n'avez pas remplis tous les champs! (rooter)");
                     }
-                    // }
-                    // else
-                    // {
-                    //     throw new \Exception("Aucun identifiant d'utilisateur envoyé");
-                    // }
                 }
+
                 else
                 {
                     throw new \Exception("impossible de commenter");
                 }
-
-                // header('Location: index.php?action=listComments&id=' . $_GET['id']);
             }
 
             else
             {
                 require 'src/view/inscriptionUser.php';
-                // throw new \Exception("Vous devez être connecté pour laisser un commentaire.");
             }
 
+            header('Location: index.php?action=listComments&id=' . $_GET['id']);
         }
 
         //Report comment by user revoir la redirection id
@@ -100,7 +92,6 @@ try
             if (isset($_GET['id']) && $_GET['id'] > 0)
             {
                 $reportedCom = $commentController->reportCom($_GET['id']);
-                // $post = $postController->getPost($_GET['id']);
 
                 header('Location: index.php&action=listComments&id=' . $_GET['id']);
             }
@@ -133,7 +124,7 @@ try
                 $_POST['mail'] = htmlspecialchars($_POST['mail']);
                 $_POST['pass'] = htmlspecialchars($_POST['pass']);
                 $_POST['confirmePass'] = htmlspecialchars($_POST['confirmePass']);
-                $errors = array();
+                // $errors = array();
 
 
                 $validate = true;

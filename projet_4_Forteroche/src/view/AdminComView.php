@@ -26,7 +26,7 @@
                         publié le : <?php echo htmlspecialchars($data->comment_date()); ?>
                         <br>
 
-                        <?= nl2br(htmlspecialchars($data->comment())); ?>
+                        <?= nl2br(html_entity_decode(htmlspecialchars($data->comment()))); ?>
                     </p>
 
                     <div class="icons">

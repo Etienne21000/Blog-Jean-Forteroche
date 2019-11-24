@@ -26,7 +26,7 @@
                     publié le : <?php echo htmlspecialchars($data->comment_date()); ?>
                     <br>
 
-                    <?= substr(html_entity_decode($data->comment()),0,50) . '...'; ?>
+                    <?= substr(html_entity_decode(htmlspecialchars($data->comment())),0,50) . '...'; ?>
                 </p>
 
                 <div class="actions">

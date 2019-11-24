@@ -6,7 +6,7 @@ use model\Comment;
 
 class CommentController
 {
-    private $post;
+    // private $post;
     private $comments;
 
     public function __construct()
@@ -36,22 +36,15 @@ class CommentController
     }
 
     // Methode Add Comment
-    public function newComment(/*$post_id, $user_id, $author, $comment*/)
+    public function newComment($post_id, $user_id, $comment)
     {
-        $comment = new Comment([$data]);
+        $Comment = new Comment([$data]);
 
-        // $Comment->setIdpost($_POST['post_id']);
-        // $Comment->setUserId($_POST['user_id']);
-        // $Comment->setAuthor($_POST['author']);
-        // $Comment->setComment(htmlspecialchars($_POST['comment']));
+        $Comment->setIdpost($post_id);
+        $Comment->setUserId($user_id);
+        $Comment->setComment($comment);
 
-        $comment->setIdpost(htmlspecialchars($_POST['post_id']));
-        // $comment->setUserId(htmlspecialchars($_POST['user_id']));
-        $comment->setAuthor(htmlspecialchars($_POST['author']));
-        $comment->setComment(htmlspecialchars($_POST['comment']));
-
-        $this->comments->addComment($comment);
-
+        $this->comments->addComment($Comment);
     }
 
     //Update comment method
