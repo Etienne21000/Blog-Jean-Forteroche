@@ -21,7 +21,7 @@
 				<p>
 					<label for="form-content">Commentaire à modifier</label>
 					<br>
-					<textarea type="textarea" name="comment" cols="70" rows="30" id="full-featured-non-premium"><?= $Comment->comment();?></textarea>
+					<textarea type="textarea" name="comment" cols="70" rows="30" id="form-comment"><?= $Comment->comment();?></textarea>
 				</p>
 
 				<p>

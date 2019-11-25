@@ -13,6 +13,7 @@ class User extends Entity
     private $user_role;
     private $user_slug;
     private $num_com;
+    private $num_com_report;
 
     public function __construct(array $data)
     {
@@ -72,6 +73,11 @@ class User extends Entity
         $this->num_com = (int)$num_com;
     }
 
+    public function setNumComReport($num_com_report)
+    {
+        $this->num_com_report = (int)$num_com_report;
+    }
+
     /*---------------------------------------
     User Getters
     ----------------------------------------*/
@@ -114,6 +120,11 @@ class User extends Entity
     public function num_com()
     {
         return $this->num_com;
+    }
+
+    public function num_com_report()
+    {
+        return $this->num_com_report;
     }
 
 }

@@ -68,7 +68,7 @@
         <!-- <script src="/src/public/js/ajax.js" type="text/javascript"></script> -->
         <script src="/src/public/js/menu.js" type="text/javascript"></script>
         <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script>
-        <!-- <script src="/src/public/js/menuAdmin.js" type="text/javascript"></script> -->
+        <script src="/src/public/js/transition_home.js" type="text/javascript"></script>
         <script src="/src/public/js/formulaire.js" type="text/javascript"></script>
         <script src="/src/public/js/transitions.js" type="text/javascript"></script>
         <script src="/src/public/js/main.js" type="text/javascript"></script>

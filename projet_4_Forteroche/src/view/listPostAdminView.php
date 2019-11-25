@@ -18,14 +18,21 @@
                         <h3>
                             <?= htmlspecialchars($data->title());?>
                         </h3>
-                        <em> <?= htmlspecialchars($data->creation_date());  ?></em>
+                        <em>
+                            <?php if($data->edition_date()){
+                                echo 'Modifier le ' . htmlspecialchars($data->edition_date());
+                            }
+                            else {
+                                echo 'Créé le ' . htmlspecialchars($data->creation_date());
+                            } ?>
+                        </em>
                     </header>
 
                     <!-- <p> -->
                     <?= substr(html_entity_decode($data->content(), ENT_HTML5, 'UTF-8'),0,300) . '...'; ?>
                     <!-- </p> -->
                     <p>
-                    Cet article à été commenté <?= htmlspecialchars($data->num_com()); ?> fois.
+                        Cet article à été commenté <?= htmlspecialchars($data->num_com()); ?> fois.
                     </p>
 
                     <div class="actions">

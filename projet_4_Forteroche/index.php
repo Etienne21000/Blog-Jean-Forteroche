@@ -93,14 +93,21 @@ try
             {
                 $reportedCom = $commentController->reportCom($_GET['id']);
 
-                header('Location: index.php&action=listComments&id=' . $_GET['id']);
+                if($_SESSION['user_role'] == 2)
+                {
+                    header('Location: index.php?action=adminCom');
+                }
+
+                else
+                {
+                    header('Location: index.php&action=listComments&id=' . $_GET['id']);
+                }
             }
 
             else
             {
                 throw new \Exception("Impossible de signaler ce commentaire car aucun identifiant de commentaire envoyé (rooter)");
             }
-            // echo 'Le message a été signalé';
         }
 
         elseif ($_GET['action'] == 'AdminConnexion')
@@ -442,12 +449,18 @@ try
 
         elseif ($_GET['action'] == 'adminCom')
         {
-            $Comments = $commentController->allCom();
-            $countComs = $commentController->nbCom();
-            $countPosts = $postController->nbPost();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-
+            if($_SESSION['user_role'] == 2){
+                $Comments = $commentController->allCom();
+                $countComs = $commentController->nbCom();
+                $countPosts = $postController->nbPost();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
+            }
+            elseif ($_SESSION['user_role'] == 1)
+            {
+                $user = $userController->getOneUser($_SESSION['id']);
+                $user_report = $userController->getUserReport($_SESSION['id']);
+            }
             require 'src/view/adminCommentList.php';
         }
 
@@ -502,6 +515,7 @@ try
             {
                 echo "Vous n'avez pas accès à cette section";
             }
+
             else
             {
                 $countPosts = $postController->nbPost();
@@ -520,23 +534,31 @@ try
 
         elseif ($_GET['action'] == 'postViewAdmins')
         {
-            if (isset($_GET['id']) && $_GET['id'] > 0)
+            if($_SESSION['user_role'] == 1)
             {
-                $post = $postController->getPost($_GET['id']);
-                $Comments = $commentController->getComAdmin($_GET['id']);
-                $countPosts = $postController->nbPost();
-                $countComs = $commentController->nbCom();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
-                // $Comment = $commentController->getCom();
+                echo "Vous n'avez pas accès à cette section";
             }
 
             else
             {
-                throw new Exception("Aucun identifiant de billet ne correspond (rooter)");
+                if (isset($_GET['id']) && $_GET['id'] > 0)
+                {
+                    $post = $postController->getPost($_GET['id']);
+                    $Comments = $commentController->getComAdmin($_GET['id']);
+                    $countPosts = $postController->nbPost();
+                    $countComs = $commentController->nbCom();
+                    $countUsers = $userController->nbUsers();
+                    $countReport = $commentController->nbReported();
+                    // $Comment = $commentController->getCom();
+                }
+
+                else
+                {
+                    throw new Exception("Aucun identifiant de billet ne correspond (rooter)");
+                }
+                // header('Location: index.php?action=Accueil');
+                require 'src/view/adminPostView.php';
             }
-            // header('Location: index.php?action=Accueil');
-            require 'src/view/adminPostView.php';
         }
 
         elseif ($_GET['action'] == 'listUsers')
@@ -552,23 +574,24 @@ try
 
         elseif ($_GET['action'] == 'singleUser')
         {
-            $countComs = $commentController->nbCom();
-            $countPosts = $postController->nbPost();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-            $user = $userController->getOneUser($_GET['id']);
-
+            if($_SESSION['user_role'] == 2){
+                $countComs = $commentController->nbCom();
+                $countPosts = $postController->nbPost();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
+                $user = $userController->getOneUser($_GET['id']);
+            }
             require 'src/view/adminSingleUser.php';
         }
 
         elseif ($_GET['action'] == 'userInfos')
         {
-            $countComs = $commentController->nbCom();
-            $countPosts = $postController->nbPost();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-            $user = $userController->getOneUser($_SESSION['id']);
-
+            if($_SESSION['user_role'] == 1){
+                // $countComs = $commentController->nbCom();
+                // $countReport = $commentController->nbReported();
+                $user = $userController->getOneUser($_SESSION['id']);
+                $user_report = $userController->getUserReport($_SESSION['id']);
+            }
             require 'src/view/adminSingleUser.php';
         }
 
@@ -577,7 +600,8 @@ try
             if(isset($_GET['id']) && $_GET['id'] > 0)
             {
                 $userController->deleteU($_GET['id']);
-
+                $userController->disconnectUser();
+                
                 header('Location: index.php?action=Accueil');
             }
             else

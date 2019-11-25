@@ -72,9 +72,17 @@ class UserController
     //Get single user infos
     public function getOneUser($id)
     {
-        $user = $this->user->getUser($id);
+        $user = $this->user->getUser($id, $report = 0);
 
         return $user;
+    }
+
+    //Get single user with reported comment
+    public function getUserReport($id)
+    {
+        $user_report = $this->user->getUser($id, $report = 1);
+
+        return $user_report;
     }
 
     //User connexion method
@@ -83,6 +91,12 @@ class UserController
         $user = $this->user->getPseudo($pseudo);
 
         return $user;
+    }
+
+    //count reported com by user
+    public function nbCmUser($id)
+    {
+        $user = $this->user->getUser($id);
     }
 
     //Disconnect user

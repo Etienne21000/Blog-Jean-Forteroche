@@ -268,7 +268,7 @@ Menu
 #banniere
 {
     /* margin-top: 58px; */
-    height: 700px;
+    height: 740px;
     width: 100%;
     /* background-image: url(images/alaska3.jpg); */
     display: flex;
@@ -279,20 +279,20 @@ Menu
 #slider
 {
     position: relative;
-    height: 700px;
+    height: 740px;
     width: 100%;
     /* margin-top: 30px; */
 }
 
 .slide
 {
-    height: 700px;
+    height: 740px;
 }
 
 .slide img
 {
     width: 100%;
-    height: 700px;
+    height: 740px;
 }
 
 .guide
@@ -311,7 +311,7 @@ Menu
     position:absolute;
     content:'';
     width:100%;
-    height:700px;
+    height:740px;
     left:0;
     top:0;
     z-index: 8;
@@ -370,8 +370,8 @@ Section 1 présentation
     justify-content: space-between;
     align-items: center;
     margin: 70px 20px 20px 20px;
-    padding-bottom: 60px;
-    box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1);
+    /* padding-bottom: 60px; */
+    /* box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1); */
 }
 
 .form-post
@@ -400,11 +400,22 @@ Section 1 présentation
     padding: 0 10px;
 }
 
+/* .presentation h3
+{
+margin-bottom: 5px;
+} */
+
 .titreh3
 {
     color: #459EC0;
     font-family: 'Special Elite', cursive;
     font-size: 1.2em;
+    /* text-align: center; */
+}
+
+#separate
+{
+    display: none;
 }
 
 /* #presentation p
@@ -426,20 +437,23 @@ color: #444444;
     height: auto;
 }
 
-#jeanF
+#bio_fleche
 {
-    width: 50%;
-    border-radius: 100px;
+    display: none;
 }
 
-
+#jeanF
+{
+    width: 100%;
+    padding-left: 10px;
+}
 
 /*--------------------------------
 Section 2
 ---------------------------------*/
 .articles /*, .comments*/
 {
-    width: 98%;
+    /* width: 98%; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -457,7 +471,7 @@ Section 2
     align-items: center;
     width: 100%;
     height: auto;
-    padding-bottom: 30px;
+    /* padding-bottom: 30px; */
 }
 
 .articleAdmin
@@ -489,12 +503,12 @@ Section 2
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 26%;
-    height: 450px;
+    width: 43%;
+    height: auto;
     padding: 0 30px;
     /* margin-bottom: 40px; */
     margin: 15px;
-    border-radius: 5px;
+    border-radius: 2px;
     transition: all .2s ease-in-out;
     box-shadow: 0 1px 1px -6px rgba(0,0,0,0.1), 0 0px 1px 0 rgba(0,0,0,0.1), 0 0px 10px -2px rgba(0,0,0,0.1);
 }
@@ -515,7 +529,7 @@ Comments Home page
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 30px 20px;
+    margin: 10px 20px;
 }
 
 .oneComment
@@ -541,18 +555,32 @@ Comments Home page
     width: 25%;
     height: 200px;
     padding: 10px 30px;
+    transition: all .4s ease-in-out;
+    background-color: #459EC0;
+    /* flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    overflow: scroll;
+    width: 25%;
+    height: 200px;
+    padding: 10px 30px;
     margin-bottom: 40px;
     border-radius: 10px;
     transition: all .4s ease-in-out;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1); */
     /* box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1); */
 }
 
 .commentBloc:hover
 {
-    transform: scale(1.1);
-    border: none;
+    /* transform: scale(1.1); */
+    transform: translateY(20px);
     box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1);
+}
+
+.com_home
+{
+    color: #fff;
 }
 
 #continu
@@ -578,7 +606,7 @@ Comments Home page
     justify-content: flex-start;
 }
 
-.fa-comment, .fa-plus-circle, .fa-reply, .fa-exclamation-circle, .fa-sign-in-alt
+.fa-comment, .fa-plus-circle, .fa-reply, .fa-exclamation-circle, .fa-sign-in-alt, .fa-book-reader
 {
     font-size: 2em;
     color: #459EC0;
@@ -586,9 +614,23 @@ Comments Home page
     margin-right: 40px;
 }
 
-.fa-comment:hover, .fa-plus-circle:hover, .fa-reply:hover, .fa-exclamation-circle:hover, .fa-sign-in-alt:hover
+.fa-comment:hover, .fa-plus-circle:hover, .fa-reply:hover, .fa-exclamation-circle:hover, .fa-sign-in-alt:hover, .fa-book-reader:hover
 {
     color: #11B6FF;
+}
+
+#suite
+{
+    font-size: 1.1em;
+    margin-left: 15px;
+    color: #459EC0;
+    transition: all .4s ease-in-out;
+}
+
+#suite:hover
+{
+    color: #11B6FF;
+    transform: translateX(10px);
 }
 
 /*----------------------------
@@ -742,7 +784,7 @@ Admin session
 
 #form-wrapper, #update-wrapper
 {
-    width: 60%;
+    width: auto;
     overflow: auto;
     max-width: calc(100vw - 20px);
     max-height: calc(100vh - 20px);
@@ -756,7 +798,7 @@ Admin session
 {
     width: 250px;
     height: 30px;
-    border: 1px solid #999999;
+    border-bottom: 1px solid #999999;
     border-radius: 20px;
     padding-left: 10px;
 }
@@ -780,8 +822,10 @@ Admin session
 {
     width: 400px;
     height: 150px;
-    border: 1px solid #999999;
-    border-radius: 20px;
+    border-bottom: 1px solid #999999;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
     padding-left: 10px;
     padding-top: 10px;
 }
@@ -1108,6 +1152,7 @@ Inscription form
     background-color: red;
 }
 
+
 /*----------------------------
 Media quieries 300px - 768px
 -----------------------------*/
@@ -1131,6 +1176,30 @@ Media quieries 300px - 768px
         transform: translateY(0);
     }
 
+    #banniere
+    {
+        height: 700px;
+    }
+
+    #slider
+    {
+        height: 700px;
+    }
+
+    .slide
+    {
+        height: 700px;
+    }
+
+    #calque
+    {
+        height: 700px;
+    }
+
+    .slide img
+    {
+        height: 700px;
+    }
 
     #banniere_description h1
     {
@@ -1148,6 +1217,35 @@ Media quieries 300px - 768px
         width: 100%;
     }
 
+    #bio_fleche
+    {
+        display: flex;
+        justify-content: center;
+    }
+
+    .fa-chevron-down
+    {
+        color: #999999;
+        font-size: 1.2em;
+    }
+
+    .fa-chevron-down:hover
+    {
+        color: #777777;
+    }
+
+    .fa-chevron-up
+    {
+        color: #999999;
+        font-size: 1.2em;
+        /* display: none; */
+    }
+
+    .presentation img
+    {
+        display: none;
+    }
+
     .presentation
     {
         width: 90%;
@@ -1163,16 +1261,59 @@ Media quieries 300px - 768px
         display: none;
     }
 
+    #jeanF
+    {
+        padding-left: 0;
+    }
+
+    .presentation h3
+    {
+        margin-bottom: 5px;
+    }
+
+    .titreh3
+    {
+        text-align: center;
+    }
+
+    #separate
+    {
+        display: block;
+        border-bottom: 1px solid #999999;
+        width: 88%;
+        padding-bottom: 20px;
+    }
+
     .article
     {
         flex-direction: column;
         flex-wrap: nowrap;
     }
 
+    .articles
+    {
+        margin: 14px 10px 10px 10px;
+    }
+
     .articleBloc
     {
         height: auto;
         width: 80%;
+        margin: 5px;
+        padding: 10px 30px;
+    }
+
+    .oneComment
+    {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .commentBloc
+    {
+        width: 80%;
+        height: auto;
+        margin-bottom: 10px;
     }
 
     /*------------- Admin connect -------------*/
@@ -1296,6 +1437,6 @@ Media quieries 300px - 768px
 
     /* .menuScroll
     {
-        width: 100%;
+    width: 100%;
     } */
 }

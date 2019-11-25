@@ -19,7 +19,7 @@
         </div>
 
         <!-- <p> -->
-            <?= html_entity_decode($post->content(), ENT_HTML5, 'UTF-8'); ?>
+            <?= html_entity_decode($post->content()); ?>
         <!-- </p> -->
     </article>
 
@@ -39,10 +39,11 @@
 
     		<div class="comment">
     			<p>
-    				<?= nl2br(html_entity_decode($data->comment())); ?>
+    				<?= nl2br(html_entity_decode(htmlspecialchars($data->comment()))); ?>
     			</p>
                 <div class="actions">
                     <button type="button" name="signleCom" class="button1"><a href="index.php?action=signleCom&id=<?= $data->id()?>">Voir le commentaire </a></button>
+                    <button type="button" name="delete" class="button3"> <a href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-trash-alt"></i></a></button>
                 </div>
     		</div>
 

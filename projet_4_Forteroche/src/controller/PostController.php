@@ -19,7 +19,7 @@ class PostController
     //Affichage des chapitres sur la page d'accueil
     public function listPosts()
     {
-        $Posts = $this->post->getPosts($start = 0, $limite = 6);
+        $Posts = $this->post->getPosts($start = 0, $limite = 2);
 
         return $Posts;
     }

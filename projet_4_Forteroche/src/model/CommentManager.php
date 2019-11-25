@@ -45,7 +45,7 @@ class CommentManager extends Manager
     {
         $Comments = [];
 
-        $req = 'SELECT c.id, c.comment, u.pseudo, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
+        $req = 'SELECT c.id, c.comment, u.pseudo, c.user_id, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
         AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id  WHERE c.report = 0 ORDER BY comment_date DESC';
 
         if ($start != -1 || $limite != -1)
@@ -68,7 +68,7 @@ class CommentManager extends Manager
     --------------------------*/
     public function getCom($id)
     {
-        $req = $this->db->prepare('SELECT c.id, c.comment, u.pseudo,
+        $req = $this->db->prepare('SELECT c.id, c.comment, c.report, u.pseudo,
         DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
         AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id
         WHERE c.id = :id');

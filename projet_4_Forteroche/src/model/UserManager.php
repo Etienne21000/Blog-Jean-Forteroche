@@ -9,19 +9,33 @@ class UserManager extends Manager
     }
 
     //Get signle user with role
-    public function getUser($id)
+    public function getUser($id, $report = -1)
     {
-        $req = $this->db->prepare('SELECT u.id, u.pseudo, u.mail, u.user_role, u.user_slug, DATE_FORMAT(u.user_date, \'%d/%m/%Y à %Hh%i\')
-        AS user_date, COUNT(c.id) AS num_com FROM users AS u LEFT OUTER JOIN commentaires AS c ON u.id = c.user_id WHERE u.id = :id AND c.report = 0');
+        $req = 'SELECT u.id, u.pseudo, u.mail, u.user_role, u.user_slug, DATE_FORMAT(u.user_date, \'%d/%m/%Y à %Hh%i\')
+        AS user_date,
+        COUNT(c.id) AS num_com FROM users AS u LEFT OUTER JOIN commentaires AS c ON u.id = c.user_id /*WHERE u.id = :id AND c.report = 0*/';
 
-        $req->bindValue('id', $id, \PDO::PARAM_INT);
+        if ($report != -1)
+        {
+            $req .= ' WHERE u.id = :id AND c.report = ' . (int) $report;
+        }
 
-        $req->execute();
+        $result = $this->db->prepare($req);
 
-        $data = $req->fetch(\PDO::FETCH_ASSOC);
+        $result->bindValue('id', $id, \PDO::PARAM_INT);
+
+        $result->execute();
+
+        $data = $result->fetch(\PDO::FETCH_ASSOC);
         $user = new User($data);
 
         return $user;
+    }
+
+    //Get user with reported com
+    public function getUserReport($id)
+    {
+
     }
 
     //Get users with comments join

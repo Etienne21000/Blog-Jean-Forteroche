@@ -41,7 +41,6 @@
         </header>
 
         <div id="contentAdminView">
-            <!-- <div class="menuScroll"></div> -->
             <a href="#adminList" class="Scroll">
                 <p>Menu
                     <i class="fas fa-chevron-down"></i>
@@ -58,7 +57,11 @@
                         <li class="menuAdmin"><a href="index.php?action=reportList"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $countReport . '</em>)';?></a></li>
                         <li class="menuAdmin"><a href="index.php?action=listUsers"><i class="fas fa-list-ul"></i>Utilisateurs <?= '(' . $countUsers . ')'; ?> </a></li>
                     <?php endif; ?>
-                    <li class="menuAdmin"><a href="index.php?action=Accueil"><i class="fas fa-igloo"></i>Accueil</a></li>
+                    <?php if($_SESSION['user_role'] == 1):?>
+                        <li class="menuAdmin"><a href="index.php?action=Accueil"><i class="fas fa-igloo"></i>Accueil</a></li>
+                        <li class="menuAdmin"><a href="index.php?action=adminCom"><i class="fas fa-list-ul"></i>Commentaires <?= '(' . $user->num_com() . ')';?></a></li>
+                        <li class="menuAdmin"><a href="index.php?action=reportList"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $user_report->num_com_report() . '</em>)';?></a></li>
+                    <?php endif;?>
                     <li class="menuAdminDeco"><a href="index.php?action=discUser"><i class="fas fa-power-off"></i> Deconnexion</a></li>
                 </ul>
             </aside>
@@ -74,7 +77,7 @@
         <!-- <script src="/src/public/js/ajax.js" type="text/javascript"></script> -->
         <!-- <script src="/src/public/js/menu.js" type="text/javascript"></script> -->
         <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script>
-        <!-- <script src="/src/public/js/menuAdmin.js" type="text/javascript"></script> -->
+        <script src="src/public/js/transition_home.js" type="text/javascript"></script>
         <script src="/src/public/js/formulaire.js" type="text/javascript"></script>
         <script src="/src/public/js/transitions.js" type="text/javascript"></script>
         <script src="/src/public/js/main.js" type="text/javascript"></script>

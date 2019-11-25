@@ -24,7 +24,11 @@
         </p>
 
         <p>
-            <?= htmlspecialchars($user->num_com()); ?> commentaires posté
+            <?= htmlspecialchars($user->num_com()); ?> commentaires postés
+        </p>
+
+        <p>
+            <?= htmlspecialchars($user_report->num_com_report()); ?> commentaires postés
         </p>
 
         <div class="actions">
