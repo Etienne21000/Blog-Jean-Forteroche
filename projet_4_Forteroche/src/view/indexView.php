@@ -16,7 +16,7 @@
 		<div id="slider">
 			<div class="slide">
 				<span id="calque"> </span>
-				<img src="src/public/images/alaska1.jpg" alt="glacier Alaska"/>
+				<img src="src/public/images/alaska3.jpg" alt="glacier Alaska"/>
 			</div>
 		</div>
 	</section>
@@ -24,12 +24,15 @@
 	<section class="general reveal">
 
 		<header class="titre">
-			<h2>Bienvenu sur mon blog
-				<?php if(isset($_SESSION))
+				<?php if(!empty($_SESSION))
 				{
-					echo $_SESSION['pseudo'];
-				}?>
-			</h2>
+					echo '<h2>Bienvenu sur mon blog ' . $_SESSION['pseudo'] . '</h2>';
+				}
+				elseif (empty($_SESSION))
+				{
+					echo '<h2> Bienvenu sur le blog de Jean Forteroche</h2>';
+				}
+				?>
 		</header>
 
 		<div id="bio">
@@ -102,7 +105,7 @@
 						</div>
 					</a>
 				<?php endforeach; ?>
-				<a href="index.php?action=post"><p id="suite">Retrouvez tous les articles...<p></a>
+				<a href="index.php?action=post"><p id="suite">Retrouvez tous les articles...</p></a>
 				<!-- </div> -->
 			</article>
 
@@ -135,6 +138,9 @@
 			</article>
 			<!-- <a href="index.php?action=adminCom"> Tous les commentaires</a> -->
 		</section>
+		<!-- <script src="src/public/js/transitions.js" type="text/javascript"></script>
+		<script src="src/public/js/transition_home.js" type="text/javascript"></script> -->
+
 
 		<?php $content = ob_get_clean(); ?>
 

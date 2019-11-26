@@ -40,13 +40,14 @@
             </h3>
         </header>
 
-        <div id="contentAdminView">
-            <a href="#adminList" class="Scroll">
-                <p>Menu
-                    <i class="fas fa-chevron-down"></i>
-                </p>
-            </a>
+         <div id="contentAdminView">
 
+            <div id="admin_fleche">
+                <p>Menu
+                    <i class="fas fa-chevron-down" id="fleche_bas_admin"></i>
+                    <i class="fas fa-chevron-up" id="fleche_haut_admin"></i>
+                </p>
+            </div>
 
             <aside class="asideAdmin">
                 <ul id="adminList">
@@ -74,15 +75,14 @@
 
     <footer>
         <p> COPYRIGHT </p>
-        <!-- <script src="/src/public/js/ajax.js" type="text/javascript"></script> -->
-        <!-- <script src="/src/public/js/menu.js" type="text/javascript"></script> -->
+        <!-- <script src="src/public/js/menu.js" type="text/javascript"></script> -->
         <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script>
-        <script src="src/public/js/transition_home.js" type="text/javascript"></script>
-        <script src="/src/public/js/formulaire.js" type="text/javascript"></script>
-        <script src="/src/public/js/transitions.js" type="text/javascript"></script>
-        <script src="/src/public/js/main.js" type="text/javascript"></script>
-        <script src="/src/public/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
-        <script src="/src/public/js/wysiwyg.js" type="text/javascript"></script>
+        <!-- <script src="src/public/js/transition_home.js" type="text/javascript"></script> -->
+        <!-- <script src="src/public/js/formulaire.js" type="text/javascript"></script>
+        <script src="src/public/js/transitions.js" type="text/javascript"></script> -->
+        <!-- <script src="src/public/js/main.js" type="text/javascript"></script> -->
+        <script src="src/public/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
+        <script src="src/public/js/wysiwyg.js" type="text/javascript"></script>
     </footer>
 </body>
 </html>

@@ -2,14 +2,30 @@
 
 <?php  ob_start(); ?>
 
+<section id="banniere_alt">
+
+	<div id="banniere_description_alt">
+		<h1>
+			<strong><?= htmlspecialchars($post->title()); ?> </strong>
+		</h1>
+
+	</div>
+	<div id="slider_alt">
+		<div class="slide_alt">
+			<span id="calque_alt"> </span>
+			<img src="src/public/images/alaska6.jpg" alt="glacier Alaska"/>
+		</div>
+	</div>
+</section>
+
 <section class="general">
 	<article class="blocAdmin">
 		<article class="commentAdmin">
-			<!-- <div class="articles">
-			<article class="article"> -->
 			<header class="titre">
 				<h3>
 					<?= htmlspecialchars($post->title()); ?>
+					(chapitre <?= htmlspecialchars($post->id()); ?>)
+
 				</h3>
 				<p id="date">
 					<?= 'Billet créé le : ' . htmlspecialchars($post->creation_date()); ?>
@@ -26,11 +42,10 @@
 			<?php endif; ?>
 			<?php if(!$_SESSION):?>
 				<p>
-					<a href="index.php?action=AdminConnexion"><i class="fas fa-sign-in-alt"></i>Connectez-vous pour laisser un commentaire</a>
+					<a href="index.php?action=AdminConnexion"><p id="suite">Connectez-vous pour laisser un commentaire <i class="fas fa-sign-in-alt"></i></p></a>
 				</p>
 			<?php endif; ?>
-			<!-- </article>
-		</div> -->
+
 	</article>
 </article>
 
@@ -52,7 +67,7 @@
 			<p>
 				<?= nl2br(html_entity_decode(htmlspecialchars($data->comment()))); ?>
 				<div class="icons">
-					<a href="index.php?action=reportComment&id=<?= $data->id(); ?>" title="Signaler"><i class="fas fa-exclamation-circle"></i></a>
+					<a href="index.php?action=reportComment&id=<?= $data->id(); ?>" title="Signaler"><p id="report"><i class="fas fa-exclamation-circle"></i> Signaler</p></a>
 				</div>
 			</p>
 		</div>

@@ -135,6 +135,7 @@
     </div>
 </article>
 
+
 <?php $content = ob_get_clean(); ?>
 
 <?php require 'src/public/templateAdmin.php'; ?>

@@ -39,7 +39,41 @@ p
     align-content: center;
     position: fixed;
     z-index: 99;
-    background-color: rgba(69, 158, 192, 0.6);
+    /* background-color: rgba(69, 158, 192, 0.6); */
+}
+
+.scrolled
+{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    position: fixed;
+    z-index: 99;
+    background-color: #fff;
+    box-shadow: 0 1px 1px -6px rgba(0,0,0,0.1), 0 0px 1px 0 rgba(0,0,0,0.1), 0 0px 10px -2px rgba(0,0,0,0.1);
+}
+
+.scrolled #ID_Utilisateur
+{
+    color: rgb(69, 158, 192);
+}
+
+.scrolled .menu_ham span
+{
+    background: rgb(69, 158, 192);
+}
+
+.scrolled .menu_ham span::before
+{
+    background: rgb(69, 158, 192);
+}
+
+.scrolled .menu_ham span::after
+{
+    background: rgb(69, 158, 192);
 }
 
 .top-Admin
@@ -245,15 +279,25 @@ Menu
     margin-left: 0;
     /* position: absolute; */
     margin-top: 48px;
-    transition-duration: 0.5s;
+    transition-duration: 0.2s;
     z-index: 99;
     background-color: transparent;
     height: auto;
     padding-bottom: 30px;
-    background-color: rgba(69, 158, 192, 0.6);
+    /* background-color: rgba(69, 158, 192, 0.6); */
 }
 
-.nav_open_admin
+.scrolled .nav_open
+{
+    background-color: #fff;
+}
+
+.scrolled .nav_open a
+{
+    color: rgb(69, 158, 192);
+}
+
+/* .nav_open_admin
 {
     margin-left: 0;
     margin-top: 48px;
@@ -263,7 +307,7 @@ Menu
     height: auto;
     padding-bottom: 30px;
     background-color: rgb(69, 158, 192);
-}
+} */
 
 #banniere
 {
@@ -360,6 +404,72 @@ h2
 }
 
 /*--------------------------
+Bannières autres pages
+---------------------------*/
+
+#banniere_alt
+{
+    /* margin-top: 58px; */
+    height: 440px;
+    width: 100%;
+    /* background-image: url(images/alaska3.jpg); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#slider_alt
+{
+    position: relative;
+    height: 440px;
+    width: 100%;
+    /* margin-top: 30px; */
+}
+
+.slide_alt
+{
+    height: 440px;
+}
+
+.slide_alt img
+{
+    width: 100%;
+    height: 440px;
+}
+
+#calque_alt
+{
+    background-color: rgba(0,0,0,0.4);
+    position:absolute;
+    content:'';
+    width:100%;
+    height:440px;
+    left:0;
+    top:0;
+    z-index: 8;
+}
+
+#banniere_description_alt
+{
+    z-index: 10;
+    text-align: center;
+}
+
+#banniere_description_alt h1
+{
+    color: #fff;
+    font-family: 'Special Elite', cursive;
+    font-size: 5em;
+    margin: 0;
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    height: auto;
+    z-index: 9;
+}
+
+
+/*--------------------------
 Section 1 présentation
 ---------------------------*/
 
@@ -438,6 +548,11 @@ color: #444444;
 }
 
 #bio_fleche
+{
+    display: none;
+}
+
+#admin_fleche
 {
     display: none;
 }
@@ -606,7 +721,7 @@ Comments Home page
     justify-content: flex-start;
 }
 
-.fa-comment, .fa-plus-circle, .fa-reply, .fa-exclamation-circle, .fa-sign-in-alt, .fa-book-reader
+.fa-comment, .fa-plus-circle, .fa-reply, .fa-book-reader
 {
     font-size: 2em;
     color: #459EC0;
@@ -614,9 +729,16 @@ Comments Home page
     margin-right: 40px;
 }
 
-.fa-comment:hover, .fa-plus-circle:hover, .fa-reply:hover, .fa-exclamation-circle:hover, .fa-sign-in-alt:hover, .fa-book-reader:hover
+.fa-comment:hover, .fa-plus-circle:hover, .fa-reply:hover, .fa-book-reader:hover
 {
     color: #11B6FF;
+}
+
+.fa-sign-in-alt
+{
+    margin-left: 5px;
+    font-size: 1em;
+    color: #459EC0;
 }
 
 #suite
@@ -627,10 +749,25 @@ Comments Home page
     transition: all .4s ease-in-out;
 }
 
-#suite:hover
+#suite:hover, #report:hover
 {
     color: #11B6FF;
     transform: translateX(10px);
+}
+
+#report
+{
+    width: 81%;
+    font-size: 1.1em;
+    margin-left: 15px;
+    color: #459EC0;
+    transition: all .4s ease-in-out;
+}
+
+.fa-exclamation-circle
+{
+    font-size: 1.4em;
+    margin-right: 10px;
 }
 
 /*----------------------------
@@ -1161,6 +1298,104 @@ Media quieries 300px - 768px
 {
 }
 
+@media all and (min-width: 768px) and (max-width: 1023px)
+{
+    /*------------- Home page -------------*/
+
+    #banniere
+    {
+        height: 440px;
+    }
+
+    #slider
+    {
+        height: 440px;
+    }
+
+    .slide
+    {
+        height: 440px;
+    }
+
+    #calque
+    {
+        height: 440px;
+    }
+
+    .slide img
+    {
+        height: 440px;
+    }
+
+    #banniere_description h1
+    {
+        top: 14%;
+        font-size: 5em;
+    }
+
+    .guide
+    {
+        top: 28%;
+    }
+
+    .titre
+    {
+        font-size: 1em;
+    }
+
+    #bio
+    {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .presentation
+    {
+        width: 98%;
+    }
+
+    #jeanF
+    {
+        padding-left: 0;
+    }
+
+    .general
+    {
+        margin: 20px;
+    }
+
+    .articleBloc
+    {
+        width: 39%;
+        margin: 10px;
+    }
+
+    .oneComment
+    {
+        width: 96%;
+    }
+
+    .commentBloc
+    {
+        width: 30%;
+        padding: 10px;
+    }
+
+    .titreh3
+    {
+        font-size: 1em;
+    }
+
+    /*------------- Liste chapitres -------------*/
+
+    #banniere_description_alt h1
+    {
+        top: 20%;
+    }
+
+
+}
+
 @media all and (min-width: 321px) and (max-width: 767px)
 {
 
@@ -1168,6 +1403,16 @@ Media quieries 300px - 768px
     #ID_Utilisateur_admin
     {
         margin-left: 12px;
+    }
+
+    .nav_open
+    {
+        width: 100%;
+    }
+
+    .menu a
+    {
+        padding-left: 16px;
     }
 
     .reveal
@@ -1217,7 +1462,7 @@ Media quieries 300px - 768px
         width: 100%;
     }
 
-    #bio_fleche
+    #bio_fleche, #admin_fleche
     {
         display: flex;
         justify-content: center;
@@ -1314,6 +1559,30 @@ Media quieries 300px - 768px
         width: 80%;
         height: auto;
         margin-bottom: 10px;
+    }
+
+    /*------------- Banniere alt -------------*/
+
+    #banniere_description_alt h1
+    {
+        font-size: 3em;
+    }
+
+    /*------------- single post -------------*/
+
+    .comment p
+    {
+        width: 100%;
+    }
+
+    .commentAdmin
+    {
+        padding-bottom: 0;
+    }
+
+    .fa-reply
+    {
+        padding-bottom: 0;
     }
 
     /*------------- Admin connect -------------*/

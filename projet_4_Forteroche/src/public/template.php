@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title> <?= $title?> </title>
+    <title> <?= $title; ?> </title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Special+Elite&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
@@ -65,15 +65,14 @@
 
     <footer>
         <p> COPYRIGHT </p>
-        <!-- <script src="/src/public/js/ajax.js" type="text/javascript"></script> -->
-        <script src="/src/public/js/menu.js" type="text/javascript"></script>
-        <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script>
-        <script src="/src/public/js/transition_home.js" type="text/javascript"></script>
-        <script src="/src/public/js/formulaire.js" type="text/javascript"></script>
-        <script src="/src/public/js/transitions.js" type="text/javascript"></script>
-        <script src="/src/public/js/main.js" type="text/javascript"></script>
-        <script src="/src/public/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
-        <script src="/src/public/js/wysiwyg.js" type="text/javascript"></script>
+        <!-- <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script> -->
+        <script src="src/public/js/formulaire.js" type="text/javascript"></script>
+        <script src="src/public/js/menu.js" type="text/javascript"></script>
+        <script src="src/public/js/transition_home.js" type="text/javascript"></script>
+        <script src="src/public/js/transitions.js" type="text/javascript"></script>
+        <!-- <script src="src/public/js/main.js" type="text/javascript"></script> -->
+        <script src="src/public/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
+        <script src="src/public/js/wysiwyg.js" type="text/javascript"></script>
     </footer>
 </body>
 </html>

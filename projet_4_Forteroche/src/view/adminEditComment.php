@@ -14,7 +14,7 @@
 			<form action="index.php?action=updateComment&amp;id=<?= $Comment->id(); ?>" method="POST">
 
 				<p>
-					Commentaire de : <?= $Comment->author(); ?>
+					Commentaire de : <?= $Comment->pseudo(); ?>
                     <br>
                     publié le <?= $Comment->comment_date(); ?>
 				</p>

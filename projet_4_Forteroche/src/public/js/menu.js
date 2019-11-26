@@ -1,36 +1,38 @@
-class Menu {
-    constructor(menu, nav, menu_admin, nav_admin){
-        this.menu = document.querySelector(menu);
-        this.nav = document.querySelector(nav);
-        // this.menu_admin = document.querySelector(menu_admin);
-        // this.nav_admin = document.querySelector(nav_admin);
+document.addEventListener('DOMContentLoaded', function(){
+
+    class Menu {
+        constructor(menu, nav, top)
+        {
+            this.menu = document.querySelector('.menu_ham');
+            this.nav = document.querySelector('.nav');
+            this.top = document.querySelector('.top');
+        }
+
+        openMenu()
+        {
+            this.nav.classList.toggle('nav_open');
+        }
+
+        init()
+        {
+            this.menu.addEventListener("click", this.openMenu.bind(this));
+            window.addEventListener('scroll', this.onWindowScroll.bind(this));
+        }
+
+        onWindowScroll(event)
+        {
+            if(window.pageYOffset < 300)
+            {
+                this.top.classList.remove('scrolled');
+            }
+            else
+            {
+                this.top.classList.add('scrolled');
+            }
+        }
     };
 
-    // displayMenu()
-    // {
-    //     if(screen.width <= 1023)
-    //     {
-    //         this.nav.style.display = "none";
-    //     }
-    //     else {
-    //         this.nav.style.display = "flex";
-    //     }
-    // }
+    var newMenu = new Menu();
+    newMenu.init();
 
-    openMenu(){
-        // this.displayMenu.bind(this);
-        this.nav.classList.toggle('nav_open');
-    };
-
-    // openMenuAdmin(){
-    //     // this.displayMenu.bind(this);
-    //     this.nav_admin.classList.toggle('nav_open_admin');
-    // };
-
-    init(){
-        // this.displayMenu();
-        // this.displayMenu.bind(this);
-        this.menu.addEventListener("click", this.openMenu.bind(this));
-        // this.menu_admin.addEventListener("click", this.openMenuAdmin.bind(this));
-    };
-};
+});
