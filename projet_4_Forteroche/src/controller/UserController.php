@@ -93,12 +93,6 @@ class UserController
         return $user;
     }
 
-    //count reported com by user
-    public function nbCmUser($id)
-    {
-        $user = $this->user->getUser($id);
-    }
-
     //Disconnect user
     public function disconnectUser()
     {

@@ -26,7 +26,7 @@ try
             $Posts = $postController->listPosts();
             $Comments = $commentController->lastCom();
 
-            require 'src/view/indexView.php';
+            require 'src/view/front_end/indexView.php';
         }
 
         elseif ($_GET['action'] == 'post')
@@ -34,7 +34,7 @@ try
             $Posts = $postController->post();
             // $countPosts = $postController->nbPost();
 
-            require 'src/view/chapterView.php';
+            require 'src/view/front_end/chapterView.php';
         }
 
         //Get post with its comments
@@ -49,7 +49,7 @@ try
             {
                 throw new Exception("Aucun identifiant de billet ne correspond (rooter)");
             }
-            require 'src/view/postView.php';
+            require 'src/view/front_end/postView.php';
         }
 
         //Add comment
@@ -80,7 +80,7 @@ try
 
             else
             {
-                require 'src/view/inscriptionUser.php';
+                require 'src/view/front_end/inscriptionUser.php';
             }
 
             header('Location: index.php?action=listComments&id=' . $_GET['id']);
@@ -100,7 +100,7 @@ try
 
                 else
                 {
-                    header('Location: index.php&action=listComments&id=' . $_GET['id']);
+                    header('Location: index.php&action=listComments&id=' . $_GET['post_id']);
                 }
             }
 
@@ -113,13 +113,13 @@ try
         elseif ($_GET['action'] == 'AdminConnexion')
         {
             $error = null;
-            require 'src/view/adminConnexionView.php';
+            require 'src/view/front_end/adminConnexionView.php';
         }
 
         elseif ($_GET['action'] == 'inscription')
         {
             $error = null;
-            require 'src/view/inscriptionUser.php';
+            require 'src/view/front_end/inscriptionUser.php';
         }
 
         //User inscription public
@@ -174,7 +174,7 @@ try
 
                         $userController->addUser(htmlspecialchars($_POST['pseudo']), htmlspecialchars($_POST['mail']), htmlspecialchars($_POST['pass']));
 
-                        // require 'src/view/adminConnexionView.php';
+                        // require 'src/view/front_end/adminConnexionView.php';
                         header('Location: index.php?action=AdminConnexion');
                     }
                     else {
@@ -207,7 +207,7 @@ try
                 break;
             }
 
-            require 'src/view/inscriptionUser.php';
+            require 'src/view/front_end/inscriptionUser.php';
         }
 
         //User connection
@@ -290,7 +290,7 @@ try
             }
 
             // header('Location: index.php?action=AdminConnexion');
-            require 'src/view/adminConnexionView.php';
+            require 'src/view/front_end/adminConnexionView.php';
         }
 
         //Disconnect user
@@ -315,7 +315,8 @@ try
             $countComs = $commentController->nbCom();
             $countUsers = $userController->nbUsers();
             $countReport = $commentController->nbReported();
-            require 'src/view/adminPost.php';
+
+            require 'src/view/back_end/adminPost.php';
         }
 
         elseif ($_GET['action'] == 'addPost')
@@ -350,13 +351,21 @@ try
         //Update post view
         elseif ($_GET['action'] == 'postUpdate')
         {
-            $countPosts = $postController->nbPost();
-            $countComs = $commentController->nbCom();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-            $post = $postController->getPost($_GET['id']);
+            if(empty($_SESSION) || $_SESSION['user_role'] == 1)
+            {
+                header('Location: index.php?action=Accueil');
+            }
 
-            require 'src/view/adminUpdatePostView.php';
+            else
+            {
+                $countPosts = $postController->nbPost();
+                $countComs = $commentController->nbCom();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
+                $post = $postController->getPost($_GET['id']);
+
+                require 'src/view/back_end/adminUpdatePostView.php';
+            }
         }
 
         //Update post
@@ -383,247 +392,315 @@ try
         //Liste of all posts admin page
         elseif ($_GET['action'] == 'postAdmin')
         {
-            $countPosts = $postController->nbPost();
-            $countComs = $commentController->nbCom();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-
-            $Posts = $postController->post();
-
-            require 'src/view/listPostAdminView.php';
-        }
-
-
-        /*---------------------------
-        2. comment's actions
-        ---------------------------*/
-
-        //Delete comment
-        elseif ($_GET['action'] == 'deleteCom')
-        {
-            if(isset($_GET['id']) && $_GET['id'] > 0)
+            if($_SESSION['user_role'] == 2)
             {
-                $commentController->deleteCom($_GET['id']);
+                $countPosts = $postController->nbPost();
+                $countComs = $commentController->nbCom();
+                $countUsers = $userController->nbUsers();
+                $countReport = $commentController->nbReported();
+
+                $Posts = $postController->post();
+
+                require 'src/view/back_end/listPostAdminView.php';
             }
-            else
-            {
-                throw new Exception("Impossible de supprimer ce commentaire. (rooter)");
-            }
-
-            header('Location: index.php?action=reportList');
         }
 
-        //Update comment view
-        elseif ($_GET['action'] == 'commentUpdate')
-        {
-            $countPosts = $postController->nbPost();
-            $countComs = $commentController->nbCom();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-            $Comment = $commentController->getOne($_GET['id']);
 
-            require 'src/view/adminEditComment.php';
-        }
+            /*---------------------------
+            2. comment's actions
+            ---------------------------*/
 
-        //Update comment
-        elseif ($_GET['action'] == 'updateComment')
-        {
-            if(isset($_GET['id']) && $_GET['id'] > 0)
+            //Delete comment
+            elseif ($_GET['action'] == 'deleteCom')
             {
-                if(!empty($_POST['comment']))
+                if(isset($_GET['id']) && $_GET['id'] > 0)
                 {
-                    $commentController->updateCom($_GET['id'], html_entity_decode(($_POST['comment'])));
+                    $commentController->deleteCom($_GET['id']);
                 }
                 else
                 {
-                    throw new \Exception("Vous n'avez pas rempli tous les champs");
+                    throw new Exception("Impossible de supprimer ce commentaire. (rooter)");
                 }
+
+                header('Location: index.php?action=reportList');
             }
-            else
+
+            //Update comment view
+            elseif ($_GET['action'] == 'commentUpdate')
             {
-                throw new Exception("Aucun identifiant de commentaire envoyé (rooter)");
-            }
-
-            header('Location: index.php?action=signleCom&id=' .$_GET['id']);
-        }
-
-        elseif ($_GET['action'] == 'adminCom')
-        {
-            if($_SESSION['user_role'] == 2){
-                $Comments = $commentController->allCom();
-                $countComs = $commentController->nbCom();
-                $countPosts = $postController->nbPost();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
-            }
-            elseif ($_SESSION['user_role'] == 1)
-            {
-                $user = $userController->getOneUser($_SESSION['id']);
-                $user_report = $userController->getUserReport($_SESSION['id']);
-            }
-            require 'src/view/adminCommentList.php';
-        }
-
-        //Get signle post admin à revoir
-        elseif ($_GET['action'] == 'signleCom')
-        {
-            $countComs = $commentController->nbCom();
-            $countPosts = $postController->nbPost();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-            $Comment = $commentController->getOne($_GET['id']);
-
-            require 'src/view/adminSingleCom.php';
-        }
-
-        //Admin reported comment list view
-        elseif ($_GET['action'] == 'reportList')
-        {
-            $countComs = $commentController->nbCom();
-            $countPosts = $postController->nbPost();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-            $report = $commentController->getAllReported();
-
-            require 'src/view/adminReportedCom.php';
-        }
-
-        //Validate reported comment
-        elseif ($_GET['action'] == 'validateCom')
-        {
-
-            if (isset($_GET['id']) && $_GET['id'] > 0)
-            {
-                $validCom = $commentController->validCom($_GET['id']);
-            }
-
-            else
-            {
-                throw new \Exception("Impossible de signaler ce commentaire car aucun identifiant de commentaire envoyé (rooter)");
-            }
-
-            header('Location: index.php?action=reportList');
-        }
-
-        /*---------------------------
-        3. Admin's actions
-        ---------------------------*/
-
-        elseif ($_GET['action'] == 'Admin')
-        {
-            if($_SESSION['user_role'] == 1)
-            {
-                echo "Vous n'avez pas accès à cette section";
-            }
-
-            else
-            {
-                $countPosts = $postController->nbPost();
-                $countComs = $commentController->nbCom();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
-
-                $Posts = $postController->adminPost();
-                $Comments = $commentController->lastCom();
-                $Users = $userController->listUsers();
-                $report = $commentController->getReportedCom();
-
-                require 'src/view/AdminHomeView.php';
-            }
-        }
-
-        elseif ($_GET['action'] == 'postViewAdmins')
-        {
-            if($_SESSION['user_role'] == 1)
-            {
-                echo "Vous n'avez pas accès à cette section";
-            }
-
-            else
-            {
-                if (isset($_GET['id']) && $_GET['id'] > 0)
+                if(isset($_SESSION))
                 {
-                    $post = $postController->getPost($_GET['id']);
-                    $Comments = $commentController->getComAdmin($_GET['id']);
                     $countPosts = $postController->nbPost();
                     $countComs = $commentController->nbCom();
                     $countUsers = $userController->nbUsers();
                     $countReport = $commentController->nbReported();
-                    // $Comment = $commentController->getCom();
+                    $Comment = $commentController->getOne($_GET['id']);
+
+                    require 'src/view/back_end/adminEditComment.php';
+                }
+                
+                else
+                {
+                    header('Location: index.php?action=Accueil');
+                }
+
+            }
+
+            //Update comment
+            elseif ($_GET['action'] == 'updateComment')
+            {
+                if(isset($_GET['id']) && $_GET['id'] > 0)
+                {
+                    if(!empty($_POST['comment']))
+                    {
+                        $commentController->updateCom($_GET['id'], html_entity_decode(($_POST['comment'])));
+                    }
+                    else
+                    {
+                        throw new \Exception("Vous n'avez pas rempli tous les champs");
+                    }
+                }
+                else
+                {
+                    throw new Exception("Aucun identifiant de commentaire envoyé (rooter)");
+                }
+
+                header('Location: index.php?action=signleCom&id=' .$_GET['id']);
+            }
+
+            elseif ($_GET['action'] == 'adminCom')
+            {
+                if($_SESSION['user_role'] == 2)
+                {
+                    $Comments = $commentController->allCom();
+                    $countComs = $commentController->nbCom();
+                    $countPosts = $postController->nbPost();
+                    $countUsers = $userController->nbUsers();
+                    $countReport = $commentController->nbReported();
+
+                    require 'src/view/back_end/adminCommentList.php';
+                }
+
+                // A revoir
+                elseif ($_SESSION['user_role'] == 1)
+                {
+                    if (isset($_GET['id']) && $_GET['id'] > 0)
+                    {
+                        $user = $userController->getOneUser($_SESSION['id']);
+                        $Comments = $commentController->getComUser($_GET['id']);
+                        $user_report = $userController->getUserReport($_SESSION['id']);
+
+                        header('Location: index.php?action=adminCom&id=' . $_GET['id']);
+                        // require 'src/view/back_end/adminCommentList.php';
+                    }
+
+                    else
+                    {
+                        throw new Exception("Aucun identifiant utilisateur ne correspond (rooter)");
+                    }
+                }
+            }
+
+            //Get signle post admin à revoir
+            elseif ($_GET['action'] == 'signleCom')
+            {
+                if(empty($_SESSION))
+                {
+                    header('Location: index.php?action=Accueil');
+                }
+
+                elseif ($_SESSION['user_role'] == 2)
+                {
+                    $countComs = $commentController->nbCom();
+                    $countPosts = $postController->nbPost();
+                    $countUsers = $userController->nbUsers();
+                    $countReport = $commentController->nbReported();
+                    $Comment = $commentController->getOne($_GET['id']);
+
+                    require 'src/view/back_end/adminSingleCom.php';
+                }
+                // elseif ($_SESSION['user_role'] == 1)
+                // {
+                //     $user = $userController->getOneUser($_SESSION['id']);
+                //     $user_report = $userController->getUserReport($_SESSION['id']);
+                //     $Comments = $commentController->allCom();
+                //     $Comment = $commentController->getOne($_GET['id']);
+                // }
+            }
+
+            //Admin reported comment list view
+            elseif ($_GET['action'] == 'reportList')
+            {
+                if(empty($_SESSION) || $_SESSION['user_role'] == 1)
+                {
+                    header('Location: index.php?action=Accueil');
+                }
+
+                // elseif ()
+                // {
+                //     $Comments = $commentController->allCom();
+                //     $user = $userController->getOneUser($_SESSION['id']);
+                //     $user_report = $userController->getUserReport($_SESSION['id']);
+                // }
+
+                else
+                {
+                    $countComs = $commentController->nbCom();
+                    $countPosts = $postController->nbPost();
+                    $countUsers = $userController->nbUsers();
+                    $countReport = $commentController->nbReported();
+                    $report = $commentController->getAllReported();
+
+                    require 'src/view/back_end/adminReportedCom.php';
+                }
+            }
+
+            //Validate reported comment
+            elseif ($_GET['action'] == 'validateCom')
+            {
+
+                if (isset($_GET['id']) && $_GET['id'] > 0)
+                {
+                    $validCom = $commentController->validCom($_GET['id']);
                 }
 
                 else
                 {
-                    throw new Exception("Aucun identifiant de billet ne correspond (rooter)");
+                    throw new \Exception("Impossible de signaler ce commentaire car aucun identifiant de commentaire envoyé (rooter)");
                 }
-                // header('Location: index.php?action=Accueil');
-                require 'src/view/adminPostView.php';
+
+                header('Location: index.php?action=reportList');
             }
-        }
 
-        elseif ($_GET['action'] == 'listUsers')
-        {
-            $countPosts = $postController->nbPost();
-            $countComs = $commentController->nbCom();
-            $countUsers = $userController->nbUsers();
-            $countReport = $commentController->nbReported();
-            $Users = $userController->allUsers();
+            /*---------------------------
+            3. Admin's actions
+            ---------------------------*/
 
-            require 'src/view/adminListUsers.php';
-        }
-
-        elseif ($_GET['action'] == 'singleUser')
-        {
-            if($_SESSION['user_role'] == 2){
-                $countComs = $commentController->nbCom();
-                $countPosts = $postController->nbPost();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
-                $user = $userController->getOneUser($_GET['id']);
-            }
-            require 'src/view/adminSingleUser.php';
-        }
-
-        elseif ($_GET['action'] == 'userInfos')
-        {
-            if($_SESSION['user_role'] == 1){
-                // $countComs = $commentController->nbCom();
-                // $countReport = $commentController->nbReported();
-                $user = $userController->getOneUser($_SESSION['id']);
-                $user_report = $userController->getUserReport($_SESSION['id']);
-            }
-            require 'src/view/adminSingleUser.php';
-        }
-
-        elseif ($_GET['action'] == 'deleteUser')
-        {
-            if(isset($_GET['id']) && $_GET['id'] > 0)
+            elseif ($_GET['action'] == 'Admin')
             {
-                $userController->deleteU($_GET['id']);
-                $userController->disconnectUser();
-                
-                header('Location: index.php?action=Accueil');
+                if(empty($_SESSION) || $_SESSION['user_role'] == 1)
+                {
+
+                    header('Location: index.php?action=Accueil');
+                }
+
+                else
+                {
+                    $countPosts = $postController->nbPost();
+                    $countComs = $commentController->nbCom();
+                    $countUsers = $userController->nbUsers();
+                    $countReport = $commentController->nbReported();
+
+                    $Posts = $postController->adminPost();
+                    $Comments = $commentController->lastCom();
+                    $Users = $userController->listUsers();
+                    $report = $commentController->getReportedCom();
+
+                    require 'src/view/back_end/AdminHomeView.php';
+                }
             }
+
+            elseif ($_GET['action'] == 'postViewAdmins')
+            {
+                if(empty($_SESSION) || $_SESSION['user_role'] == 1)
+                {
+                    header('Location: index.php?action=Accueil');            }
+
+                    else
+                    {
+                        if (isset($_GET['id']) && $_GET['id'] > 0)
+                        {
+                            $post = $postController->getPost($_GET['id']);
+                            $Comments = $commentController->getComAdmin($_GET['id']);
+                            $countPosts = $postController->nbPost();
+                            $countComs = $commentController->nbCom();
+                            $countUsers = $userController->nbUsers();
+                            $countReport = $commentController->nbReported();
+                        }
+
+                        else
+                        {
+                            throw new Exception("Aucun identifiant de billet ne correspond (rooter)");
+                        }
+                        // header('Location: index.php?action=Accueil');
+                        require 'src/view/back_end/adminPostView.php';
+                    }
+                }
+
+                elseif ($_GET['action'] == 'listUsers')
+                {
+                    if(empty($_SESSION) || $_SESSION['user_role'] == 1)
+                    {
+                        header('Location: index.php?action=Accueil');
+                    }
+
+                    else
+                    {
+                        $countPosts = $postController->nbPost();
+                        $countComs = $commentController->nbCom();
+                        $countUsers = $userController->nbUsers();
+                        $countReport = $commentController->nbReported();
+                        $Users = $userController->allUsers();
+
+                        require 'src/view/back_end/adminListUsers.php';
+                    }
+                }
+
+                elseif ($_GET['action'] == 'singleUser')
+                {
+                    if($_SESSION['user_role'] == 2){
+                        $countComs = $commentController->nbCom();
+                        $countPosts = $postController->nbPost();
+                        $countUsers = $userController->nbUsers();
+                        $countReport = $commentController->nbReported();
+                        $user = $userController->getOneUser($_GET['id']);
+
+                        require 'src/view/back_end/adminSingleUser.php';
+                    }
+                    else
+                    {
+                        header('Location: index.php?action=Accueil');
+                    }
+                }
+
+                elseif ($_GET['action'] == 'userInfos')
+                {
+                    if($_SESSION['user_role'] == 1){
+                        $user = $userController->getOneUser($_SESSION['id']);
+                        $user_report = $userController->getUserReport($_SESSION['id']);
+                    }
+                    require 'src/view/back_end/adminSingleUser.php';
+                }
+
+                elseif ($_GET['action'] == 'deleteUser')
+                {
+                    if(isset($_GET['id']) && $_GET['id'] > 0)
+                    {
+                        $userController->deleteU($_GET['id']);
+                        $userController->disconnectUser();
+
+                        header('Location: index.php?action=Accueil');
+                    }
+                    else
+                    {
+                        throw new \Exception("impossiblme de supprimer le compte");
+                    }
+                }
+
+                /*---------------------------
+                3. Admin's actions
+                ---------------------------*/
+            }
+
             else
             {
-                throw new \Exception("impossiblme de supprimer le compte");
+                $Posts = $postController->listPosts();
+                $Comments = $commentController->lastCom();
+
+                require 'src/view/front_end/indexView.php';
             }
         }
-
-        /*---------------------------
-        3. Admin's actions
-        ---------------------------*/
-    }
-
-    else
-    {
-        $Posts = $postController->listPosts();
-        $Comments = $commentController->lastCom();
-
-        require 'src/view/indexView.php';
-    }
-}
-catch (Exception $e)
-{
-    echo '<strong>Erreur</strong> : une erreur s\'est produite : ' . $e->getMessage();
-}
+        catch (Exception $e)
+        {
+            echo '<strong>Erreur</strong> : une erreur s\'est produite : ' . $e->getMessage();
+        }

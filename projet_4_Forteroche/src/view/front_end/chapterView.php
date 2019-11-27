@@ -37,16 +37,16 @@
 						<em> <?php echo htmlspecialchars($data->creation_date());  ?></em>
 					</header>
 
-					<p>
-						<?php echo substr(html_entity_decode($data->content()), 0,500) . '...'; ?>
-					</p>
+					<!-- <p> -->
+						<?php echo substr(html_entity_decode($data->content()), 0,550) . '...'; ?>
+					<!-- </p> -->
 					<p id="continu">
 						<a href="index.php?action=listComments&post=<?= $data->id(); ?>"> Lire la suite...</a>
 					</p>
 					<br>
 
 					<div id="icons">
-						<em><i class="far fa-comment"><?= $data->num_com(); ?></i></em>
+						<p id="num_com"><i class="far fa-comment"></i><?= $data->num_com();?></p>
 					</div>
 				</div>
 			</a>

@@ -462,7 +462,7 @@ Bannières autres pages
     font-size: 5em;
     margin: 0;
     position: absolute;
-    top: 30%;
+    top: 25%;
     width: 100%;
     height: auto;
     z-index: 9;
@@ -581,7 +581,7 @@ Section 2
 {
     display: flex;
     flex-direction: row;
-    /* justify-content: center; */
+    justify-content: center;
     flex-wrap: wrap;
     align-items: center;
     width: 100%;
@@ -672,18 +672,25 @@ Comments Home page
     padding: 10px 30px;
     transition: all .4s ease-in-out;
     background-color: #459EC0;
-    /* flex-direction: column;
+}
+
+.commentBloc3
+{
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     overflow: scroll;
-    width: 25%;
-    height: 200px;
+    width: 35%;
+    height: auto;
     padding: 10px 30px;
-    margin-bottom: 40px;
-    border-radius: 10px;
+    margin-bottom: 30px;
     transition: all .4s ease-in-out;
-    border: 1px solid rgba(0, 0, 0, 0.1); */
-    /* box-shadow: 0 1px 10px -6px rgba(0,0,0,0.42), 0 1px 10px 0 rgba(0,0,0,0.12), 0 4px 5px -2px rgba(0,0,0,0.1); */
+    background-color: #459EC0;
+}
+
+.commentBloc3 p, .commentBloc3 i
+{
+    color: #fff;
 }
 
 .commentBloc:hover
@@ -721,7 +728,7 @@ Comments Home page
     justify-content: flex-start;
 }
 
-.fa-comment, .fa-plus-circle, .fa-reply, .fa-book-reader
+.fa-plus-circle, .fa-reply, .fa-book-reader
 {
     font-size: 2em;
     color: #459EC0;
@@ -729,7 +736,7 @@ Comments Home page
     margin-right: 40px;
 }
 
-.fa-comment:hover, .fa-plus-circle:hover, .fa-reply:hover, .fa-book-reader:hover
+.fa-plus-circle:hover, .fa-reply:hover, .fa-book-reader:hover
 {
     color: #11B6FF;
 }
@@ -741,10 +748,24 @@ Comments Home page
     color: #459EC0;
 }
 
+.fa-comment
+{
+    font-size: 1.8em;
+    color: #459EC0;
+    /* padding-bottom: 30px; */
+    margin-right: 10px;
+}
+
+#num_com
+{
+    color: #459EC0;
+
+}
+
 #suite
 {
     font-size: 1.1em;
-    margin-left: 15px;
+    /* margin-left: 15px; */
     color: #459EC0;
     transition: all .4s ease-in-out;
 }
@@ -757,10 +778,10 @@ Comments Home page
 
 #report
 {
-    width: 81%;
+    width: 86%;
     font-size: 1.1em;
-    margin-left: 15px;
-    color: #459EC0;
+    /* margin-left: 15px; */
+    color: #fff;
     transition: all .4s ease-in-out;
 }
 
@@ -809,7 +830,7 @@ Page formulaire
 .comment
 {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: baseline;
 }
 
@@ -1329,18 +1350,18 @@ Media quieries 300px - 768px
 
     #banniere_description h1
     {
-        top: 14%;
         font-size: 5em;
+        top: 14%;
     }
 
     .guide
     {
-        top: 28%;
+        top: 24%;
     }
 
     .titre
     {
-        font-size: 1em;
+        font-size: 1.4em;
     }
 
     #bio
@@ -1390,9 +1411,96 @@ Media quieries 300px - 768px
 
     #banniere_description_alt h1
     {
-        top: 20%;
+        top: 18%;
     }
 
+    /*------------- connexion -------------*/
+
+    .Admin
+    {
+        width: auto;
+    }
+
+    /*------------- Admin Home -------------*/
+
+    #contentAdminView
+    {
+        flex-direction: column;
+        margin-top:  0;
+    }
+
+    #blocInfos
+    {
+        width: 100%;
+    }
+
+    .asideAdmin
+    {
+        width: 90%;
+        /* padding-left: 10px; */
+        background-color: #fff;
+        /* display: none; */
+        transition : all .2s ease-in-out;
+    }
+
+    #adminList
+    {
+        padding: 0;
+    }
+
+    .articleComment
+    {
+        flex-direction: column;
+    }
+
+    .blocAdmin
+    {
+        width: 95%;
+        padding: 10px;
+        box-shadow: none;
+    }
+
+    .content
+    {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .articleBloc2, .allComments
+    {
+        width: 90%;
+        padding: 0 15px;
+        margin: 0 0px 10px 0;
+    }
+
+    .generalAdmin
+    {
+        padding: 0;
+        margin: 45px 5px 10px 5px;
+        width: 95%;
+    }
+
+    .commentBloc2, .userBloc
+    {
+        width: 90%;
+        margin: 0 0px 10px 0;
+        padding: 1px 15px;
+    }
+
+    .actions
+    {
+        justify-content: space-around;
+    }
+
+    .button1, .button2, .button3
+    {
+        margin-right: 0;
+    }
+
+    #date
+    {
+        font-size: 1em;
+    }
 
 }
 

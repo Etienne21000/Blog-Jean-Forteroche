@@ -35,12 +35,6 @@ class CommentController
         return $countComs;
     }
 
-    //count com by user id
-    public function countComUser()
-    {
-        
-    }
-
     // Methode Add Comment
     public function newComment($post_id, $user_id, $comment)
     {
@@ -89,6 +83,14 @@ class CommentController
     public function getComAdmin($id)
     {
         $Comments = $this->comments->getComments($id);
+
+        return $Comments;
+    }
+
+    //count com by user id
+    public function getComUser($id)
+    {
+        $Comments = $this->comments->getCommentsByUser($id);
 
         return $Comments;
     }

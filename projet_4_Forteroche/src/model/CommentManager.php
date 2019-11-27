@@ -37,6 +37,34 @@ class CommentManager extends Manager
         return $Comments;
     }
 
+    //Get comments by user id
+    public function getCommentsByUser($id, $start =-1, $limite = -1)
+    {
+        $Comments = [];
+
+        $req = 'SELECT c.id, c.user_id, u.pseudo, c.comment, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
+        AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id
+        WHERE c.user_id = :user_id AND c.report = 0 ORDER BY comment_date DESC';
+
+        if ($start != -1 || $limite != -1)
+        {
+            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+        }
+
+        $result = $this->db->prepare($req);
+
+        $result->bindValue(':post_id', $id, \PDO::PARAM_INT);
+
+        $result->execute();
+
+        while ($data = $result->fetch(\PDO::FETCH_ASSOC))
+        {
+            $comment = new Comment($data);
+            $Comments[] = $comment;
+        }
+        return $Comments;
+    }
+
     /*------------------------------
     list comments
     with limit variables

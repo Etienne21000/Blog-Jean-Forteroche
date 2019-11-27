@@ -61,7 +61,7 @@
                     <?php if($_SESSION['user_role'] == 1):?>
                         <li class="menuAdmin"><a href="index.php?action=Accueil"><i class="fas fa-igloo"></i>Accueil</a></li>
                         <li class="menuAdmin"><a href="index.php?action=adminCom"><i class="fas fa-list-ul"></i>Commentaires <?= '(' . $user->num_com() . ')';?></a></li>
-                        <li class="menuAdmin"><a href="index.php?action=reportList"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $user_report->num_com_report() . '</em>)';?></a></li>
+                        <li class="menuAdmin"><a href="index.php?action=reportList"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $user_report->num_com() . '</em>)';?></a></li>
                     <?php endif;?>
                     <li class="menuAdminDeco"><a href="index.php?action=discUser"><i class="fas fa-power-off"></i> Deconnexion</a></li>
                 </ul>
@@ -75,12 +75,7 @@
 
     <footer>
         <p> COPYRIGHT </p>
-        <!-- <script src="src/public/js/menu.js" type="text/javascript"></script> -->
         <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script>
-        <!-- <script src="src/public/js/transition_home.js" type="text/javascript"></script> -->
-        <!-- <script src="src/public/js/formulaire.js" type="text/javascript"></script>
-        <script src="src/public/js/transitions.js" type="text/javascript"></script> -->
-        <!-- <script src="src/public/js/main.js" type="text/javascript"></script> -->
         <script src="src/public/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
         <script src="src/public/js/wysiwyg.js" type="text/javascript"></script>
     </footer>
