@@ -11,7 +11,7 @@ class Manager
     {
         try
         {
-            $db = new \PDO('mysql:host=localhost;dbname=test', 'root', 'root',
+            $db = new \PDO('mysql:host=localhost;dbname=blog forteroche', 'root', 'root',
             array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
             return $db;
 

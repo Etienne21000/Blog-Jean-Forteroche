@@ -60,8 +60,8 @@
                     <?php endif; ?>
                     <?php if($_SESSION['user_role'] == 1):?>
                         <li class="menuAdmin"><a href="index.php?action=Accueil"><i class="fas fa-igloo"></i>Accueil</a></li>
-                        <li class="menuAdmin"><a href="index.php?action=adminCom"><i class="fas fa-list-ul"></i>Commentaires <?= '(' . $user->num_com() . ')';?></a></li>
-                        <li class="menuAdmin"><a href="index.php?action=reportList"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $user_report->num_com() . '</em>)';?></a></li>
+                        <li class="menuAdmin"><a href="index.php?action=userCom&amp;id=<?= $_SESSION['id']; ?>"><i class="fas fa-list-ul"></i>Commentaires <?= '(' . $user->num_com() . ')';?></a></li>
+                        <li class="menuAdmin"><a href="index.php?action=userReportList&amp;id=<?= $_SESSION['id']; ?>"><i class="fas fa-list-ul"></i>Signalés <?= '(<em id="signalés">' . $user_report->num_com() . '</em>)';?></a></li>
                     <?php endif;?>
                     <li class="menuAdminDeco"><a href="index.php?action=discUser"><i class="fas fa-power-off"></i> Deconnexion</a></li>
                 </ul>

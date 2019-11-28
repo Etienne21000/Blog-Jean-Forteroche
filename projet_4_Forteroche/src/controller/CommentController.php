@@ -16,23 +16,31 @@ class CommentController
 
     public function lastCom()
     {
-        $Comments = $this->comments->getAllComments($start = 0, $limite = 3);
+        $Comments = $this->comments->getAllComments($report = 0, $start = 0, $limite = 3);
 
         return $Comments;
     }
 
     public function allCom()
     {
-        $Comments = $this->comments->getAllComments();
+        $Comments = $this->comments->getAllComments($report = 0);
 
         return $Comments;
     }
 
     public function nbCom()
     {
-        $countComs = $this->comments->countComments();
+        $countComs = $this->comments->countComments($report = 0);
 
         return $countComs;
+    }
+
+    //Count reported Comments
+    public function nbReported()
+    {
+        $countReport = $this->comments->countComments($report = 1);
+
+        return $countReport;
     }
 
     // Methode Add Comment
@@ -61,14 +69,14 @@ class CommentController
     //Methode admin delete comment
     public function deleteCom($id)
     {
-        if(isset($_GET['id']) && $_GET['id'] > 0)
-        {
+        // if(isset($_GET['id']) && $_GET['id'] > 0)
+        // {
             $Comment = $this->comments->deleteComment($id);
-        }
-        else
-        {
-            throw new Exception("Impossible supprimer le commentaire (controller)");
-        }
+        // }
+        // else
+        // {
+        //     throw new Exception("Impossible supprimer le commentaire (controller)");
+        // }
     }
 
     //Get comment by post
@@ -88,11 +96,19 @@ class CommentController
     }
 
     //count com by user id
-    public function getComUser($id)
+    public function getComUser($user_id)
     {
-        $Comments = $this->comments->getCommentsByUser($id);
+        $Comments = $this->comments->getCommentsByUser($user_id, $report = 0);
 
         return $Comments;
+    }
+
+    //Get reported com by user id
+    public function getUserReportedCom($user_id)
+    {
+        $report = $this->comments->getCommentsByUser($user_id, $report = 1);
+
+        return $report;
     }
 
     //Get one comment by id
@@ -131,14 +147,6 @@ class CommentController
         $report = $this->comments->getReportedComments();
 
         return $report;
-    }
-
-    //Count reported Comments
-    public function nbReported()
-    {
-        $countReport = $this->comments->countReported();
-
-        return $countReport;
     }
 
 }

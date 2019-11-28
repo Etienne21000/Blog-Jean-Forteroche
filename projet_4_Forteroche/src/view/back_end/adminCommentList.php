@@ -39,7 +39,7 @@
                             <?php if($data->pseudo() == $_SESSION['pseudo']): ?>
                                 <button type="button" name="update" class="button1"><a href="index.php?action=commentUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
                             <?php endif; ?>
-                            <button type="button" name="report" class="button3"> <a href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-trash-alt"></i></a></button>
+                            <button type="button" name="report" class="button3"> <a href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-exclamation"></i></a></button>
                         </div>
                     </div>
                 </a>

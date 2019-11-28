@@ -38,22 +38,26 @@ class CommentManager extends Manager
     }
 
     //Get comments by user id
-    public function getCommentsByUser($id, $start =-1, $limite = -1)
+    public function getCommentsByUser($user_id, $report=-1, $start =-1, $limite = -1)
     {
         $Comments = [];
 
         $req = 'SELECT c.id, c.user_id, u.pseudo, c.comment, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id
-        WHERE c.user_id = :user_id AND c.report = 0 ORDER BY comment_date DESC';
+        AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id';
 
         if ($start != -1 || $limite != -1)
         {
             $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
         }
 
+        if($report!=-1)
+        {
+            $req .= ' WHERE c.user_id = :user_id AND c.report = ' . (int) $report;
+        }
+
         $result = $this->db->prepare($req);
 
-        $result->bindValue(':post_id', $id, \PDO::PARAM_INT);
+        $result->bindValue(':user_id', $user_id, \PDO::PARAM_INT);
 
         $result->execute();
 
@@ -69,16 +73,21 @@ class CommentManager extends Manager
     list comments
     with limit variables
     -------------------------------*/
-    public function getAllComments($start =-1, $limite = -1)
+    public function getAllComments($report = -1, $start =-1, $limite = -1)
     {
         $Comments = [];
 
         $req = 'SELECT c.id, c.comment, u.pseudo, c.user_id, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id  WHERE c.report = 0 ORDER BY comment_date DESC';
+        AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id ';
+
+        if($report != -1)
+        {
+            $req.= ' WHERE c.report = ' . (int) $report . ' ORDER BY comment_date DESC';
+        }
 
         if ($start != -1 || $limite != -1)
         {
-            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+            $req .= ' LIMIT '.(int) $limite . ' OFFSET ' . (int) $start;
         }
 
         $result = $this->db->query($req);
@@ -97,114 +106,113 @@ class CommentManager extends Manager
     public function getCom($id)
     {
         $req = $this->db->prepare('SELECT c.id, c.comment, c.report, u.pseudo,
-        DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id
-        WHERE c.id = :id');
+            DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
+            AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id
+            WHERE c.id = :id');
 
-        $req->bindValue(':id', $id, \PDO::PARAM_INT);
+            $req->bindValue(':id', $id, \PDO::PARAM_INT);
 
-        $req->execute();
+            $req->execute();
 
-        $data = $req->fetch(\PDO::FETCH_ASSOC);
-        $Comment = new Comment($data);
+            $data = $req->fetch(\PDO::FETCH_ASSOC);
+            $Comment = new Comment($data);
 
-        return $Comment;
-    }
-
-    //Count total of comments
-    public function countComments()
-    {
-        $countComs = $this->db->query('SELECT COUNT(*) FROM commentaires WHERE report = 0')->fetchColumn();
-
-        return $countComs;
-    }
-
-    //Count reported comments
-    public function countReported()
-    {
-        $countReport = $this->db->query('SELECT COUNT(*) FROM commentaires WHERE report = 1')->fetchColumn();
-
-        return $countReport;
-    }
-
-    //Get all reported comments
-    public function reportComment($id)
-    {
-        $req = $this->db->prepare('UPDATE commentaires SET report = 1 WHERE id = :id');
-
-        $req->bindValue(':id', $id, \PDO::PARAM_INT);
-
-        $req->execute();
-    }
-
-    //Validate a reported comment
-    public function validateCom($id)
-    {
-        $req = $this->db->prepare('UPDATE commentaires SET report = 0 WHERE id = :id');
-
-        $req->bindValue(':id', $id, \PDO::PARAM_INT);
-
-        $req->execute();
-    }
-
-    /*------------------------------
-    list reported comments
-    with limit variables
-    -------------------------------*/
-    public function getReportedComments($start = -1, $limite = -1)
-    {
-        $report = [];
-
-        $req = 'SELECT c.id, u.pseudo, c.comment, c.report, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date
-        FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id WHERE c.report = 1 ORDER BY comment_date DESC';
-
-        if ($start != -1 || $limite != -1)
-        {
-            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+            return $Comment;
         }
 
-        $result = $this->db->query($req);
-
-        while ($data = $result->fetch(\PDO::FETCH_ASSOC))
+        //Count total of comments
+        public function countComments($report =-1)
         {
-            $com = new Comment($data);
-            $report[] = $com;
+            $req = 'SELECT COUNT(*) FROM commentaires';
+
+            if($report != -1)
+            {
+                $req.= ' WHERE report = ' .(int) $report;
+            }
+
+            $countComs = $this->db->query($req)->fetchColumn();
+
+            return $countComs;
         }
 
-        return $report;
+        //Report comment
+        public function reportComment($id)
+        {
+            $req = $this->db->prepare('UPDATE commentaires SET report = 1 WHERE id = :id');
+
+            $req->bindValue(':id', $id, \PDO::PARAM_INT);
+
+            $req->execute();
+        }
+
+        //Validate a reported comment
+        public function validateCom($id)
+        {
+            $req = $this->db->prepare('UPDATE commentaires SET report = 0 WHERE id = :id');
+
+            $req->bindValue(':id', $id, \PDO::PARAM_INT);
+
+            $req->execute();
+        }
+
+        /*------------------------------
+        list reported comments
+        with limit variables
+        -------------------------------*/
+        public function getReportedComments($start = -1, $limite = -1)
+        {
+            $report = [];
+
+            $req = 'SELECT c.id, u.pseudo, c.comment, c.report, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date
+            FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id WHERE c.report = 1 ORDER BY comment_date DESC';
+
+            if ($start != -1 || $limite != -1)
+            {
+                $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+            }
+
+            $result = $this->db->query($req);
+
+            while ($data = $result->fetch(\PDO::FETCH_ASSOC))
+            {
+                $com = new Comment($data);
+                $report[] = $com;
+            }
+
+            return $report;
+        }
+
+        public function addComment(Comment $comment)
+        {
+            $req = $this->db->prepare('INSERT INTO commentaires(post_id, user_id, comment, comment_date, report)
+            VALUES(:post_id, :user_id, :comment, NOW(), 0)');
+
+            $req->bindValue(':post_id', $comment->post_id(), \PDO::PARAM_INT);
+            $req->bindValue(':user_id', $comment->user_id(), \PDO::PARAM_INT);
+            $req->bindValue(':comment', $comment->comment());
+
+            $req->execute();
+        }
+
+        //Delet comment (admin session)
+        public function deleteComment($id)
+        {
+            $req = $this->db->prepare('DELETE FROM commentaires WHERE id = :id');
+
+            $req->bindValue(':id', $id, \PDO::PARAM_INT);
+
+            $req->execute();
+        }
+
+        //Update comment method
+        public function updateComment(Comment $comment)
+        {
+            $req = $this->db->prepare('UPDATE commentaires SET comment = :comment, report = 0, edition_com_date = NOW()
+            WHERE id = :id');
+
+            $req->bindValue(':comment', $comment->comment());
+            $req->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
+
+            $req->execute();
+        }
     }
-
-    public function addComment(Comment $comment)
-    {
-        $req = $this->db->prepare('INSERT INTO commentaires(post_id, user_id, comment, comment_date, report)
-        VALUES(:post_id, :user_id, :comment, NOW(), 0)');
-
-        $req->bindValue(':post_id', $comment->post_id(), \PDO::PARAM_INT);
-        $req->bindValue(':user_id', $comment->user_id(), \PDO::PARAM_INT);
-        $req->bindValue(':comment', $comment->comment());
-
-        $req->execute();
-    }
-
-    //Delet comment (admin session)
-    public function deleteComment($id)
-    {
-        $req = $this->db->prepare('DELETE FROM commentaires WHERE id = :id');
-
-        $req->bindValue(':id', $id, \PDO::PARAM_INT);
-
-        $req->execute();
-    }
-
-    //Update comment method
-    public function updateComment(Comment $comment)
-    {
-        $req = $this->db->prepare('UPDATE commentaires SET comment = :comment, report = 0, edition_com_date = NOW()
-        WHERE id = :id');
-
-        $req->bindValue(':comment', $comment->comment());
-        $req->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
-
-        $req->execute();
-    }
-}
