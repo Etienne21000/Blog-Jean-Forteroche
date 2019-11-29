@@ -69,14 +69,7 @@ class CommentController
     //Methode admin delete comment
     public function deleteCom($id)
     {
-        // if(isset($_GET['id']) && $_GET['id'] > 0)
-        // {
-            $Comment = $this->comments->deleteComment($id);
-        // }
-        // else
-        // {
-        //     throw new Exception("Impossible supprimer le commentaire (controller)");
-        // }
+        $Comment = $this->comments->deleteComment($id);
     }
 
     //Get comment by post
@@ -114,7 +107,7 @@ class CommentController
     //Get one comment by id
     public function getOne($id)
     {
-    $Comment = $this->comments->getCom($id);
+        $Comment = $this->comments->getCom($id);
 
         return $Comment;
     }

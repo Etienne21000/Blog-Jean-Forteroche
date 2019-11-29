@@ -64,8 +64,7 @@
 
 
     <footer>
-        <p> COPYRIGHT </p>
-        <!-- <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script> -->
+        <p> Copyright © Etienne Juffard - 2019 - tous droits réservés </p>
         <script src="src/public/js/formulaire.js" type="text/javascript"></script>
         <script src="src/public/js/menu.js" type="text/javascript"></script>
         <script src="src/public/js/transition_home.js" type="text/javascript"></script>

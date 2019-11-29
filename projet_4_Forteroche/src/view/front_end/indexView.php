@@ -85,7 +85,7 @@
 		<!-- <div id="article_home"> -->
 		<?php foreach ($Posts as $data): ?>
 			<a href="index.php?action=listComments&id=<?= $data->id()?>">
-				<div class="articleBloc">
+				<div class="articleBloc1">
 					<header class="titreh3">
 						<h3>
 							<?php echo htmlspecialchars($data->title()); ?>
@@ -118,7 +118,7 @@
 <section class="comments">
 
 	<header class="titre">
-		<h2>Les derniers commentaires</h2>
+		<h2> <i class="fas fa-comments"></i> Les derniers commentaires</h2>
 	</header>
 
 	<article class="oneComment">

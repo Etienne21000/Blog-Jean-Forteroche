@@ -95,15 +95,10 @@ try
                 $post = $postController->getPost($_GET['id']);
                 $Comments = $commentController->getCom($_GET['id']);
 
-                // if($_SESSION['user_role'] == 2)
-                // {
-                //     header('Location: index.php?action=adminCom');
-                // }
-                //
-                // else
-                // {
-                    header('Location: index.php&action=listComments&id=' . $_GET['id']);
-                // }
+                // header('Location: index.php&action=listComments&id=' . $_GET['id']);
+                // require 'src/view/front_end/postView.php';
+                header('Refresh: 2; URL=index.php');
+
             }
 
             else
@@ -748,4 +743,6 @@ try
     catch (Exception $e)
     {
         echo '<strong>Erreur</strong> : une erreur s\'est produite : ' . $e->getMessage();
+        require 'src/view/front_end/errorView.php';
+
     }

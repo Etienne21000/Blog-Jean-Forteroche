@@ -74,7 +74,7 @@
     </section>
 
     <footer>
-        <p> COPYRIGHT </p>
+        <p> Copyright © Etienne Juffard - 2019 - tous droits réservés </p>
         <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script>
         <script src="src/public/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
         <script src="src/public/js/wysiwyg.js" type="text/javascript"></script>
