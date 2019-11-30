@@ -52,53 +52,17 @@ try
             require 'src/view/front_end/postView.php';
         }
 
-        //Add comment
-        elseif ($_GET['action'] == 'addComment')
-        {
-            if(isset($_SESSION['pseudo']) && isset($_SESSION['id']))
-            {
-                if(isset($_GET['id']) && $_GET['id'] > 0)
-                {
-                    $user_id = $_SESSION['id'];
-
-                    if(!empty($_POST['comment']))
-                    {
-                        $commentController->newComment($_GET['id'], $user_id, htmlspecialchars($_POST['comment']));
-                    }
-
-                    else
-                    {
-                        throw new Exception("vous n'avez pas remplis tous les champs! (rooter)");
-                    }
-                }
-
-                else
-                {
-                    throw new \Exception("impossible de commenter");
-                }
-            }
-
-            else
-            {
-                require 'src/view/front_end/inscriptionUser.php';
-            }
-
-            header('Location: index.php?action=listComments&id=' . $_GET['id']);
-        }
-
         //Report comment by user revoir la redirection id
         elseif ($_GET['action'] == 'reportComment')
         {
             if (isset($_GET['id']) && $_GET['id'] > 0)
             {
-                $reportedCom = $commentController->reportCom($_GET['id']);
                 $post = $postController->getPost($_GET['id']);
-                $Comments = $commentController->getCom($_GET['id']);
+                $reportedCom = $commentController->reportCom($_GET['id']);
+
+                header('Location: index.php?action=Accueil');
 
                 // header('Location: index.php&action=listComments&id=' . $_GET['id']);
-                // require 'src/view/front_end/postView.php';
-                header('Refresh: 2; URL=index.php');
-
             }
 
             else
@@ -122,17 +86,16 @@ try
         //User inscription public
         elseif ($_GET['action'] == 'userInscription')
         {
+            $error = null;
+
             if (!empty($_POST))
             {
+                $validate = true;
+
                 $_POST['pseudo'] = htmlspecialchars($_POST['pseudo']);
                 $_POST['mail'] = htmlspecialchars($_POST['mail']);
                 $_POST['pass'] = htmlspecialchars($_POST['pass']);
                 $_POST['confirmePass'] = htmlspecialchars($_POST['confirmePass']);
-                // $errors = array();
-
-
-                $validate = true;
-                $error = null;
 
                 //Verify pseudo
                 if(empty($_POST['pseudo']) || strlen($_POST['pseudo']) > 100 || !preg_match("#^[a-zà-ùA-Z0-9-\s_-]+$#", $_POST['pseudo']))
@@ -148,7 +111,7 @@ try
                     $error = 6;
                 }
 
-                //Verufy passWord
+                //Verify passWord
                 if(empty($_POST['pass']) || strlen($_POST['pass']) > 255 || !preg_match("#^[a-zA-Z0-9_-]+.{8,}$#", $_POST['pass']))
                 {
                     $validate = false;
@@ -156,27 +119,24 @@ try
                 }
 
                 //Confirm pass
-                if (($_POST['pass'] !== $_POST['confirmePass']))
+                if(empty($_POST['pass']) || ($_POST['pass'] !== $_POST['confirmePass']))
                 {
                     $validate = false;
                     $error = 8;
                 }
 
-                if($validate = true)
+                if($validate)
                 {
-                    // $hash_pass = $_POST['pass'];
                     if (empty($userController->pseudoExist($_POST['pseudo'])) && empty($userController->mailExist($_POST['mail'])))
                     {
                         $_POST['pass'] = password_hash($_POST['pass'], PASSWORD_BCRYPT);
 
                         $userController->addUser(htmlspecialchars($_POST['pseudo']), htmlspecialchars($_POST['mail']), htmlspecialchars($_POST['pass']));
 
-                        // require 'src/view/front_end/adminConnexionView.php';
                         header('Location: index.php?action=AdminConnexion');
                     }
                     else {
                         $error = 9;
-                        // echo '<p>Ce pseudo est déjà utilisé ou le mail est invalide</p>';
                     }
                 }
             }
@@ -230,7 +190,7 @@ try
                 }
 
                 //if form is ok validate retunr true
-                if ($validate = true)
+                if ($validate)
                 {
                     $user = $userController->userConnect($_POST['pseudo']);
 
@@ -286,7 +246,6 @@ try
                 break;
             }
 
-            // header('Location: index.php?action=AdminConnexion');
             require 'src/view/front_end/adminConnexionView.php';
         }
 
@@ -297,10 +256,6 @@ try
 
             header('Location: index.php?action=Accueil');
         }
-
-        /*---------------------------------------------------
-        Admin actions with specific acces role = 2
-        ----------------------------------------------------*/
 
         /*---------------------------
         1. post's actions
@@ -321,7 +276,7 @@ try
             //Admin session action
             if(!empty($_POST['title']) && !empty($_POST['content']))
             {
-            $postController->addPost(/*htmlspecialchars($_POST['title']), htmlentities($_POST['content'])*/);
+                $postController->addPost(htmlspecialchars($_POST['title']), htmlspecialchars($_POST['content']));
             }
             else
             {
@@ -402,10 +357,43 @@ try
             }
         }
 
-
         /*---------------------------
         2. comment's actions
         ---------------------------*/
+
+        //Add comment
+        elseif ($_GET['action'] == 'addComment')
+        {
+            if(isset($_SESSION['pseudo']) && isset($_SESSION['id']))
+            {
+                if(isset($_GET['id']) && $_GET['id'] > 0)
+                {
+                    $user_id = $_SESSION['id'];
+
+                    if(!empty($_POST['comment']))
+                    {
+                        $commentController->newComment($_GET['id'], $user_id, htmlspecialchars($_POST['comment']));
+                    }
+
+                    else
+                    {
+                        throw new Exception("vous n'avez pas remplis tous les champs! (rooter)");
+                    }
+                }
+
+                else
+                {
+                    throw new \Exception("impossible de commenter");
+                }
+            }
+
+            else
+            {
+                require 'src/view/front_end/inscriptionUser.php';
+            }
+
+            header('Location: index.php?action=listComments&id=' . $_GET['id']);
+        }
 
         //Delete comment
         elseif ($_GET['action'] == 'deleteCom')
@@ -439,15 +427,19 @@ try
         {
             if(isset($_SESSION))
             {
-                $countPosts = $postController->nbPost();
-                $countComs = $commentController->nbCom();
-                $countUsers = $userController->nbUsers();
-                $countReport = $commentController->nbReported();
-                $Comment = $commentController->getOne($_GET['id']);
-
-                $user = $userController->getOneUser($_SESSION['id']);
-                $Comments = $commentController->getComUser($_GET['id']);
-                $user_report = $userController->getUserReport($_SESSION['id']);
+                if($_SESSION['user_role'] == 2){
+                    $countPosts = $postController->nbPost();
+                    $countComs = $commentController->nbCom();
+                    $countUsers = $userController->nbUsers();
+                    $countReport = $commentController->nbReported();
+                    $Comment = $commentController->getOne($_GET['id']);
+                }
+                elseif ($_SESSION['user_role'] == 1)
+                {
+                    $user = $userController->getOneUser($_SESSION['id']);
+                    $Comments = $commentController->getComUser($_GET['id']);
+                    $user_report = $userController->getUserReport($_SESSION['id']);
+                }
 
                 require 'src/view/back_end/adminEditComment.php';
             }
@@ -532,6 +524,7 @@ try
                 $countUsers = $userController->nbUsers();
                 $countReport = $commentController->nbReported();
                 $Comment = $commentController->getOne($_GET['id']);
+                // $Comment = $commentController->getReportCom($_GET['id']);
             }
 
             elseif ($_SESSION['user_role'] == 1)
@@ -710,10 +703,18 @@ try
             {
                 if(isset($_GET['id']) && $_GET['id'] > 0)
                 {
-                    $userController->deleteU($_GET['id']);
-                    $userController->disconnectUser();
 
-                    header('Location: index.php?action=Accueil');
+                    $userController->deleteU($_GET['id']);
+
+                    if($_SESSION['user_role'] == 2)
+                    {
+                        header('Location: index.php?action=listUsers');
+                    }
+                    elseif ($_SESSION['user_role'] == 1)
+                    {
+                        $userController->disconnectUser();
+                        header('Location: index.php?action=Accueil');
+                    }
                 }
                 else
                 {
@@ -726,10 +727,6 @@ try
                 require 'src/view/front_end/errorView.php';
 
             }
-
-            /*---------------------------
-            3. Admin's actions
-            ---------------------------*/
         }
 
         else

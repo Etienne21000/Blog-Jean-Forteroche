@@ -89,17 +89,17 @@ class CommentController
     }
 
     //count com by user id
-    public function getComUser($user_id)
+    public function getComUser($id)
     {
-        $Comments = $this->comments->getCommentsByUser($user_id, $report = 0);
+        $Comments = $this->comments->getCommentsByUser($id, $report = 0);
 
         return $Comments;
     }
 
     //Get reported com by user id
-    public function getUserReportedCom($user_id)
+    public function getUserReportedCom($id)
     {
-        $report = $this->comments->getCommentsByUser($user_id, $report = 1);
+        $report = $this->comments->getCommentsByUser($id, $report = 1);
 
         return $report;
     }
@@ -129,7 +129,7 @@ class CommentController
     //Get reported comments
     public function getReportedCom()
     {
-        $report = $this->comments->getReportedComments($start = 0, $limite = 3);
+        $report = $this->comments->getAllComments($report = 1, $start = 0, $limite = 3);
 
         return $report;
     }
@@ -137,7 +137,7 @@ class CommentController
     //Get all reported Comments
     public function getAllReported()
     {
-        $report = $this->comments->getReportedComments();
+        $report = $this->comments->getAllComments($report = 1);
 
         return $report;
     }

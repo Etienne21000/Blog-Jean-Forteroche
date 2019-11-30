@@ -47,12 +47,12 @@ class PostController
         return $countPosts;
     }
 
-    public function addPost()
+    public function addPost($title, $content)
     {
         $post = new Post([$data]);
 
-        $post->setTitle(htmlspecialchars($_POST['title']));
-        $post->setContent(htmlspecialchars($_POST['content']));
+        $post->setTitle($title);
+        $post->setContent($content);
 
         $this->post->add($post);
     }

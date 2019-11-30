@@ -10,13 +10,14 @@ class CommentManager extends Manager
         $this->db = $this->dbConnect();
     }
 
+    //Comments by post id
     public function getComments($id, $start =-1, $limite = -1)
     {
         $Comments = [];
 
         $req = 'SELECT c.id, c.post_id, u.pseudo, c.comment, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
         AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id
-        WHERE c.post_id = :post_id AND c.report = 0 ORDER BY comment_date DESC';
+        WHERE c.post_id = :post_id AND c.report = 0 ORDER BY c.comment_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
@@ -34,6 +35,7 @@ class CommentManager extends Manager
             $comment = new Comment($data);
             $Comments[] = $comment;
         }
+
         return $Comments;
     }
 
@@ -45,14 +47,14 @@ class CommentManager extends Manager
         $req = 'SELECT c.id, c.user_id, u.pseudo, c.comment, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
         AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id';
 
+        if($report != -1)
+        {
+            $req .= ' WHERE c.user_id = :user_id AND c.report = ' . (int) $report;
+        }
+
         if ($start != -1 || $limite != -1)
         {
             $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
-        }
-
-        if($report!=-1)
-        {
-            $req .= ' WHERE c.user_id = :user_id AND c.report = ' . (int) $report;
         }
 
         $result = $this->db->prepare($req);
@@ -78,11 +80,11 @@ class CommentManager extends Manager
         $Comments = [];
 
         $req = 'SELECT c.id, c.comment, u.pseudo, c.user_id, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\')
-        AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id ';
+        AS comment_date FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id';
 
         if($report != -1)
         {
-            $req.= ' WHERE c.report = ' . (int) $report . ' ORDER BY comment_date DESC';
+            $req.= ' WHERE c.report = ' . (int) $report . ' ORDER BY c.comment_date DESC';
         }
 
         if ($start != -1 || $limite != -1)
@@ -103,6 +105,7 @@ class CommentManager extends Manager
     /*-------------------------
     Get comment by id
     --------------------------*/
+
     public function getCom($id)
     {
         $req = $this->db->prepare('SELECT c.id, c.comment, c.report, u.pseudo,
@@ -155,33 +158,7 @@ class CommentManager extends Manager
             $req->execute();
         }
 
-        /*------------------------------
-        list reported comments
-        with limit variables
-        -------------------------------*/
-        public function getReportedComments($start = -1, $limite = -1)
-        {
-            $report = [];
-
-            $req = 'SELECT c.id, u.pseudo, c.comment, c.report, DATE_FORMAT(c.comment_date, \'%d/%m/%Y à %Hh%i\') AS comment_date
-            FROM commentaires AS c LEFT JOIN users AS u ON c.user_id = u.id WHERE c.report = 1 ORDER BY comment_date DESC';
-
-            if ($start != -1 || $limite != -1)
-            {
-                $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
-            }
-
-            $result = $this->db->query($req);
-
-            while ($data = $result->fetch(\PDO::FETCH_ASSOC))
-            {
-                $com = new Comment($data);
-                $report[] = $com;
-            }
-
-            return $report;
-        }
-
+        //Add comment
         public function addComment(Comment $comment)
         {
             $req = $this->db->prepare('INSERT INTO commentaires(post_id, user_id, comment, comment_date, report)

@@ -11,28 +11,28 @@
 
     <div class="content">
         <article class="articleComment">
-            <?php foreach ($Users as $data): /*var_dump($data)*/?>
-                <a href="index.php?action=singleUser&id=<?= $data->id()?>">
+            <?php foreach ($Users as $user): /*var_dump($data)*/?>
+                <a href="index.php?action=singleUser&id=<?= $user->id()?>">
                     <div class="allComments">
                         <header class="titreh3">
                             <p>
-                                <?= htmlspecialchars($data->pseudo()); ?>
+                                <?= htmlspecialchars($user->pseudo()); ?>
                             </p>
                         </header>
 
                         <p>
-                            inscrit le : <?php echo htmlspecialchars($data->user_date()); ?>
+                            inscrit le : <?= htmlspecialchars($user->user_date()); ?>
                             <br>
 
-                            <?= nl2br(htmlspecialchars($data->mail())); ?>
+                            <?= nl2br(htmlspecialchars($user->mail())); ?>
                         </p>
 
                         <p>
-                            <?= htmlspecialchars($data->num_com()); ?> commentaires posté
+                            <?= htmlspecialchars($user->num_com()); ?> commentaires posté
                         </p>
 
                         <div class="actions">
-                            <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteUser&amp;id=<?= $data->id()?>">Supprimer le compte <i class="fas fa-trash-alt"></i></a></button>
+                            <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteUser&amp;id=<?= $user->id()?>">Supprimer le compte <i class="fas fa-trash-alt"></i></a></button>
                         </div>
                     </div>
                 </a>

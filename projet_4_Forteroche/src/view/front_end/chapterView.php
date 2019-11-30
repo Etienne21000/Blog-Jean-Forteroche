@@ -8,9 +8,7 @@
 		<h1>
 			<strong>Les chapitres</strong>
 		</h1>
-		<!-- <div class="guide_alt">
-		<div id="sousTitre">Les chapitres</div>
-	</div> -->
+		
 	<div id="slider_alt">
 		<div class="slide_alt">
 			<span id="calque_alt"> </span>

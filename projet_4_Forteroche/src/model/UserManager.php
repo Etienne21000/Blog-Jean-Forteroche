@@ -37,8 +37,8 @@ class UserManager extends Manager
     {
         $Users = [];
 
-        $req = 'SELECT u.id, u.pseudo, u.mail, DATE_FORMAT(u.user_date, \'%d/%m/%Y à %Hh%i\')
-        AS user_date, COUNT(c.id) AS num_com FROM users AS u LEFT OUTER JOIN commentaires AS c ON u.id = c.user_id GROUP BY u.id ORDER BY user_date DESC';
+        $req = 'SELECT u.id, u.pseudo, u.mail, DATE_FORMAT(u.user_date, \'%d/%m/%Y\')
+        AS user_date, COUNT(c.id) AS num_com FROM users AS u LEFT OUTER JOIN commentaires AS c ON u.id = c.user_id GROUP BY u.id ORDER BY u.user_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
@@ -122,14 +122,3 @@ class UserManager extends Manager
     }
 
 }
-
-// $data = $req->fetch(\PDO::FETCH_ASSOC);
-
-// if(!$data)
-// {
-//     return false;
-// }
-// else
-// {
-//     return new User($data);
-// }

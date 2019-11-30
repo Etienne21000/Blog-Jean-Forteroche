@@ -16,7 +16,7 @@ class UserController
     //Add user
     public function addUser($pseudo, $mail, $pass)
     {
-        $User = new User(['data']);
+        $User = new User([$data]);
 
         $User->setPseudo($pseudo);
         $User->setMail($mail);

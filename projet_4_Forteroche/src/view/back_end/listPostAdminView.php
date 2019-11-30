@@ -28,9 +28,7 @@
                         </em>
                     </header>
 
-                    <!-- <p> -->
-                    <?= substr(html_entity_decode($data->content(), ENT_HTML5, 'UTF-8'),0,300) . '...'; ?>
-                    <!-- </p> -->
+                    <?= substr(html_entity_decode($data->content()),0,300) . '...'; ?>
                     <p>
                         Cet article à été commenté <?= htmlspecialchars($data->num_com()); ?> fois.
                     </p>

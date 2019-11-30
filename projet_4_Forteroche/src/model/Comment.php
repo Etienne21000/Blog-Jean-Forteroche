@@ -17,16 +17,16 @@ class Comment extends Entity
     //Constructor
     public function __construct(array $data)
     {
-    $this->hydrate = $this->hydrate($data);
+        $this->hydrate = $this->hydrate($data);
     }
 
     /*---------------------------------------
-                    Setter Comments
+    Setter Comments
     ----------------------------------------*/
 
     public function setId($id)
     {
-            $this->id = (int)$id;
+        $this->id = (int)$id;
     }
 
     public function setAuthor($author)
@@ -39,7 +39,7 @@ class Comment extends Entity
 
     public function setIdpost($post_id)
     {
-            $this->post_id = (int)$post_id;
+        $this->post_id = (int)$post_id;
     }
 
     public function setComment($comment)
@@ -73,7 +73,7 @@ class Comment extends Entity
 
     public function setUserId($user_id)
     {
-            $this->user_id = (int)$user_id;
+        $this->user_id = (int)$user_id;
     }
 
     public function setPseudo($pseudo)
@@ -85,7 +85,7 @@ class Comment extends Entity
     }
 
     /*---------------------------------------
-                    Getter Comments
+    Getter Comments
     ----------------------------------------*/
 
     public function id()

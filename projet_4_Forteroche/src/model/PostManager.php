@@ -19,11 +19,11 @@ class PostManager extends Manager
         $req = 'SELECT b.id, b.title, b.content, DATE_FORMAT(b.creation_date, \'%d/%m/%Y à %Hh%i\')
         AS creation_date, DATE_FORMAT(b.edition_date, \'%d/%m/%Y à %Hh%i\') AS edition_date,
         COUNT(c.id) AS num_com FROM billets AS b LEFT JOIN commentaires AS c
-        ON b.id = c.post_id WHERE c.report = 0 GROUP BY b.id ORDER BY creation_date DESC';
+        ON b.id = c.post_id GROUP BY b.id ORDER BY b.creation_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
-            $req .= ' LIMIT '.(int) $limite.' OFFSET '.(int) $start;
+            $req .= ' LIMIT '. (int) $limite .' OFFSET ' . (int) $start;
         }
 
         $result = $this->db->query($req);

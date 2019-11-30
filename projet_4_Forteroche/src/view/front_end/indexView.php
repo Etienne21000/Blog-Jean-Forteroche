@@ -88,15 +88,13 @@
 				<div class="articleBloc1">
 					<header class="titreh3">
 						<h3>
-							<?php echo htmlspecialchars($data->title()); ?>
+							<?= htmlspecialchars($data->title()); ?>
 						</h3>
-						<em> <?php echo htmlspecialchars($data->creation_date() /*== $data->edition_date() ? '-' : $data->edition_date()->format('d/m/Y à H/hi')*/); ?></em>
+						<em> <?= 'publié le ' . htmlspecialchars($data->creation_date()); ?></em>
 					</header>
 
-					<!-- <p> -->
-					<?php echo substr(html_entity_decode($data->content()), 0, 330) . '...'; ?>
+					<?= substr(html_entity_decode($data->content()), 0, 340) . '...'; ?>
 
-					<!-- </p> -->
 					<p id="continu">
 						<a href="index.php?action=listComments&id=<?= $data->id(); ?>">Lire la suite...</a>
 					</p>
@@ -112,7 +110,6 @@
 	</article>
 
 	<div id="separate"></div>
-	<!-- <a href="index.php?action=AddPostAdmin">Ajouter un article</a> -->
 </section>
 
 <section class="comments">

@@ -618,10 +618,8 @@ Section 2
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    /* width: 43%; */
     height: auto;
     padding: 0 30px;
-    /* margin-bottom: 40px; */
     margin: 15px;
     border-radius: 2px;
     transition: all .2s ease-in-out;
@@ -633,7 +631,7 @@ Section 2
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    width: 43%;
+    width: 40%;
     height: auto;
     padding: 0 30px;
     margin: 15px;
