@@ -2,8 +2,7 @@
 
 <?php  ob_start(); ?>
 
-<!-- <article class="blocAdmin"> -->
-<header class="titre">
+<article class="titre">
     <h4>
         <?php if($_SESSION['user_role'] == 2){
             echo $countComs . ' commentaires';
@@ -14,13 +13,12 @@
         }
         ?>
     </h4>
-</header>
+</article>
 
 <div class="content">
     <?php if($_SESSION['user_role'] == 2): ?>
         <article class="articleComment">
             <?php foreach ($Comments as $data): ?>
-                <a href="index.php?action=signleCom&id=<?= $data->id()?>">
                     <div class="allComments">
                         <header class="titreh3">
                             <p>
@@ -35,14 +33,17 @@
                             <?= substr(html_entity_decode(htmlspecialchars($data->comment())),0,50) . '...'; ?>
                         </p>
 
+                        <p class="continu">
+                            <a href="index.php?action=signleCom&id=<?= $data->id()?>">Voir le commentaire</a>
+                        </p>
+
                         <div class="actions">
                             <?php if($data->pseudo() == $_SESSION['pseudo']): ?>
-                                <button type="button" name="update" class="button1"><a href="index.php?action=commentUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
+                                <a class="button1 update" href="index.php?action=postUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a>
                             <?php endif; ?>
-                            <button type="button" name="report" class="button3"> <a href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-exclamation"></i></a></button>
+                            <a class="button3 report" href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-exclamation"></i></a>
                         </div>
                     </div>
-                </a>
             <?php endforeach; ?>
         </article>
     <?php endif; ?>
@@ -66,9 +67,9 @@
 
                         <div class="actions">
                             <?php if($data->pseudo() == $_SESSION['pseudo']): ?>
-                                <button type="button" name="update" class="button1"><a href="index.php?action=commentUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
+                                <a class="button1 update" href="index.php?action=postUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a>
                             <?php endif; ?>
-                            <button type="button" name="report" class="button3"> <a href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-trash-alt"></i></a></button>
+                            <a class="button3 report" href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-exclamation"></i></a>
                         </div>
                     </div>
                 </a>
@@ -79,4 +80,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require 'src/public/templateAdmin.php'; ?>
+<?php require_once 'src/public/templateAdmin.php'; ?>

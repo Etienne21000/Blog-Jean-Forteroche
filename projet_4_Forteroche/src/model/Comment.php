@@ -3,7 +3,6 @@ namespace model;
 
 class Comment extends Entity
 {
-    //Attributs de l'objet
     private $id;
     private $author;
     private $post_id;
@@ -14,7 +13,6 @@ class Comment extends Entity
     private $user_id;
     private $pseudo;
 
-    //Constructor
     public function __construct(array $data)
     {
         $this->hydrate = $this->hydrate($data);

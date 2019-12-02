@@ -11,34 +11,35 @@
 <div class="content">
     <article class="articleComment">
         <?php foreach ($report as $data): ?>
-            <a href="index.php?action=signleCom&id=<?=$data->id(); ?>">
-                <div class="allComments">
-                    <header class="titreh3">
-                        <p>
-                            <?= htmlspecialchars($data->pseudo()); ?>
-                        </p>
-                    </header>
-
+            <div class="allComments">
+                <header class="titreh3">
                     <p>
-                        publié le : <?php echo htmlspecialchars($data->comment_date()); ?>
-                        <br>
-
-                        <?= substr(nl2br(html_entity_decode(htmlspecialchars($data->comment()))),0,50) . '...'; ?>
+                        <?= htmlspecialchars($data->pseudo()); ?>
                     </p>
+                </header>
 
-                    <div class="actions">
-                        <?php if($data->pseudo() == $_SESSION['pseudo']): ?>
-                            <button type="button" name="update" class="button1"><a href="index.php?action=commentUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
-                        <?php endif; ?>
-                        <button type="button" name="validate" class="button2"> <a href="index.php?action=validateCom&amp;id=<?= $data->id(); ?>">Valider <i class="fas fa-check-circle"></i></a></button>
-                        <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteCom&amp;id=<?= $data->id()?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
-                    </div>
+                <p>
+                    publié le : <?php echo htmlspecialchars($data->comment_date()); ?>
+                    <br>
+
+                    <?= substr(nl2br(html_entity_decode(htmlspecialchars($data->comment()))),0,50) . '...'; ?>
+                </p>
+
+                <p class="continu">
+                    <a href="index.php?action=signleCom&id=<?=$data->id(); ?>">Voir le commentaire</a>
+                </p>
+
+                <div class="actions">
+                    <?php if($data->pseudo() == $_SESSION['pseudo']): ?>
+                        <a class="button1 update" href="index.php?action=commentUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a>
+                    <?php endif; ?>
+                    <a class="button2 validate" href="index.php?action=validateCom&amp;id=<?= $data->id(); ?>">Valider <i class="fas fa-check-circle"></i></a>
+                    <a class="button3 delete" href="index.php?action=deleteCom&amp;id=<?= $data->id()?>">Supprimer <i class="fas fa-trash-alt"></i></a>
                 </div>
-            </a>
+            </div>
         <?php endforeach; ?>
     </article>
 </div>
-<!-- </article> -->
 
 <?php $content = ob_get_clean(); ?>
 

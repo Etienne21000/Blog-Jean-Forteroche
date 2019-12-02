@@ -14,13 +14,11 @@
         </header>
 
         <div class="actions">
-            <button type="button" name="update" class="button1"><a href="index.php?action=postUpdate&id=<?= $post->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
-            <button type="button" name="delete" class="button3"> <a href="index.php?action=deletePost&id=<?= $post->id(); ?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
+            <a class="button1 update" href="index.php?action=postUpdate&id=<?= $post->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a>
+            <a class="button3 delete" href="index.php?action=deletePost&id=<?= $post->id(); ?>">Supprimer <i class="fas fa-trash-alt"></i></a>
         </div>
 
-        <!-- <p> -->
             <?= html_entity_decode($post->content()); ?>
-        <!-- </p> -->
     </article>
 
     <p>
@@ -42,8 +40,8 @@
     				<?= nl2br(html_entity_decode(htmlspecialchars($data->comment()))); ?>
     			</p>
                 <div class="actions">
-                    <button type="button" name="signleCom" class="button1"><a href="index.php?action=signleCom&id=<?= $data->id()?>">Voir le commentaire </a></button>
-                    <button type="button" name="delete" class="button3"> <a href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-trash-alt"></i></a></button>
+                    <a class="button1 signleCom" href="index.php?action=signleCom&id=<?= $data->id()?>">Voir le commentaire </a>
+                    <a class="button3 delete" href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-trash-alt"></i></a>
                 </div>
     		</div>
 

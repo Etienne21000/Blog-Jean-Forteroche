@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
-    
+
     class Transition_bio {
         constructor(fleche, blocBio, fleche_haut, articles, fleche_bas, fleche_haut_2)
         {
@@ -60,25 +60,3 @@ document.addEventListener('DOMContentLoaded', function(){
     newTransition.init();
 
 });
-
-
-//
-//
-//
-// var fleche = document.querySelector('#fleche_bio');
-// var bloc_bio = document.querySelector('#bio_forteroche').style.display = "none";
-//
-// function showBio()
-// {
-//     var bloc_bio = document.querySelector('#bio_forteroche').style.display = "block";
-// }
-
-// function hideBion()
-// {
-//     var bloc_bio = document.querySelector('#bio_forteroche').style.display = "none";
-// }
-
-
-// var blocBio = addEventListener('click', this.hideBio);
-
-// var fleche = addEventListener('click', this.showBio);

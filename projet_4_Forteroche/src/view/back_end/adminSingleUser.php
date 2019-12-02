@@ -3,7 +3,6 @@
 <?php  ob_start(); ?>
 
 <article class="blocAdmin">
-    <!-- <a href="index.php?action=listUsers"> <i class="fas fa-arrow-circle-left"></i> retour</a> -->
     <article class="commentAdmin">
         <header class="titre">
             <h3>

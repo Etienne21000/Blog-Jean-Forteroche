@@ -32,18 +32,17 @@
 				</p>
 			</header>
 
-			<!-- <p> -->
 			<?= html_entity_decode($post->content()); ?>
-			<!-- </p> -->
+
 			<?php if($_SESSION):?>
 				<em>
 					<a href="#form" class="js-form" title="Répondre"><i class="fas fa-reply"></i></a>
 				</em>
 			<?php endif; ?>
 			<?php if(!$_SESSION):?>
-				<p>
-					<a href="index.php?action=AdminConnexion"><p id="suite">Connectez-vous pour laisser un commentaire <i class="fas fa-sign-in-alt"></i></p></a>
-				</p>
+
+					<a href="index.php?action=AdminConnexion"><p class="suite">Connectez-vous pour laisser un commentaire <i class="fas fa-sign-in-alt"></i></p></a>
+
 			<?php endif; ?>
 
 		</article>
@@ -70,7 +69,7 @@
 					</p>
 				</div>
 				<div class="icons">
-					<a href="index.php?action=reportComment&id=<?= $data->id(); ?>" title="Signaler"><p id="report"><i class="fas fa-exclamation-circle"></i> Signaler</p></a>
+					<a href="index.php?action=reportComment&com_id=<?= htmlspecialchars($data->id()); ?>&id=<?= htmlspecialchars($post->id()); ?>" title="Signaler"><p class="report"><i class="fas fa-exclamation-circle"></i> Signaler</p></a>
 				</div>
 			</div>
 		<?php endforeach; ?>
@@ -79,7 +78,7 @@
 	</article>
 </section>
 
-<aside id="form" aria-hidden="true" role="dialog" aria-labelledby="titre-form">
+<aside id="form" aria-hidden="true" class="titre-form">
 	<article id="form-wrapper">
 		<i class="fas fa-times" id="cross"></i>
 		<header class="titre titre-form">
@@ -94,7 +93,7 @@
 			<p>
 				<label for="form-comment">Commentaire : </label>
 				<br>
-				<textarea type="text" name="comment" id="form-comment" placeholder="message" required></textarea>
+				<textarea name="comment" id="form-comment" placeholder="message" required></textarea>
 			</p>
 
 			<p>

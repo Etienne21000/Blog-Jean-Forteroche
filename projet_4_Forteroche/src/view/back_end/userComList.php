@@ -11,8 +11,6 @@
 <div class="content">
     <article class="articleComment">
         <?php foreach ($Comments as $data): ?>
-            <a href="index.php?action=signleCom&id=<?= $data->id(); ?>">
-                <?php/* echo var_dump($data); */?>
                 <div class="allComments">
                     <header class="titreh3">
                         <p>
@@ -27,13 +25,15 @@
                         <?= substr(html_entity_decode(htmlspecialchars($data->comment())),0,50) . '...'; ?>
                     </p>
 
+                    <p class="continu">
+                        <a href="index.php?action=signleCom&id=<?= $data->id(); ?>">Voir le commentaire</a>
+                    </p>
+
                     <div class="actions">
-                        <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteCom&amp;id=<?= $data->id()?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
+                        <a class="button3 delete" href="index.php?action=deletePost&amp;id=<?= $data->id(); ?>">Supprimer <i class="fas fa-trash-alt"></i></a>
                     </div>
 
                 </div>
-            </a>
-
         <?php endforeach; ?>
     </article>
 </div>

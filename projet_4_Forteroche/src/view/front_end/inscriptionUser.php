@@ -4,18 +4,6 @@
 
 <section class="connexion">
 
-	<?php /*if (!empty($errors)):?>
-		<div class="alert alerte-danger">
-			<p>Le formulaire n'est pas remplis correctement : </p>
-			<?php foreach ($errors as $error): ?>
-				<ul>
-					<li><?= $error; ?></li>
-				</ul>
-			<?php endforeach; ?>
-		</div>
-
-	<?php endif; */?>
-
 	<aside class="Admin">
 		<header class="titre">
 			<h4>
@@ -49,7 +37,7 @@
 				<p>
 					<label for="form-mp">Confirmer le mot de passe</label>
 					<br>
-					<input type="password" name="confirmePass" id="form-mp" placeholder="" required/>
+					<input type="password" name="confirmePass" id="form-mp-confirm" placeholder="" required/>
 				</p>
 
 				<p>

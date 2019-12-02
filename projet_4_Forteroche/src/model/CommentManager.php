@@ -10,7 +10,6 @@ class CommentManager extends Manager
         $this->db = $this->dbConnect();
     }
 
-    //Comments by post id
     public function getComments($id, $start =-1, $limite = -1)
     {
         $Comments = [];
@@ -39,7 +38,6 @@ class CommentManager extends Manager
         return $Comments;
     }
 
-    //Get comments by user id
     public function getCommentsByUser($user_id, $report=-1, $start =-1, $limite = -1)
     {
         $Comments = [];
@@ -71,10 +69,6 @@ class CommentManager extends Manager
         return $Comments;
     }
 
-    /*------------------------------
-    list comments
-    with limit variables
-    -------------------------------*/
     public function getAllComments($report = -1, $start =-1, $limite = -1)
     {
         $Comments = [];
@@ -102,10 +96,6 @@ class CommentManager extends Manager
         return $Comments;
     }
 
-    /*-------------------------
-    Get comment by id
-    --------------------------*/
-
     public function getCom($id)
     {
         $req = $this->db->prepare('SELECT c.id, c.comment, c.report, u.pseudo,
@@ -123,7 +113,6 @@ class CommentManager extends Manager
             return $Comment;
         }
 
-        //Count total of comments
         public function countComments($report =-1)
         {
             $req = 'SELECT COUNT(*) FROM commentaires';
@@ -138,7 +127,6 @@ class CommentManager extends Manager
             return $countComs;
         }
 
-        //Report comment
         public function reportComment($id)
         {
             $req = $this->db->prepare('UPDATE commentaires SET report = 1 WHERE id = :id');
@@ -148,7 +136,6 @@ class CommentManager extends Manager
             $req->execute();
         }
 
-        //Validate a reported comment
         public function validateCom($id)
         {
             $req = $this->db->prepare('UPDATE commentaires SET report = 0 WHERE id = :id');
@@ -158,7 +145,6 @@ class CommentManager extends Manager
             $req->execute();
         }
 
-        //Add comment
         public function addComment(Comment $comment)
         {
             $req = $this->db->prepare('INSERT INTO commentaires(post_id, user_id, comment, comment_date, report)
@@ -171,7 +157,6 @@ class CommentManager extends Manager
             $req->execute();
         }
 
-        //Delet comment (admin session)
         public function deleteComment($id)
         {
             $req = $this->db->prepare('DELETE FROM commentaires WHERE id = :id');
@@ -181,7 +166,6 @@ class CommentManager extends Manager
             $req->execute();
         }
 
-        //Update comment method
         public function updateComment(Comment $comment)
         {
             $req = $this->db->prepare('UPDATE commentaires SET comment = :comment, report = 0, edition_com_date = NOW()

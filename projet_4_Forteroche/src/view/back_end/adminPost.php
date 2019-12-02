@@ -10,8 +10,6 @@
 	</header>
 
 	<div class="content">
-		<!-- <section class="general form-post"> -->
-		<!-- <article class="article"> -->
 
 		<aside id="addPost">
 			<form action="index.php?action=addPost" method="post" charset="utf-8">

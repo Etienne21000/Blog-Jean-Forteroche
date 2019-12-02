@@ -6,7 +6,6 @@ use model\Comment;
 
 class CommentController
 {
-    // private $post;
     private $comments;
 
     public function __construct()

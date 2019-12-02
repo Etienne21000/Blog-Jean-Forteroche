@@ -1,5 +1,7 @@
 <!DOCTYPE html>
+
 <html lang="fr">
+
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,25 +14,26 @@
     <link rel="stylesheet" href="/src/public/faw/css/all.min.css"/>
 </head>
 
-<header class="top-Admin">
-
-    <div id="ID_Utilisateur_admin">
-        <a href="/index.php?action=Accueil" title="retour à l'accueil du site">
-            <i class="fas fa-user-edit"></i>
-            <?php
-            if(isset($_SESSION['pseudo']) && isset($_SESSION['id']))
-            {
-                echo  $_SESSION['pseudo'];
-            }
-            else {
-                echo 'se connecter';
-            }
-            ?>
-        </a>
-    </div>
-</header>
-
 <body>
+
+    <header class="top-Admin">
+
+        <div id="ID_Utilisateur_admin">
+            <a href="index.php?action=Accueil" title="retour à l'accueil du site">
+                <i class="fas fa-user-edit"></i>
+                <?php
+                if(isset($_SESSION['pseudo']) && isset($_SESSION['id']))
+                {
+                    echo  $_SESSION['pseudo'];
+                }
+                else {
+                    echo 'se connecter';
+                }
+                ?>
+            </a>
+        </div>
+
+    </header>
 
     <section class="generalAdmin">
 
@@ -40,7 +43,7 @@
             </h3>
         </header>
 
-         <div id="contentAdminView">
+        <div id="contentAdminView">
 
             <div id="admin_fleche">
                 <p>Menu
@@ -75,9 +78,9 @@
 
     <footer>
         <p> Copyright © Etienne Juffard - 2019 - tous droits réservés </p>
-        <script src="/src/public/js/transitionsAdmin.js" type="text/javascript"></script>
-        <script src="src/public/js/tinyMce/tinymce.min.js" type="text/javascript"></script>
-        <script src="src/public/js/wysiwyg.js" type="text/javascript"></script>
+        <script src="/src/public/js/transitionsAdmin.js"></script>
+        <script src="src/public/js/tinyMce/tinymce.min.js"></script>
+        <script src="src/public/js/wysiwyg.js"></script>
     </footer>
 </body>
 </html>

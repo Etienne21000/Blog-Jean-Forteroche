@@ -11,7 +11,6 @@
 
     <div class="content">
         <?php foreach ($Posts as $data): ?>
-            <a href="index.php?action=postViewAdmins&id=<?= $data->id(); ?>">
                 <div class="articleBloc2">
 
                     <p>
@@ -22,17 +21,16 @@
                         <?php echo htmlspecialchars($data->creation_date()); ?>
                     </p>
 
-                    <p id="continu">
-                        <a href="index.php?action=listComments&id=<?= $data->id(); ?>">Voir l'article...</a>
+                    <p class="continu">
+                        <a href="index.php?action=listComments&id=<?= $data->id(); ?>"> Voir l'article...</a>
                     </p>
                 </div>
-            </a>
         <?php endforeach; ?>
     </div>
 
     <div class="actions">
-        <button type="button" name="listPost" class="button1"><a href="index.php?action=postAdmin">Liste <i class="fas fa-list"></i></a></button>
-        <button type="button" name="addPost" class="button2"> <a href="index.php?action=AddPostAdmin">Ajouter un article</a></button>
+        <a class="button1 listPost" href="index.php?action=postAdmin">Liste <i class="fas fa-list"></i></a>
+        <a class="button2 addPost" href="index.php?action=AddPostAdmin">Ajouter un article</a>
     </div>
 </article>
 
@@ -66,11 +64,10 @@
     </div>
 
     <div class="actions">
-        <button type="button" name="listCom" class="button1"><a href="index.php?action=adminCom">Liste <i class="fas fa-list"></i></a></button>
+        <a class="button1 listCom" href="index.php?action=adminCom">Liste <i class="fas fa-list"></i></a>
     </div>
 </article>
 
-<!-- reported comments -->
 <article class="blocAdmin">
     <header class="titre">
         <h4>
@@ -101,7 +98,7 @@
     </div>
 
     <div class="actions">
-        <button type="button" name="listComReported" class="button1"><a href="index.php?action=reportList">Liste <i class="fas fa-list"></i></a></button>
+        <a class="button1 listComReported" href="index.php?action=reportList">Liste <i class="fas fa-list"></i></a>
     </div>
 </article>
 
@@ -131,7 +128,7 @@
     </div>
 
     <div class="actions">
-        <button type="button" name="listUser" class="button1"><a href="index.php?action=listUsers">Liste <i class="fas fa-list"></i></a></button>
+        <a class="button1 listUser" href="index.php?action=listUsers">Liste <i class="fas fa-list"></i></a>
     </div>
 </article>
 

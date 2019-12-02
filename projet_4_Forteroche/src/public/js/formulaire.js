@@ -11,10 +11,6 @@ document.addEventListener('DOMContentLoaded', function(){
         init(){
             this.formOpen.addEventListener('click', this.openForm.bind(this));
             this.cross.addEventListener('click', this.closeForm.bind(this));
-            // this.formUpdate.forEach(function(elem){
-            //     elem.addEventListener('click', this.openUpdate.bind(this));
-            // }.bind(this));
-            // this.crossUpdate.addEventListener('click', this.closeUpdate.bind(this));
         }
 
         openForm(e){

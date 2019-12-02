@@ -1,10 +1,8 @@
 <?php
 namespace model;
-// require_once 'model/Entity.php';
 
 class User extends Entity
 {
-    //Object's attributes
     private $id;
     private $pseudo;
     private $pass;
@@ -46,7 +44,7 @@ class User extends Entity
         $this->mail = $mail;
     }
 
-    public function setInscriptiondate($user_date)
+    public function setUserdate($user_date)
     {
         if(is_string($user_date))
         {

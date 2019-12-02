@@ -8,10 +8,6 @@ class PostManager extends Manager
         $this->db = $this->dbConnect();
     }
 
-    /*------------------------------
-            Get All posts
-            with variable limit
-    -------------------------------*/
     public function getPosts($start = -1, $limite = -1)
     {
         $Posts = [];
@@ -19,7 +15,7 @@ class PostManager extends Manager
         $req = 'SELECT b.id, b.title, b.content, DATE_FORMAT(b.creation_date, \'%d/%m/%Y à %Hh%i\')
         AS creation_date, DATE_FORMAT(b.edition_date, \'%d/%m/%Y à %Hh%i\') AS edition_date,
         COUNT(c.id) AS num_com FROM billets AS b LEFT JOIN commentaires AS c
-        ON b.id = c.post_id GROUP BY b.id ORDER BY b.creation_date DESC';
+        ON b.id = c.post_id AND c.report = 0 GROUP BY b.id ORDER BY b.creation_date DESC';
 
         if ($start != -1 || $limite != -1)
         {
@@ -43,7 +39,6 @@ class PostManager extends Manager
         return $countPosts;
     }
 
-    //Get post by id
     public function getOne($id)
     {
         $req = $this->db->prepare('SELECT b.id, b.title, b.content, DATE_FORMAT(b.creation_date, \'%d/%m/%Y à %Hh%i\')
@@ -59,7 +54,6 @@ class PostManager extends Manager
         return $post;
     }
 
-    //Methode to delete a post
     public function delete($id)
     {
         $req = $this->db->prepare('DELETE FROM billets WHERE id = :id');
@@ -78,7 +72,6 @@ class PostManager extends Manager
         $req->execute();
     }
 
-    //Methode update post
     public function update(Post $post)
     {
         $req = $this->db->prepare('UPDATE billets SET title = :title, content = :content, edition_date = NOW()

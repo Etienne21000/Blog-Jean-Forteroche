@@ -3,16 +3,13 @@ namespace model;
 
 class Post extends Entity
 {
-    //Attributs de l'objet
     private $id;
     private $title;
     private $content;
     private $creation_date;
     private $edition_date;
     private $num_com;
-    // private $date_update;
 
-    //Constructor
     public function __construct(array $data)
     {
         $this->hydrate = $this->hydrate($data);

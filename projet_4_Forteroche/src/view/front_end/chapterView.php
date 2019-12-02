@@ -8,7 +8,8 @@
 		<h1>
 			<strong>Les chapitres</strong>
 		</h1>
-		
+	</div>
+
 	<div id="slider_alt">
 		<div class="slide_alt">
 			<span id="calque_alt"> </span>
@@ -26,28 +27,24 @@
 	<article class="article">
 
 		<?php foreach ($Posts as $data): ?>
-			<a href="index.php?action=listComments&id=<?= $data->id()?>">
-				<div class="articleBloc">
-					<header class="titreh3">
-						<h3>
-							<?php echo htmlspecialchars($data->title());?>
-						</h3>
-						<em> <?php echo htmlspecialchars($data->creation_date());  ?></em>
-					</header>
+			<div class="articleBloc">
+				<header class="titreh3">
+					<h3>
+						<?php echo htmlspecialchars($data->title());?>
+					</h3>
+					<em> <?php echo htmlspecialchars($data->creation_date());  ?></em>
+				</header>
+					<?php echo substr(html_entity_decode($data->content()), 0,550) . '...'; ?>
+				<p class="continu">
+					<a href="index.php?action=listComments&id=<?= $data->id(); ?>"> Lire la suite...</a>
+				</p>
+				<br>
 
-					<!-- <p> -->
-						<?php echo substr(html_entity_decode($data->content()), 0,550) . '...'; ?>
-					<!-- </p> -->
-					<p id="continu">
-						<a href="index.php?action=listComments&post=<?= $data->id(); ?>"> Lire la suite...</a>
-					</p>
-					<br>
-
-					<div id="icons">
-						<p id="num_com"><i class="far fa-comment"></i><?= $data->num_com();?></p>
-					</div>
+				<div class="icons">
+					<p class="num_com"><i class="far fa-comment"></i><?= $data->num_com();?></p>
 				</div>
-			</a>
+			</div>
+
 		<?php endforeach; ?>
 
 	</article>

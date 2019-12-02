@@ -16,7 +16,6 @@ class PostController
         $this->comments = new CommentManager();
     }
 
-    //Affichage des chapitres sur la page d'accueil
     public function listPosts()
     {
         $Posts = $this->post->getPosts($start = 0, $limite = 2);
@@ -24,7 +23,6 @@ class PostController
         return $Posts;
     }
 
-    //Affichage des posts sur la page admin
     public function adminPost()
     {
         $Posts = $this->post->getPosts($start = 0, $limite = 3);
@@ -32,7 +30,6 @@ class PostController
         return $Posts;
     }
 
-    //Affichage des chapitres sur la page dédiée
     public function post()
     {
         $Posts = $this->post->getPosts();
@@ -63,10 +60,6 @@ class PostController
         {
             $Posts = $this->post->delete($id);
         }
-        else
-        {
-            throw new \Exception("Impossible de supprimer l'article (controller)");
-        }
     }
 
     public function getPost($id)
@@ -85,5 +78,10 @@ class PostController
         $Post->setContent($content);
 
         $this->post->update($Post);
+    }
+
+    public function errors()
+    {
+        require 'src/view/front_end/errorView.php';
     }
 }

@@ -45,7 +45,7 @@
 				<h3>Jean Forteroche, acteur et écrivain</h3>
 			</header>
 
-			<div id="bio_fleche">
+			<div class="bio_fleche">
 				<i class="fas fa-chevron-down" id="fleche_bio"></i>
 				<i class="fas fa-chevron-up" id="fleche_bio_bas"></i>
 			</div>
@@ -76,40 +76,36 @@
 		<h2>Les derniers articles de Jean Forteroche</h2>
 	</header>
 
-	<div id="bio_fleche">
+	<div class="bio_fleche">
 		<i class="fas fa-chevron-down" id="fleche_bio2"></i>
 		<i class="fas fa-chevron-up" id="fleche_haut_2"></i>
 	</div>
 
 	<article class="article" id="article_home">
-		<!-- <div id="article_home"> -->
 		<?php foreach ($Posts as $data): ?>
-			<a href="index.php?action=listComments&id=<?= $data->id()?>">
-				<div class="articleBloc1">
-					<header class="titreh3">
-						<h3>
-							<?= htmlspecialchars($data->title()); ?>
-						</h3>
-						<em> <?= 'publié le ' . htmlspecialchars($data->creation_date()); ?></em>
-					</header>
+			<div class="articleBloc1">
+				<header class="titreh3">
+					<h3>
+						<?= htmlspecialchars($data->title()); ?>
+					</h3>
+					<em> <?= 'publié le ' . htmlspecialchars($data->creation_date()); ?></em>
+				</header>
 
-					<?= substr(html_entity_decode($data->content()), 0, 340) . '...'; ?>
+				<?= substr(html_entity_decode(htmlspecialchars($data->content())), 0, 230) . '...'; ?>
 
-					<p id="continu">
-						<a href="index.php?action=listComments&id=<?= $data->id(); ?>">Lire la suite...</a>
-					</p>
+				<p class="continu">
+					<a href="index.php?action=listComments&id=<?= $data->id(); ?>"> Lire la suite...</a>
+				</p>
 
-					<div id="icons">
-						<p id="num_com"><i class="far fa-comment"></i><?= $data->num_com();?></p>
-					</div>
+				<div class="icons">
+					<p class="num_com"><i class="far fa-comment"></i><?= $data->num_com();?></p>
 				</div>
-			</a>
+			</div>
 		<?php endforeach; ?>
-		<a href="index.php?action=post"><p id="suite">Retrouvez tous les articles...</p></a>
-		<!-- </div> -->
+		<a href="index.php?action=post"><p class="suite">Retrouvez tous les articles...</p></a>
 	</article>
 
-	<div id="separate"></div>
+	<div class="separate"></div>
 </section>
 
 <section class="comments">

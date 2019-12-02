@@ -19,15 +19,15 @@
 
         <div class="actions">
             <?php if($_SESSION['user_role'] == 2): ?>
-                <button type="button" name="validate" class="button2"> <a href="index.php?action=validateCom&amp;id=<?= $Comment->id(); ?>">Valider <i class="fas fa-check-circle"></i></a></button>
+                <a class="button2 validate" href="index.php?action=validateCom&amp;id=<?= $Comment->id(); ?>">Valider <i class="fas fa-check-circle"></i></a>
             <?php endif; ?>
 
             <?php if($Comment->pseudo() == $_SESSION['pseudo']): ?>
-                <button type="button" name="update" class="button1"><a href="index.php?action=commentUpdate&amp;id=<?= $Comment->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a></button>
+                <a class="button1 update" href="index.php?action=commentUpdate&amp;id=<?= $Comment->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a>
             <?php endif; ?>
 
             <?php if($Comment->user_id() == $_SESSION['id'] || $_SESSION['user_role'] == 2): ?>
-                <button type="button" name="delete" class="button3"> <a href="index.php?action=deleteCom&amp;id=<?= $Comment->id()?>">Supprimer <i class="fas fa-trash-alt"></i></a></button>
+                <a class="button3 delete" href="index.php?action=deleteCom&amp;id=<?= $Comment->id()?>">Supprimer <i class="fas fa-trash-alt"></i></a>
             <?php endif; ?>
         </div>
 
