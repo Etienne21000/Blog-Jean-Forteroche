@@ -11,20 +11,20 @@
 
     <div class="content">
         <?php foreach ($Posts as $data): ?>
-                <div class="articleBloc2">
+            <div class="articleBloc2">
 
-                    <p>
-                        <?php echo htmlspecialchars($data->title()); ?>
-                    </p>
+                <p>
+                    <?php echo htmlspecialchars($data->title()); ?>
+                </p>
 
-                    <p>
-                        <?php echo htmlspecialchars($data->creation_date()); ?>
-                    </p>
+                <p>
+                    <?php echo htmlspecialchars($data->creation_date()); ?>
+                </p>
 
-                    <p class="continu">
-                        <a href="index.php?action=listComments&id=<?= $data->id(); ?>"> Voir l'article...</a>
-                    </p>
-                </div>
+                <p class="continu">
+                    <a href="index.php?action=listComments&id=<?= $data->id(); ?>"> Voir l'article...</a>
+                </p>
+            </div>
         <?php endforeach; ?>
     </div>
 
@@ -43,23 +43,25 @@
 
     <div class="content">
         <?php foreach ($Comments as $data): ?>
-            <a href="index.php?action=signleCom&id=<?= $data->id()?>">
-                <div class="commentBloc2">
+            <div class="commentBloc2">
 
-                    <p>
-                        <?= htmlspecialchars($data->pseudo()); ?>
-                    </p>
+                <p>
+                    <?= htmlspecialchars($data->pseudo()); ?>
+                </p>
 
-                    <p>
-                        <?= htmlspecialchars($data->comment_date()); ?>
-                    </p>
+                <p>
+                    <?= htmlspecialchars($data->comment_date()); ?>
+                </p>
 
-                    <p>
-                        <?= substr(nl2br(htmlspecialchars($data->comment())),0,20) . '...'; ?>
-                    </p>
+                <p>
+                    <?= substr(nl2br(htmlspecialchars($data->comment())),0,20) . '...'; ?>
+                </p>
 
-                </div>
-            </a>
+                <p class="continu">
+                    <a href="index.php?action=signleCom&id=<?= $data->id()?>">Voir le commentaire</a>
+                </p>
+
+            </div>
         <?php endforeach; ?>
     </div>
 
@@ -77,23 +79,25 @@
 
     <div class="content">
         <?php foreach ($report as $data): ?>
-            <a href="index.php?action=reportList">
-                <div class="commentBloc2">
+            <div class="commentBloc2">
 
-                    <p>
-                        <?= htmlspecialchars($data->pseudo()); ?>
-                    </p>
+                <p>
+                    <?= htmlspecialchars($data->pseudo()); ?>
+                </p>
 
-                    <p>
-                        <?= htmlspecialchars($data->comment_date()); ?>
-                    </p>
+                <p>
+                    <?= htmlspecialchars($data->comment_date()); ?>
+                </p>
 
-                    <p>
-                        <?= substr(nl2br(htmlspecialchars($data->comment())),0,20) . '...'; ?>
-                    </p>
+                <p>
+                    <?= substr(nl2br(htmlspecialchars($data->comment())),0,20) . '...'; ?>
+                </p>
 
-                </div>
-            </a>
+                <p class="continu">
+                    <a href="index.php?action=signleCom&id=<?= $data->id()?>">Voir le commentaire</a>
+                </p>
+
+            </div>
         <?php endforeach; ?>
     </div>
 
@@ -111,19 +115,20 @@
 
     <div class="content">
         <?php foreach ($Users as $data): ?>
-            <a href="index.php?action=singleUser&id=<?= $data->id(); ?>">
-                <div class="userBloc">
-                    <p>
-                        <?= htmlspecialchars($data->pseudo()); ?>
-                        <br>
-                        <?= htmlspecialchars($data->mail()); ?>
-                        <br>
-                        inscrit depuis le :  <?php echo htmlspecialchars($data->user_date()); ?>
-                        <br>
-                        <?= htmlspecialchars($data->num_com()); ?> commentaires posté
+            <div class="userBloc">
+                <p>
+                    <?= htmlspecialchars($data->pseudo()); ?>
+                    <br>
+                    <?= htmlspecialchars($data->mail()); ?>
+                    <br>
+                    inscrit depuis le :  <?php echo htmlspecialchars($data->user_date()); ?>
+                    <br>
+                    <?= htmlspecialchars($data->num_com()); ?> commentaires posté
+                    <p class="continu">
+                        <a href="index.php?action=singleUser&id=<?= $data->id(); ?>">Voir le compte</a>
                     </p>
-                </div>
-            </a>
+                </p>
+            </div>
         <?php endforeach; ?>
     </div>
 
