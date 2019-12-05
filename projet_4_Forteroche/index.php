@@ -442,7 +442,7 @@ if (isset($_GET['action']))
         {
             if(!empty($_POST['comment']))
             {
-                $commentController->updateCom($_GET['id'], html_entity_decode(($_POST['comment'])));
+                $commentController->updateCom($_GET['id'], htmlspecialchars(($_POST['comment'])));
             }
         }
         else
@@ -626,7 +626,7 @@ if (isset($_GET['action']))
             {
                 $postController->errors();
             }
-            
+
             require 'src/view/back_end/adminPostView.php';
         }
     }
@@ -662,6 +662,7 @@ if (isset($_GET['action']))
 
             require 'src/view/back_end/adminSingleUser.php';
         }
+
         else
         {
             header('Location: index.php?action=Accueil');
@@ -673,8 +674,14 @@ if (isset($_GET['action']))
         if($_SESSION['user_role'] == 1){
             $user = $userController->getOneUser($_SESSION['id']);
             $user_report = $userController->getUserReport($_SESSION['id']);
+
+            require 'src/view/back_end/adminSingleUser.php';
         }
-        require 'src/view/back_end/adminSingleUser.php';
+
+        elseif(empty($_SESSION) || $_SESSION['user_role'] == 2)
+        {
+            header('Location: index.php?action=Accueil');
+        }
     }
 
     elseif ($_GET['action'] == 'deleteUser')

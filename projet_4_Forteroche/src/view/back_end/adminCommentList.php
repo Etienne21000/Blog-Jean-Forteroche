@@ -39,9 +39,8 @@
 
                         <div class="actions">
                             <?php if($data->pseudo() == $_SESSION['pseudo']): ?>
-                                <a class="button1 update" href="index.php?action=postUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a>
+                                <a class="button1 update" href="index.php?action=commentUpdate&amp;id=<?= $data->id(); ?>">Editer <i class="fas fa-pen-nib"></i></a>
                             <?php endif; ?>
-                            <a class="button3 report" href="index.php?action=reportComment&id=<?= $data->id(); ?>">Signaler <i class="fas fa-exclamation"></i></a>
                         </div>
                     </div>
             <?php endforeach; ?>
